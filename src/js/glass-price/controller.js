@@ -75,8 +75,9 @@ export function initGlassPriceCalculator({ onEntriesChange, onFeedbackChange }) 
     }
 
     const message = persistEntry
-      ? `Added ${entry.size} to ${label}. Total: ₦${entry.price}`
-      : `Glass price for ${entry.size}: ₦${entry.price}`;
+      // ? `Added ${entry.size} to ${label}. Total: ₦${entry.price}`
+      // : `Glass price for ${entry.size}: ₦${entry.price}`;
+      ?( label, entry): entry;
 
     onFeedbackChange?.(message);
     onEntriesChange?.(entries);
@@ -126,5 +127,5 @@ function getFeedbackMessage(entries) {
   }
 
   const total = entries.reduce((sum, entry) => sum + entry.price, 0);
-  return `Showing ${entries.length} saved entry${entries.length === 1 ? "" : "ies"}. Total: ₦${total}`;
+  return `Showing ${entries.length} saved entr${entries.length === 1 ? "y" : "ies"}. Total: ₦${total}`;
 }

@@ -4,7 +4,7 @@
   padding: 0 var(--sp);
   .container {
     padding: 0;
-    @include df(normal, normal, column, 20px);
+    @include df(normal, normal, column, 10px);
   }
 
   fieldset {

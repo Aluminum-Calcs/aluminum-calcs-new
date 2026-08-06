@@ -3,46 +3,69 @@ import { NavLink } from "react-router-dom";
 import "../scss/pages/Home.scss";
 import { Helmet } from "react-helmet-async";
 import { PageContext } from "../context/PageContext.jsx";
+import { Greeting } from "../components/Greeting.jsx";
+import logo from '../assets/react.svg';
+import logo2 from '../assets/vite.svg';
+import logo3 from '../assets/images/channels/height.svg';
 
 export default function Home() {
   const { setCurrentPage } = useContext(PageContext)
   useEffect(() => {
-    setCurrentPage('Home');
+    setCurrentPage('Make Life Easier');
   }, []);
+  // let name = 'Ehi';
 
   return (
     <>
       <main className="home">
         <section className="hero">
           <div className="container">
-            <h1>Make Life easier!!</h1>
-            <p>Enjoy the variety of tools here to create windows, calculate dimensions and efficiently manage your business</p>
+            <h1><Greeting />{name && `, ${name}`}!</h1>
+            
+            <p>Enjoy the variety of tools here to create windows, calculate dimensions and efficiently manage your business.</p>
           </div>
         </section>
 
         <section className="tools">
           <div className="container">
-            {/* <h2>Tools</h2> */}
+            <h2>Quick Actions</h2>
             <div className="cards">
-              <div className="card">
-                <h3>Glass Price Calculator</h3>
-                <p>Calculate the price of glass based on dimensions and type of glass</p>
-                <NavLink to="/glass-price-calculator" className="btn">Check it out!</NavLink>
+              <div className="card quote">
+                <div className="card__img">
+                  <img src={logo} alt="img" />
+                </div>
+                <h3>Quote Builder</h3>
+                <p>Create complete window quotations in minutes (sliding, casement, frameless).</p>
+                <NavLink to="/aluminum-calcs-new/quote-builder" className="btn">Start New Quote</NavLink>
               </div>
-              <div className="card">
+              <div className="card glass">
+                <div className="card__img">
+                  <img src={logo2} alt="img" />
+                </div>
+                <h3>Glass Calculator</h3>
+                <p>Calculate glass price bassed on dimensions, thickness and colors.</p>
+                <NavLink to="/aluminum-calcs-new/glass-price-calculator" className="btn">Calculate Glass</NavLink>
+              </div>
+              <div className="card channels">
+                <div className="card__img">
+                  <img src={logo3} alt="img" />
+                </div>
                 <h3>Channels</h3>
-                <p>Learn more about local  aluminum channels and their uses.</p>
-                <NavLink to="/channels" className="btn">learn More</NavLink>
+                <p>View Aluminum channels reference, lengths, and applications.</p>
+                <NavLink to="/aluminum-calcs-new/channels" className="btn">Explore Channels</NavLink>
               </div>
               <div className="card">
-                <h3>Stile Calculator</h3>
+                <h3>Profile/Stile Calc</h3>
                 <p>Calculate the dimensions of stiles based on the type of stile and the dimensions of the window</p>
-                <NavLink to="/stile-calculator" className="btn">Try it.</NavLink>
+                <NavLink to="/aluminum-calcs-new/stile-calculator" className="btn">Calculate Profiles</NavLink>
               </div>
-              <div className="card">
+              <div className="card cart">
+                <div className="card__img">
+                  <i className="fa fa-shopping-cart"></i>
+                </div>
                 <h3>Cart</h3>
                 <p>View, tabulate and calculate your customer cart and manage your customer orders</p>
-                <NavLink to="/cart" className="btn">View Carts</NavLink>
+                <NavLink to="/aluminum-calcs-new/cart" className="btn">View Carts</NavLink>
               </div>
             </div>
           </div>

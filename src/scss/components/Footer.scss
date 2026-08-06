@@ -47,7 +47,7 @@ footer {
         grid-template-columns: repeat(3, 1fr);
       }
       a {
-        @include btn(var(--text), #fff);
+        @include btn(var(--text), var(--bg));
         & {
           font-size: 1.5rem;
           border-radius: 10px;
@@ -58,5 +58,15 @@ footer {
       font-size: 0.8rem;
       text-align: center;
     }
+  }
+
+  @media (min-width: $desktop) {
+    // z-index: 100;
+    position: absolute;
+    position-anchor: --main;
+    top: anchor(bottom);
+    left: anchor(left);
+    right: 0;
+    // background: green;
   }
 }

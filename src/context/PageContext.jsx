@@ -1,11 +1,17 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
+import { sel } from '../js/util/methods.js';
 
 export const PageContext = createContext();
 
 export default function PageContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState("Home");
+  const [theme, setTheme] = useState('light-mode')
   const [carts, updatecarts] = useState([]);
   const [calcMode, setCalcMode] = useState('hide');
+
+  useEffect(() => {
+    setPageTheme(theme);
+  }, [theme]);
 
   return (
     <PageContext.Provider
@@ -14,10 +20,18 @@ export default function PageContextProvider({ children }) {
         setCurrentPage,
         carts,
         calcMode,
-        setCalcMode
+        setCalcMode,
+        theme,
+        setTheme,
       }}
     >
       {children}
     </PageContext.Provider>
   )
+}
+
+function setPageTheme(theme) {
+  let html = sel('html');
+  html.classList.remove('light-mode', 'dark-mode');
+  html.classList.add(theme);
 }

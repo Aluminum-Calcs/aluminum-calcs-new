@@ -7,6 +7,10 @@
   font-family: 'space-grotesk';
   src: url("../../assets/fonts/space-grotesk.ttf");
 }
+@font-face {
+  font-family: 'jetbrains-mono';
+  src: url("../../assets/fonts/jetbrains-mono.ttf");
+}
 
 $mini-tab: 500px;
 $tab: 700px;
@@ -18,11 +22,36 @@ $desktop: 1100px;
   --text: #000;
   --bg: #fff;
   --cream: beige;
+  --cream-10: rgba(beige, 0.1);
+  --cream-50: rgba(beige, 0.5);
   --dark-cream: #121212;
   --medium: #aaa;
   --tl: teal;
-
+  
   --error: crimson;
   --correct: goldenrod;
   --active: blue;
+
+  --green: #053f05;
+  --dark-green: #033003;
+  --light-green: #086808;
+  --green-100: rgba(152, 233, 152, 0.1);
+  --green-200: rgba(132, 202, 132, 0.2);
+  --green-300: rgba(104, 177, 104, 0.3);
+  --green-400: rgba(71, 134, 71, 0.4);
+  --green-500: rgba(42, 109, 42, 0.5);
+  --green-600: rgba(42, 107, 42, 0.6);
+  --green-700: rgba(35, 100, 35, 0.7);
+  --green-800: rgba(31, 100, 31, 0.8);
+  --green-900: rgba(18, 75, 18, 0.9);
+  --green: rgba(3, 39, 3, 1);
+}
+
+html.dark-mode {
+  --text: #fff;
+  --bg: #000;
+  --cream: #121212;
+  --cream-10: rgba(#121212, 0.1);
+  --cream-50: rgba(#121212, 0.5);
+  --dark-cream: beige;
 }

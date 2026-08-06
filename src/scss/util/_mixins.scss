@@ -21,7 +21,7 @@
   border: 1px solid;
   padding: 5px 20px;
   text-decoration: none;
-  font: inherit;
+  font-family: 'Jetbrains Mono';
   font-size: 15px;
   transition: all .3s;
   text-align: center;
@@ -94,5 +94,31 @@
     bottom: 0;
     border-radius: 20px;
     transform: translateY(10px);
+  }
+}
+
+@mixin dash($side:bottom, $color: var(--tl)) {
+  margin-bottom: 10px;
+  position: relative;
+  @include df(center, center, column);
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 50px;
+    height: 4px;
+    border-radius: 10px;
+    background: $color;
+    transform: translateY(10px);
+  }
+  @if ($side == left) {
+    margin: 0 0 0 20px;
+    @include df(normal, center, row);
+    &::after {
+      transform: translate(-20px,0);
+      left: 0;
+      height: 100%;
+      width: 4px;
+    }
   }
 }

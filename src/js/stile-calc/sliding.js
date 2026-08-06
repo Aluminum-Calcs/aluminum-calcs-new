@@ -1,3 +1,5 @@
+
+
 export default function calculateSliding(input, width = 0, height = 0) {
   const w = Number(width) || 0;
   const h = Number(height) || 0;

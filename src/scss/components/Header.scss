@@ -1,214 +1,186 @@
 @use '../util/' as *;
 
-
-header.body-header {
-  padding: 20px var(--sp);
-  background: var(--cream);
-  border-bottom: 1px solid var(--medium);
+header.page-header {
+  line-height: 1;
+  border-bottom: 1px solid var(--green);
+  anchor-name: --header;
   position: fixed;
-  z-index: 5;
+  z-index: 10;
   top: 0;
   right: 0;
   left: 0;
-  @include df(normal, normal);
+
+  background: var(--cream);
+  padding: 5px var(--sp);
+  @include df(center, center);
   .wrapper {
     width: 100%;
-    @include df(space-between, center, row, 10px);
-    @media (min-width: $desktop) {
-      max-width: $desktop;
-      margin: 0 auto;
-    }
+    @include df(space-between, normal, row, 10px);
   }
+
   .logo {
-    @include df(normal, center, row, 10px);
-    &__svg {
-      width: 15px;
+    @include df(normal, normal, row, 15px);
+    svg {
+      height: 50px;
       stroke: var(--text);
-      rect { 
-        stroke-width: 2px;
-      }
     }
     &__text {
-      @include df(normal, normal, column);
+      @include df(normal, normal, column, 5px);
+      h2 {
+        font-size: 1.5rem;
+      }
+      span {
+        color: #555;
+        // font-weight: 700;
+      }
     }
   }
-  #ch {
-    display: none;
-  }
-  .overlay {
-    position: fixed;
-    z-index: 6;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    transition: all .3s;
-    transform: translateY(100%);
-    background: rgba(#000,.3);
-  }
-  .hamburger {
-    transition: all .5s;
-    @include df(normal, normal, column, 4px);
-    span {
-      width: 25px;
-      height: 4px;
-      background: #121212;
-    }
-  }
-  nav {
-    padding: 20px var(--sp);
-    position: fixed;
-    z-index: 7;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    transform: translateY(100%);
-    transition: all .5s;
-    background: var(--text);
-    color: var(--text);
-    @include df(normal, flex-end, column, 20px);
-    .close {
-      width: 30px;
-      height: 30px;
-      position: relative;
+
+
+  .quick-btns {
+    @include df(right, center, row, 10px);
+    .theme-btn {
+      padding: 5px;
+      background: inherit;
+      border: 1px solid transparent;
+      border-radius: 50%;
       transition: all .3s;
+      // outline: 1px dashed tran;
       @include df(center, center);
       &:hover {
-        background: rgba(#ccc, .3);
+        background: var(--green-300);
+        border-color: var(--green-400);
       }
-      span {
-        width: 25px;
-        height: 3px;
-        background: var(--cream);
-        position: absolute;
-        transform: rotate(45deg);
-        &:nth-of-type(2) {
-          transform: rotate(-45deg);
+
+      &.light-mode {
+        .icon-sun {
+          display: none;
+        }
+        .icon-moon {
+          display: block;
         }
       }
-    }
-    ul {
-      align-self: start;
-      @include df(normal, start, column, 20px);
-      li {
-        @include df(normal, start, column, 20px);
-        a {
-          @include btn();
+      &.dark-mode {
+        .icon-sun {
+          display: block;
         }
-      }
-    }
-  }
-  .calc-trigger {
-    @include btn(var(--bg), var(--text));
-    & {
-      position: fixed;
-      transform: translate(0,0);
-      bottom: 50px;
-      right: var(--sp);
-      z-index: 9;
-      padding: 10px;
-      border-radius: 10px;
-    }
-    i {
-      font-size: 1.5rem;
-    }
-
-    &:hover {
-      transform: translateY(-1px);
-      background: var(--tl);
-      color: var(--cream);
-    }
-  }
-  #ch:checked {
-    ~ nav {
-      transform: translateY(0);
-    }
-    ~ .hamburger {
-      opacity: 0;
-    }
-    ~ .overlay{
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  @media (min-width: $big-tab) {
-    .overlay,.hamburger {
-      display: none;
-    }
-    nav {
-      padding: 0;
-      position: static;
-      transform: translateY(0);
-      transition: all .5s;
-      background: transparent;
-      color: var(--text);
-      @include df(right, center, row, 20px);
-      .close {
-        display: none;
-      }
-      ul {
-        @include df(right, center, row, 10px);
-        li {
-          &:not(:last-of-type) {
-            border-right: 2px solid var(--text);
-            padding-right: 10px;
-          }
-          a {
-            font-size: 14px;
-            padding: 0;
-            border: none;
-            background: transparent;
-            &:hover {
-              color: var(--tl);
-            }
-          }
+        .icon-moon {
+          display: none;
         }
-      }
-    }
-  }
-
-  // latest mobile styling
-  
-
-  @media (max-width: $mini-tab) {
-    padding: 5px var(--sp);
-    .logo {
-      h2 {
-        font-size: 1rem;
-      }
-      span {
-        // color: var(--tl);
-        font-variant: small-caps;
-        font-size: 1.5rem;
-        font-weight: 600;
       }
     }
     .hamburger {
+      width: 35px;
+      height: 35px;
+      outline: transparent;
+      background: inherit;
+      border: 1px solid transparent;
+      position: relative;
+      transition: all .3s;
+      @include df(center, center, column, 4px);
       span {
         width: 25px;
-        height: 1px;
-        border-radius: 20px;
+        height: 3px;
+        background: var(--text);
+        transition: all .3s;
       }
-    }
-    nav {
-      ul {
-        align-self: start;
-        @include df(normal, start, column, 20px);
-        li {
-          @include df(normal, start, column, 20px);
-          a {
-            background: transparent;
-            color: var(--medium);
-            padding: 0;
-            border: none;
-            &.active {
-              font-size: 1.5rem;
-              color: var(--cream);
-            }
+      &.open {
+        span {
+          position: absolute;
+          &:nth-of-type(1) {
+            transform: rotate(45deg);
+          }
+          &:nth-of-type(2) {
+            transform: rotate(-45deg);
+          }
+          &:last-of-type {
+            display: none;
           }
         }
+      }
+      &:hover {
+        background: #00ff0011;
+        border: 1px solid #00550022;
+        color: #005500;
       }
     }
   }
 }
 
+aside {
+  z-index: 10;
+  position: fixed;
+  position-anchor: --header;
+  top: anchor(bottom);
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  background: var(--cream);
+  padding: 20px var(--sp);
+  transition: all .5s;
+  @include df(space-between, normal, column, 0);
+
+  &.closed {
+    transform: translateX(-100%);
+  }
+
+  nav {
+    ul {
+      list-style: none;
+      @include df(normal, normal, column, 10px);
+      li {
+        a {
+          // border: 1px solid #009900;
+          border-radius: 5px;
+          padding: 10px 20px 10px 10px;
+          text-decoration: none;
+          color: inherit;
+          transition: all .3s;
+          @include df(normal, center, row, 20px);
+          &:hover {
+            color: #007700;
+            background: #00770011;
+          }
+          &.active {
+            color: green;
+            background: var(green,.2);
+          }
+        }
+      }
+    }
+  }
+
+  .use {
+    @include df(normal, normal, column, 20px);
+    button {
+      @include btn(var(--text), var(--green-200));
+      & {
+        padding: 10px 15px;
+        font-weight: 600;
+        border: 1px solid;
+        border-radius: 10px;
+        @include df(normal, center, row, 10px);
+      }
+    }
+  }
+}
+
+@media (min-width: $desktop) {
+  header.page-header {
+    width: 400px;
+    padding: 10px 20px;
+    .hamburger {
+      display: none !important;
+    }
+  }
+  aside {
+    right: auto;
+    width: 400px;
+    padding: 10px 20px;
+
+    &.closed {
+      transform: translateX(0);
+    }
+  }
+}

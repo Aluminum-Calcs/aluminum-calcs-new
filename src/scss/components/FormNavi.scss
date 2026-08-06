@@ -1,0 +1,28 @@
+@use '../util/' as *;
+
+.form-navigation {
+  margin-top: auto;
+  padding: 20px var(--sp);
+  .container {
+    position: relative;
+    @include df(normal, center, row, 20px);
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   height: 1px;
+    //   background: var(--green);
+    //   width: 100%;
+    //   z-index: -1;
+    // }
+  }
+  button,a {
+    flex: 1;
+    @include btn;
+    &.forward {
+      // font-weight: 600;
+      background: rgb(6, 146, 81);
+      color: var(--cream);
+      border: 1px solid var(--text);
+    }
+  }
+}

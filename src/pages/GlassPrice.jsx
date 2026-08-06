@@ -6,6 +6,7 @@ import "../scss/pages/GlassPrice.scss";
 
 import InputField from "../components/InputField.jsx";
 import { initGlassPriceCalculator } from "../js/glass-price/controller.js";
+import GlassResultsTable from "../components/GlassResultsTable.jsx";
 
 export default function GlassPrice() {
   const { setCurrentPage } = useContext(PageContext);
@@ -63,7 +64,7 @@ export default function GlassPrice() {
             </button>
           </div>
 
-          <p className="glass-price-feedback">{feedback}</p>
+          {/* <p className="glass-price-feedback">{feedback}</p> */}
         </div>
       </section>
 
@@ -72,30 +73,35 @@ export default function GlassPrice() {
   );
 }
 
-export function GlassPriceResults({ entries = [], ans = "No previous entries" }) {
+export function GlassPriceResults({
+  entries = [],
+  ans = "No previous entries"
+}) {
+  useEffect(()=>console.log(entries, ans), [entries, ans])
   return (
     <section className="results">
       <div className="container">
-        <p
-          className="glass-price-feedback"
-        >
-          {ans.split(0,ans.indexOf(":") + 1).join("")}
-        </p>
-        <h1>
-        </h1>
+        <div className="results__current">
+          <p className="glass-price-feedback">
+            Glass Price for: <b>{ans.size}</b>
+          </p>
+          <h1>{ans.price}</h1>
+        </div>
+
+        {/* <div className="results__table">
+          {/* <div className="head">
+            <h2 className="title">Tabulated</h2>
+            <div className="tools">
+              <button><i className="fa fa-cart-plus"></i></button>
+            </div>
+          </div> }
+          {entries.length}
+          <GlassResultsTable/>
+        </div> */}
 
         {entries.length ? (
-          <div className="results__list">
-            {entries.map((entry) => (
-              <article className="results__item" key={entry.id}>
-                <p>
-                  <strong>{entry.size}</strong>
-                </p>
-                <p>Qty: {entry.qty}</p>
-                <p>Per sheet: ₦{entry.per}</p>
-                <p>Total: ₦{entry.price}</p>
-              </article>
-            ))}
+          <div className="results__table">
+            <GlassResultsTable entries={entries}/>
           </div>
         ) : (
           <div className="results__empty">

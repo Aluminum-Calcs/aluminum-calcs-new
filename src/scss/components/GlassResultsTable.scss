@@ -1,0 +1,30 @@
+@use  '../util/' as *;
+
+table {
+  font-size: 14px;
+  td, th {
+    padding: 5px;
+    text-align: left;
+  }
+  thead {
+    text-align: left;
+    text-transform: capitalize;
+    background-color: var(--cream);
+  }
+  tbody {
+    counter-reset: tRow;
+    tr {
+      counter-increment: tRow;
+      td:first-of-type {
+        text-align: center;
+        &::after {
+          content: counter(tRow);
+        }
+      }
+    }
+  }
+  tfoot {
+    font-size: 1rem;
+    background-color: var(--cream);
+  }
+}

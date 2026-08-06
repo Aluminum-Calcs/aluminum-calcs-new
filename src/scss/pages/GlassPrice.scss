@@ -3,10 +3,39 @@
 main.glass-price-page {
   @include df(normal, normal, column, 20px);
   @include responsiveGrid;
+
+  @media (min-width: $mini-tab) {
+    .form {
+      padding-top: 50px;
+    }
+  }
 }
 
 .results {
+  padding: 20px var(--sp);
   @include df(normal, normal, column, 20px);
+  & .container {
+    @include df(normal, normal, column, 20px);
+  }
+  
+  &__current {
+    @include df(normal, normal, column, 5px);
+    h1 {
+      border-top: 1px solid;
+      padding-top: 10px;
+    }
+  }
+  
+  &__table {
+    @include df(normal, normal,  column, 5px);
+    .head {
+      @include df(space-between, center, row wrap, 5px);
+      button {
+        @include btn;
+      }
+    }
+  }
+
   &__empty {
     @include empty;
   }

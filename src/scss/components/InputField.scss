@@ -12,40 +12,49 @@
       top: 0;
       left: 10px;
       padding: 0 10px;
-      background-color: #fff;
+      background-color: var(--bg);
       transform: translateY(-50%);
       text-transform: capitalize;
     }
     input {
-      font: inherit;
+      font-family: 'jetbrains-mono';
       font-size: 1.5rem;
       font-weight: 700;
-      display: block;
       width: 100%;
       padding: 20px 20px 15px 20px;
-      border: 1px solid;
-      outline: none;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      outline: transparent;
+      background: transparent;
+      color: var(--text);
+      @include df(normal, normal, row);
       &:focus {
-        border: 1px solid #81068e;
+        border: 1px solid green;
       }
       &:focus ~ label {
-        color: #81068e;
+        color: green;
       }
     }
+    // &.dark-mode {
+    //   label {
+    //     // background: ;
+    //   }
+    // }
   }
   .error-message {
     opacity: 0;
     font-weight: bold;
     font-size: 13px;
     transition: all 0.3s;
+    color: var(--green-700);
     @include df(normal, center, row, 10px);
     &::before {
       content: "!";
-      border: 1px solid;
+      border: 1px solid var(--green-700);
       border-radius: 50%;
       width: 1.5rem;
       height: 1.5rem;
-      background: rgba(crimson, 0.1);
+      background: var(--green-200);
       @include df(center, center);
     }
     &.static {
@@ -64,6 +73,172 @@
     .error-message {
       opacity: 1;
       color: crimson;
+    }
+  }
+}
+
+fieldset.checkbox-field {
+  border: none;
+  @include df(normal, normal, column);
+  legend {
+    padding: 0px 10px 0 0;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  .types {
+    padding: 10px 0;
+    width: 100%;
+    // border: 1px solid;
+    @include df(normal, center, row, 20px);
+    label {
+      text-transform: capitalize;
+      font-size: 14px;
+      border-radius: 10px;
+      background: var(--bg);
+      border: 1px solid var(--medium);
+      padding: 10px;
+      position: relative;
+      @include df(normal, center, row, 10px);
+      input {
+        accent-color: green;
+        outline: transparent;
+        border: 1px solid;
+        width: 20px;
+        height: 20px;
+        background: var(--bg);
+        &:checked {
+          &::after {
+            content: '';
+            background: rgba(green,.2);
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+          }
+        }
+      }
+    }
+    .error-msg {
+      @include error-msg;
+    }
+  }
+  &.error {
+    border-color: crimson;
+    legend {
+      color: crimson;
+    }
+    .error-msg {
+      opacity: 1;
+      height: 100%;
+      color: crimson;
+    }
+  }
+  &.sash-field {
+    background: rgba(#67a32d, 0.1);
+    height: 0;
+    opacity: 0;
+    transition: all 0.5s;
+    &.show {
+      height: auto;
+      opacity: 1;
+    }
+    .types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      .error-msg {
+        grid-column: span 2;
+      }
+    }
+  }
+}
+
+fieldset.image-radio-field {
+  border: none;
+  @include df(normal, normal, column, 10px);
+  legend {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .options {
+    @include df(normal, normal, column, 10px);
+    label {
+      border: 1px solid var(--medium);
+      border-radius: 10px;
+      padding: 20px;
+      text-transform: capitalize;
+      position: relative;
+      @include df(center, center, column, 10px);
+      input.checked, input:checked {
+        &::before {
+          content: '';
+          z-index: -1;
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          background: rgba(darkgreen,.1);
+          border: 1px solid green;
+          border-radius: 10px;
+        }
+        &::after {
+          content: '✓';
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 20px;
+          height: 20px;
+          color: #fff;
+          background: darkgreen;
+          border-radius: 50%;
+          @include df(center, center);
+        }
+      }
+    }
+  }
+}
+
+.dropdown-field {
+  @include df(normal, normal, column, 5px);
+  .container {
+    position: relative;
+    @include df(normal, normal, column, 5px);
+    label {
+      font-size: 13px;
+      font-weight: bold;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      padding: 0 10px;
+      background-color: var(--bg);
+      transform: translateY(-50%);
+      text-transform: capitalize;
+    }
+    select {
+      font-family: 'jetbrains-mono';
+      font-size: 1.5rem;
+      font-weight: 700;
+      width: 100%;
+      padding: 20px 20px 15px 20px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      outline: transparent;
+      background: transparent;
+      color: var(--text);
+      @include df(normal, normal, row);
+      &:focus {
+        border: 1px solid green;
+      }
+      &:focus ~ label {
+        color: green;
+      }
+      &::picker-icon {
+        border: 1px solid;
+        color: red;
+        margin-right: 20px;
+        transform: scale(1.02);
+      }
     }
   }
 }

@@ -5,14 +5,17 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  transition: color .3s;
 }
 
 body {
-  font-family:'cascadia-code',Monospace;
-  padding-top: 70px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'space-grotesk',Monospace;
+  // padding-top: 70px;
   anchor-name: --body;
-  input, button {
-    font-family: Monospace;
+  h1, h2, h3, button {
+    font-family: 'jetbrains-mono';
   }
   form, .answer__section,.list {
     padding: 20px var(--sp);
@@ -20,7 +23,7 @@ body {
 }
 
 main {
-  min-height: 70dvh;
+  // min-height: 70dvh;
   padding-top: 50px;
   @include df(normal, normal, column);
   section {
@@ -31,5 +34,16 @@ main {
       max-width: 1200px;
     }
   }
+
+  @media (min-width: $desktop) {
+    position: absolute;
+    position-anchor: --header;
+    left: anchor(right);
+    right: 0;
+    anchor-name: --main;
+  }
 }
 
+.special {
+  color: green;
+}

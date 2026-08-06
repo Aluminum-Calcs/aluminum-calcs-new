@@ -1,6 +1,7 @@
 
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import "../scss/components/InputField.scss";
+import { PageContext } from "../context/PageContext";
 
 function InputField({
   inputType = "number",
@@ -11,6 +12,7 @@ function InputField({
   msg,
   onChange
 }) {
+  const { theme } = useContext(PageContext);
   const [valueState, setValueState] = useState(value ?? val ?? "");
 
   useEffect(() => {
@@ -24,7 +26,7 @@ function InputField({
 
   return (
     <div className="InputField">
-      <div className="InputField__container">
+      <div className={`InputField__container ${theme}`}>
         <input
           type={inputType}
           id={`${id}_input`}
@@ -49,7 +51,6 @@ function InputField({
   )
 }
 
-
 export function CheckboxField({
   id,
   classNames = [],
@@ -64,8 +65,8 @@ export function CheckboxField({
   // },[selectedValue]);
 
   return (
-    <fieldset id={id} className={classNames.join(" ")}>
-      <legend>Select {id.replace('-',' ')}</legend>
+    <fieldset id={id} className={`checkbox-field ${classNames.join(" ")}`}>
+      <legend>{id.replace('-',' ')}</legend>
 
       <div className="types">
         {options.map((option, key) => (
@@ -105,4 +106,44 @@ function Checkbox({ data, name, selectedValue, onChange }) {
   );
 }
 
-export default InputField
+export function ImageRadioField({
+  options = [],
+  label = 'Image Radio Field',
+  name = 'radio-field',
+  classNames = [],
+  selectedValue = 'none',
+  onchange,
+}) {
+  return <fieldset className={`image-radio-field ${classNames && classNames.join(' ')}`}>
+    <legend>{label}</legend>
+    <div className="options">
+      {options && options.map((option,i) =>
+        <label htmlFor="something" key={i}>
+          <input type="radio" name={name} id={`${name}-1`}/>
+          <img src={option.image} alt={option.image} />
+          <span>{option.value.replace('-', ' ')}</span>
+        </label>
+      )}
+    </div>
+  </fieldset>;
+}
+
+export function DropdownField({
+  label = 'Dropdown field',
+  name = 'drop-down',
+  options = [],
+  classNames = [],
+}) {
+  return <div className={`dropdown-field ${classNames.join(' ')}`}>
+    <div className="container">
+      <label htmlFor={name}>{label}</label>
+      <select name={name} id={name}>
+        {options && options.map((option, i) => <option key={i} value={option.value} selected={option.default ? true : false}>
+          {option.value.replace('-', ' ')}
+        </option>)}
+      </select>
+    </div>
+  </div>;
+}
+
+export default InputField;

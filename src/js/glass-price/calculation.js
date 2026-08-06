@@ -18,6 +18,7 @@ export function calculateGlassPrice(values) {
     scale,
     perSheetCost,
     totalPrice,
+    quantity
   };
 }
 

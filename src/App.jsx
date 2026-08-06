@@ -11,6 +11,7 @@ import Channels from './pages/Channels.jsx';
 import StileCalc from './pages/StileCalc.jsx';
 import Cart from './pages/Cart.jsx';
 import GlassPrice from './pages/GlassPrice.jsx';
+import QuoteBuilder from './pages/Quote.jsx';
 
 import "./assets/fontawesome/css/font-awesome.min.css";
 import { HelmetProvider } from 'react-helmet-async';
@@ -28,19 +29,23 @@ function App() {
 
           <Routes>
             <Route
-              path="/"
+              path="/aluminum-calcs-new/"
               element={<Home />}
             />
             <Route
-              path="/glass-price-calculator"
+              path="/aluminum-calcs-new/quote-builder"
+              element={<QuoteBuilder />}
+            />
+            <Route
+              path="/aluminum-calcs-new/glass-price-calculator"
               element={<GlassPrice />}
             />
             <Route
-              path="/channels"
+              path="/aluminum-calcs-new/channels"
               element={<Channels />}
             />
             <Route
-              path="/stile-calculator"
+              path="/aluminum-calcs-new/stile-calculator"
               element={
                 <StileContextProvider>
                   <StileCalc />
@@ -48,7 +53,7 @@ function App() {
               }
             />
             <Route
-              path="/cart"
+              path="/aluminum-calcs-new/cart"
               element={<Cart />}
             />
           </Routes>

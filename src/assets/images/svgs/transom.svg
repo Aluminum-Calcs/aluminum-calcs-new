@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Grafika (https://www.grafika.cc/) -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1657.44" height="2048" viewBox="0 0 19.28 23.83" preserveAspectRatio="xMidYMid meet">
+	<defs>
+		<clipPath id="mask_1">
+			<rect x="-9.54" y="-11.83" width="19.09" height="23.67" />
+		</clipPath>
+	</defs>
+	<g id="transom.svg" transform="matrix(0.999966417951589, -0.00819530164602864, 0.00819530164602861, 0.999966417951588, 9.64100156045399, 11.9127915774583)" clip-path="url(#mask_1)">
+		<path d="M7.64 6.87 L9.16 6.87 L9.16 5.73 M-7.64 6.87 L-9.16 6.87 L-9.16 5.73 M-9.16 5.73 L-9.16 -11.45 L9.16 -11.45 L9.16 5.73 M-9.16 5.73 L-6.11 5.73 L-5.34 5.73 L-5.34 6.49 L-5.34 6.87 M-5.34 6.87 L-6.49 6.87 M-5.34 6.87 L-1.53 6.87 M9.16 5.73 L4.96 5.73 L4.96 6.87 M4.96 6.87 L6.49 6.87 M4.96 6.87 L1.53 6.87 M-1.53 6.87 L-1.53 8.78 M-1.53 6.87 L-0.76 6.87 M-1.53 11.45 L-1.53 8.78 M1.53 6.87 L0.76 6.87 M1.53 6.87 L1.53 8.78 M1.53 11.45 L1.53 8.78 M-1.53 8.78 L-0.76 6.87 M-0.76 6.87 L0.38 6.87 L0.76 6.87 M0.76 6.87 L1.53 8.78" id="Path" style="fill:#315F1E;fill-opacity:0.266666666666667;stroke:#315F1E;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-width:1;" />
+	</g>
+</svg>

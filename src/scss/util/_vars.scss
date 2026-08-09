@@ -17,9 +17,13 @@ $tab: 700px;
 $big-tab: 900px;
 $desktop: 1100px;
 
+$green: #3a5a40;
+$green-bg: rgba(#315F1E,.26);
+
 :root {
   --sp: clamp(10px, 5dvw, 10%);
   --text: #000;
+  --inv-text: #fff;
   --bg: #fff;
   --cream: beige;
   --cream-10: rgba(beige, 0.1);
@@ -45,10 +49,12 @@ $desktop: 1100px;
   --green-800: rgba(31, 100, 31, 0.8);
   --green-900: rgba(18, 75, 18, 0.9);
   --green: rgba(3, 39, 3, 1);
+
 }
 
 html.dark-mode {
   --text: #fff;
+  --inv-text: #000;
   --bg: #000;
   --cream: #121212;
   --cream-10: rgba(#121212, 0.1);

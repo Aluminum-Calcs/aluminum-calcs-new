@@ -77,7 +77,8 @@
   }
 }
 
-fieldset.checkbox-field {
+.RadioField {
+  cursor: pointer;
   border: none;
   @include df(normal, normal, column);
   legend {
@@ -94,13 +95,14 @@ fieldset.checkbox-field {
       text-transform: capitalize;
       font-size: 14px;
       border-radius: 10px;
-      background: var(--bg);
+      background: var(--cream);
+      white-space: nowrap;
       border: 1px solid var(--medium);
       padding: 10px;
       position: relative;
       @include df(normal, center, row, 10px);
       input {
-        accent-color: green;
+        accent-color: $green;
         outline: transparent;
         border: 1px solid;
         width: 20px;
@@ -109,7 +111,7 @@ fieldset.checkbox-field {
         &:checked {
           &::after {
             content: '';
-            background: rgba(green,.2);
+            background: $green-bg;
             position: absolute;
             top: 0;
             right: 0;
@@ -153,8 +155,9 @@ fieldset.checkbox-field {
   }
 }
 
-fieldset.image-radio-field {
+.image-radio-field {
   border: none;
+  cursor: pointer;
   @include df(normal, normal, column, 10px);
   legend {
     font-weight: bold;
@@ -162,44 +165,47 @@ fieldset.image-radio-field {
   }
   .options {
     @include df(normal, normal, column, 10px);
+    @media (min-width: $tab) {
+      @include df(normal, normal, row wrap, 10px);
+      label {
+        flex: 1;
+      }
+    }
     label {
       border: 1px solid var(--medium);
       border-radius: 10px;
       padding: 20px;
       text-transform: capitalize;
       position: relative;
+      background: var(--cream);
       @include df(center, center, column, 10px);
-      input.checked, input:checked {
-        &::before {
-          content: '';
-          z-index: -1;
-          position: absolute;
-          top: 0;
-          right: 0;
-          left: 0;
-          bottom: 0;
-          background: rgba(darkgreen,.1);
-          border: 1px solid green;
-          border-radius: 10px;
-        }
-        &::after {
-          content: '✓';
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          width: 20px;
-          height: 20px;
-          color: #fff;
-          background: darkgreen;
-          border-radius: 50%;
-          @include df(center, center);
-        }
+      img {
+        width: 50px;
+      }
+      input {
+        // display: none;
+       &:checked ~ label {
+        background: $green-bg;
+          &::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            color: var(--text);
+            background: $green;
+            border-radius: 50%;
+            @include df(center, center);
+          }
+        } 
       }
     }
   }
 }
 
 .dropdown-field {
+  cursor: pointer;
   @include df(normal, normal, column, 5px);
   .container {
     position: relative;
@@ -238,6 +244,51 @@ fieldset.image-radio-field {
         color: red;
         margin-right: 20px;
         transform: scale(1.02);
+      }
+    }
+  }
+}
+
+.image-checkbox-field {
+  border: 1px solid var(--medium);
+  border-radius: 10px;
+  padding: 10px 20px;
+  @include df(normal, center, row, 20px);
+  img {
+    height: 40px;
+    width: 40px;
+  }
+  input {
+    cursor: pointer;
+    margin-left: auto;
+    appearance: none;
+    border: 1px solid var(--medium);
+    width: 50px;
+    height: 32px;
+    border-radius: 30px;
+    background: var(--cream);
+    position: relative;
+    transition: all .3s;
+    outline: transparent;
+    @include df(normal, center);
+    &::after {
+      content: '';
+      position: absolute;
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      left: 3px;
+      background: #fff;
+      transition: all .3s;
+      border: 1px solid var(--medium);
+    }
+    &:checked {
+      background: $green;
+      border-color: var(--text);
+      &::after {
+        border-color: darkgreen;
+        right: 3px;
+        transform: translateX(calc(100% - 7px));
       }
     }
   }

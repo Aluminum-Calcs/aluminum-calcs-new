@@ -11,7 +11,7 @@ import "../scss/components/Form.scss";
 import "../scss/components/StileTable.scss";
 
 import InputField from "../components/InputField";
-import { CheckboxField } from "../components/InputField.jsx";
+import { RadioField } from "../components/InputField.jsx";
 
 function StileCalc() {
   const { setCurrentPage } = useContext(PageContext);
@@ -80,7 +80,7 @@ function StileCalc() {
       <main className="stileCalc-page">
         <section className="form">
           <form className="container" onSubmit={handleCompute}>
-            <CheckboxField
+            <RadioField
               id="window-type"
               classNames={["windowType"]}
               options={types}
@@ -90,7 +90,7 @@ function StileCalc() {
             />
             {errors.windowType && <div className="field-error">{errors.windowType}</div>}
 
-            <CheckboxField
+            <RadioField
               id="panels/sash"
               classNames={["sash-field"]}
               options={sashes}

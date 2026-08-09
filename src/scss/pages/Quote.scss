@@ -25,8 +25,9 @@ main.quote-builder-page {
           @include df(normal, center, row, 20px);
           &::before {
             content: counter(num);
+            color: $green;
             font-weight: 600;
-            background: #a6dfb7;
+            background: #a4cfb0;
             border: 1px solid;
             width: 30px;
             height: 30px;
@@ -93,24 +94,33 @@ main.quote-builder-page {
   .counter {
     position: relative;
     margin: 0 var(--sp);
-    @include df(space-between, center, row, 10px);
-    &::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      left: 0;
-      height: 2px;
-      background: linear-gradient(to right,red 25%, green 25%, orange 25%, purple 25%);
-      z-index: -1;
-    }
+    @include df(space-between, center, row, 0px);
     span {
-      border: 1px solid var(--medium);
+      border: 1px solid;
       width: 25px;
       height: 25px;
       border-radius: 50%;
       position: relative;
       background: var(--bg);
+      transition: all .3s;
       @include df(center, center);
+      &.active {
+        background: $green-bg;
+      }
+      &.completed {
+        color: var(--inv-text);
+        background: $green;
+        border-color: $green;
+      }
+    }
+    .line {
+      flex: 1;
+      height: 2px;
+      background: var(--medium);
+      transition: all .3s;
+      &.completed {
+        background: $green;
+      }
     }
   }
 }

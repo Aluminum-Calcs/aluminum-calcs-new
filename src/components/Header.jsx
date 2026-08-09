@@ -51,12 +51,14 @@ export default function Header() {
           
         <div className="quick-btns">
           <button
+            title={`Switch theme to ${theme.replace('-',' ')}`}
             className={`theme-btn ${theme}`}
             onClick={changeTheme}>
             <img src={iconSun} className='icon-sun' alt="icon sun" />
             <img src={iconMoon} className='icon-moon' alt="icon moon" />
           </button>
           <button
+            title="Open navigation menu"
             className={`${navState} hamburger`} onClick={handleNavState}>
             <span></span>
             <span></span>

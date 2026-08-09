@@ -18,11 +18,15 @@
   button,a {
     flex: 1;
     @include btn;
+    & {
+      border-radius: 10px;
+      padding: 10px 20px;
+    }
     &.forward {
       // font-weight: 600;
-      background: rgb(6, 146, 81);
-      color: var(--cream);
-      border: 1px solid var(--text);
+      background: rgba(darkgreen,.5);
+      color: var(--text);
+      border: 2px solid darkgreen;
     }
   }
 }

@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 22 22"><g clip-path="url(#a)"><path stroke="#091540" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.98" d="M20.125 11.877A7.333 7.333 0 1 1 10.124 1.875a9.168 9.168 0 1 0 10.001 10.002Z"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h22v22H0z"/></clipPath></defs></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Grafika (https://www.grafika.cc/) -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2048" height="2048" viewBox="0 0 22 22" preserveAspectRatio="xMidYMid meet" id="icon-moon.svg">
+	<defs>
+		<mask id="mask_1" mask-type="alpha">
+			<path d="M0 0 L22 0 L22 22 L0 22 L0 0 Z" id="a" style="fill:white;stroke:white;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-width:1;" />
+		</mask>
+	</defs>
+	<g id="Group">
+		<g mask="url(#mask_1)">
+			<path d="M20.12 11.88 C18.99 13.86 17 15.21 14.73 15.51 C12.46 15.82 10.19 15.05 8.57 13.43 C6.95 11.81 6.18 9.54 6.49 7.27 C6.79 5 8.14 3.01 10.12 1.88 C5.31 2.34 1.68 6.46 1.84 11.29 C1.99 16.13 5.87 20.01 10.71 20.16 C15.54 20.32 19.66 16.69 20.12 11.88 Z" id="Path" style="fill:#315F1E;fill-opacity:0.266666666666667;stroke:#3A5A40;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;" />
+		</g>
+	</g>
+</svg>

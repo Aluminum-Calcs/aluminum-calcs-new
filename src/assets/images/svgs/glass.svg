@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Grafika (https://www.grafika.cc/) -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2048" height="2048" viewBox="0 0 25 25" preserveAspectRatio="xMidYMid meet">
+	<defs>
+		<filter id="filter_1" style="color-interpolation-filters:sRGB" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" x="-8.45" y="-298.55" width="9.91" height="0.19">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="0" />
+			<feOffset dx="0" dy="0" />
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.533333358764648 0" result="dropShadow_1" />
+			<feComposite in="SourceGraphic" in2="dropShadow_1" operator="over" result="Layer1" />
+		</filter>
+	</defs>
+	<g style="isolation: isolate;">
+		<rect x="0.5" y="0.5" width="24" height="24" id="Rectangle" style="fill:#315F1E;fill-opacity:0.266666666666667;stroke:#3A5A40;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;mix-blend-mode:overlay;" />
+		<line x1="5.39" y1="23.42" x2="22.44" y2="8.64" id="Line" opacity="0.588235294117647" style="fill:none;stroke:#3A5A40;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;" />
+		<line x1="16.74" y1="23.42" x2="22.44" y2="17.71" id="Line 1" opacity="0.392156862745098" style="fill:none;stroke:#3A5A40;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;" />
+		<line transform="matrix(0.755610894403633, -0.655020744907017, 0.655020744907016, 0.755610894403633, 212.045599349319, 235.731059053206)" x1="-8.45" y1="-298.36" x2="1.47" y2="-298.55" id="Line 2" style="fill:#315F1E;fill-opacity:0.266666666666667;stroke:#FFFFFF;stroke-linecap:round;stroke-linejoin:round;stroke-width:1;filter:url(#filter_1);mix-blend-mode:overlay;" />
+	</g>
+</svg>

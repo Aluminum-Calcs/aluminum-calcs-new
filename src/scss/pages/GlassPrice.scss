@@ -1,6 +1,7 @@
 @use '../util/' as *;
 
 main.glass-price-page {
+  padding-top: 100px;
   @include df(normal, normal, column, 20px);
   @include responsiveGrid;
 

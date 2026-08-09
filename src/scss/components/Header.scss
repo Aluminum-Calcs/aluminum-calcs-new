@@ -45,11 +45,15 @@ header.page-header {
       border: 1px solid transparent;
       border-radius: 50%;
       transition: all .3s;
-      // outline: 1px dashed tran;
+      outline: none;
       @include df(center, center);
       &:hover {
         background: var(--green-300);
         border-color: var(--green-400);
+      }
+
+      img {
+        width: 30px;
       }
 
       &.light-mode {
@@ -81,7 +85,7 @@ header.page-header {
       span {
         width: 25px;
         height: 3px;
-        background: var(--text);
+        background: darkgreen;
         transition: all .3s;
       }
       &.open {
@@ -144,7 +148,7 @@ aside {
           }
           &.active {
             color: green;
-            background: var(green,.2);
+            background: rgba(green,.2);
           }
         }
       }

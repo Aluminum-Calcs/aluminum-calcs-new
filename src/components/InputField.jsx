@@ -1,9 +1,9 @@
 
-import { useContext, useEffect, useState } from "react"
+import { Fragment, useContext, useEffect, useState } from "react"
 import "../scss/components/InputField.scss";
 import { PageContext } from "../context/PageContext";
 
-function InputField({
+function InputField ({
   inputType = "number",
   id,
   val,
@@ -51,7 +51,7 @@ function InputField({
   )
 }
 
-export function CheckboxField({
+export function RadioField({
   id,
   classNames = [],
   options = [],
@@ -59,18 +59,18 @@ export function CheckboxField({
   selectedValue,
   onChange,
 }) {
-  // console.log(selectedValue);
-  // useEffect(() => {
-  //   selectedValue = selectedValue;
-  // },[selectedValue]);
+  console.log(selectedValue);
+  useEffect(() => {
+    selectedValue = selectedValue;
+  },[selectedValue]);
 
   return (
-    <fieldset id={id} className={`checkbox-field ${classNames.join(" ")}`}>
+    <fieldset id={id} className={`RadioField ${classNames.join(" ")}`}>
       <legend>{id.replace('-',' ')}</legend>
 
       <div className="types">
         {options.map((option, key) => (
-          <Checkbox
+          <Radio
             data={option}
             key={key}
             name={name}
@@ -85,7 +85,7 @@ export function CheckboxField({
   )
 }
 
-function Checkbox({ data, name, selectedValue, onChange }) {
+function Radio({ data, name, selectedValue, onChange }) {
   const value = data?.val ?? "Option";
 
   return (
@@ -107,22 +107,36 @@ function Checkbox({ data, name, selectedValue, onChange }) {
 }
 
 export function ImageRadioField({
-  options = [],
-  label = 'Image Radio Field',
-  name = 'radio-field',
+  label, // String
+  options, // Array
+  name,
+  selectedValue, // String
+  onChange, // Function handleValues(name, value)
   classNames = [],
-  selectedValue = 'none',
-  onchange,
 }) {
+
+  useEffect(() => {
+    // console.log(`UseEffect started: selectedValue=${selectedValue}`)
+    selectedValue = selectedValue; // Update whenever changed
+    // console.log(`UseEffect ended: selectedValue=${selectedValue}`)
+  }, [selectedValue]);
+
+
   return <fieldset className={`image-radio-field ${classNames && classNames.join(' ')}`}>
     <legend>{label}</legend>
     <div className="options">
-      {options && options.map((option,i) =>
-        <label htmlFor="something" key={i}>
-          <input type="radio" name={name} id={`${name}-1`}/>
-          <img src={option.image} alt={option.image} />
-          <span>{option.value.replace('-', ' ')}</span>
-        </label>
+      {options && options.map((option, i) =>
+      
+        <Fragment key={i}>
+          <input type="radio" name={name} id={`${name}-${option.value}`} value={option.value} onChange={() => {
+            onChange(name, option.value);
+          }} checked={selectedValue === option.value} />
+          
+          <label htmlFor={`${name}-${option.value}`} key={i}>
+            {option.image && <img src={option.image} alt={option.image} />}
+            <span>{option.value.replace('-', ' ')}</span>
+          </label>
+        </Fragment>
       )}
     </div>
   </fieldset>;
@@ -136,7 +150,7 @@ export function DropdownField({
 }) {
   return <div className={`dropdown-field ${classNames.join(' ')}`}>
     <div className="container">
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>{label.replace('-', ' ')}</label>
       <select name={name} id={name}>
         {options && options.map((option, i) => <option key={i} value={option.value} selected={option.default ? true : false}>
           {option.value.replace('-', ' ')}
@@ -144,6 +158,27 @@ export function DropdownField({
       </select>
     </div>
   </div>;
+}
+
+export function ImageCheckboxField({
+  label='Image Checkbox Field',
+  name = 'name',
+  info = 'Lorem ipsium donor sit amet',
+  onChange,
+  classNames = [],
+  image,
+  selected=false,
+}) {
+  
+  return <div className="image-checkbox-field" id={`parent-of-${name}`}>
+    {image && <img src={image} alt={image} />}
+    <div className="info">
+      <label htmlFor={name}>{label.replace('-', ' ')}</label>
+      {info && <p>{info}</p>}
+    </div>
+
+    <input type="checkbox" name={name} id={name} />
+  </div>
 }
 
 export default InputField;

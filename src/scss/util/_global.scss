@@ -20,6 +20,9 @@ body {
   form, .answer__section,.list {
     padding: 20px var(--sp);
   }
+  img {
+    width: 100%;
+  }
 }
 
 main {
@@ -45,5 +48,5 @@ main {
 }
 
 .special {
-  color: green;
+  color: $green;
 }

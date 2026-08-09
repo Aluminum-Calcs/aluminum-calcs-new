@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="720">
+	<clipPath id="cl_4">
+		<rect width="1280" height="720"/>
+	</clipPath>
+	<g clip-path="url(#cl_4)">
+		<rect fill="white" width="1280" height="720"/>
+		<rect fill="#7BAD71" fill-opacity="0.2" transform="translate(436.795 194.03)" x="-40.5" y="-55.5" width="81" height="111"/>
+		<rect fill="none" stroke="#075D00" stroke-width="2" stroke-linecap="round" stroke-miterlimit="4" transform="translate(436.795 194.03)" x="-40.5" y="-55.5" width="81" height="111"/>
+		<defs>
+			<image id="img_0" width="65" height="84" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABUCAYAAADd7FptAAAABHNCSVQICAgIfAhkiAAAAnBJREFUeJzlmctNw0AURW+cjSWKIJXgEuiAFkgqAVqgk1BJ6IANUjYhLPLhOsTOeN583ps5K0vJwjqKj+I7M9TMsl0AwDz3fWRj1XbY4xENvprc95KFVdvhBx0AYI/P+iQs28VZQIM1Xreb+iTs5w/AUcDLdn24rIlV2wG7BTDfnASgKgncgdnugz+qQ8KVDvDHdUjY4wnod4ApX8KqPfwCLjrAlC2BO/D2/T70tXIlXHZghHIl3OgAU6YEhw4w5Ulw7ABTlgQWcKMDTFkSWIDDY3CiHAmnDkwUgGIk8GMwUQCKkNB7MYJTCC+xL2HkxcgV2xKe75z/EI1hV8J5IPHrAGNTQoAOMPYk3BhIfLAn4cpQKsWWhIGhVIodCSNDqRQbEiJ0gLEhIUIHGP0SInWA0S0hYgcYvRIid4DRK2HCUCpFp4SJQ6kUfRI8hlIpuiRMODAJiS4JCTvA6JEgGEql6JAgHEql5JfgeWASkvwSPA9MQpJXQsYOMPkkZO4Ak0dC4KFUSh4JiV6MXEkvIdCBSUjSSgh4YBKSdBKUdYBJIyHhQOJDGgmRh1Ip8SUkGEqlxJWQaCiVEk+C8g4w8SQo7wATR4KBDjDhJRjpABNWgqEOMGElZBpKpYSTkPjAJCRhJGQ4MAmJXIKCoVSKXIKCoVSKTIKSoVSKvwRFQ6kUPwkFdIDxk1BAB5jpEhQOpVKmSVA6lEpxl6B4KJXiLsHgi5ErbhIK7ABzW0KhHWDGJRTcAWZYgtGBxIdhCYaGUinXJRgbSqX8l2BwKJXSl1BRB5i+hIo6wPxJqKwDzEFChR1gmlo7wDSY4f54VVUHmF91blFIKx+wqAAAAABJRU5ErkJggg=="/>
+		</defs>
+		<use transform="translate(403 147)" xlink:href="#img_0"/>
+		<path fill="none" stroke="#888" vector-effect="non-scaling-stroke" stroke-width="1" stroke-miterlimit="4" transform="translate(440.869 208.832)" d="M-14.232403 33.12133L12.418785 -4.5580902"/>
+		<path fill="none" stroke="#006012" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.50196081" transform="translate(440.869 208.832)" d="M-14.232403 33.12133L12.418785 -4.5580902"/>
+		<path fill="none" stroke="#888" vector-effect="non-scaling-stroke" stroke-width="1" stroke-miterlimit="4" transform="translate(441 199)" d="M-34.917015 46.186962L28.294643 -36.990528"/>
+		<path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(441 199)" d="M-34.917015 46.186962L28.294643 -36.990528"/>
+		<path fill="none" stroke="#888" vector-effect="non-scaling-stroke" stroke-width="1" stroke-miterlimit="4" transform="translate(698.336 343.44)" d="M-34.917015 46.186962L28.294643 -36.990528"/>
+		<path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(698.336 343.44)" d="M-34.917015 46.186962L28.294643 -36.990528"/>
+		<path fill="none" stroke="#888" vector-effect="non-scaling-stroke" stroke-width="1" stroke-miterlimit="4" transform="translate(681 329)" d="M-34.917015 46.186962L28.294643 -36.990528"/>
+		<path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(681 329)" d="M-34.917015 46.186962L28.294643 -36.990528"/>
+		<path fill="#FEFEFE" fill-opacity="0.7019608" transform="translate(460.114 228.247)" d="M-14.099733 20.377333L12.687435 -18.720966L5.4330311 20.353781"/>
+		<path fill="white" fill-opacity="0.7019608" transform="translate(422.604 170.055)" d="M-22.613087 8.6316662L-22.517385 -27.788412L4.3139191 -27.865391"/>
+		<rect fill="none" stroke="#166700" stroke-width="2" stroke-miterlimit="4" transform="translate(595.461 192.366)" x="-62" y="-54" width="124" height="108"/>
+		<rect fill="#126B00" fill-opacity="0.10196079" transform="translate(569 192.5)" x="-34.5" y="-53.5" width="69" height="107"/>
+		<rect fill="none" stroke="#155300" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(569 192.5)" x="-34.5" y="-53.5" width="69" height="107"/>
+		<rect fill="#888" transform="translate(825 336)" x="-34.5" y="-53" width="69" height="106"/>
+		<path fill="none" stroke="#888" vector-effect="non-scaling-stroke" stroke-width="1" stroke-miterlimit="4" transform="translate(542.506 190.407)" d="M-1.1167431 5.3309984L-0.97142792 23.460142"/>
+		<path fill="none" stroke="#095500" stroke-width="2" stroke-miterlimit="4" transform="translate(542.506 190.407)" d="M-1.1167431 5.3309984L-0.97142792 23.460142"/>
+		<path fill="white" fill-opacity="0.50196081" transform="translate(576.58 222.494)" d="M25.005512 -10.025898L-12.519905 22.022633L24.999119 22.077711"/>
+		<path fill="#FFF8F8" fill-opacity="0.50196081" transform="translate(559.803 161.142)" d="M-23.873402 3.155755L4.7815571 -20.599297L22.558167 -20.676237L-23.817225 21.199739"/>
+		<path fill="none" stroke="#1F5100" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.27843139" transform="translate(571.457 206.54)" d="M-29.034151 31.277035L25.354664 -15.587357L-29.034151 31.277035Z"/>
+		<path fill="none" stroke="#888" vector-effect="non-scaling-stroke" stroke-width="1" stroke-miterlimit="4" transform="translate(566.392 208.372)" d="M-15.095737 12.914024L15.095737 -12.914024"/>
+		<path fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(566.392 208.372)" d="M-15.095737 12.914024L15.095737 -12.914024"/>
+	</g>
+</svg>

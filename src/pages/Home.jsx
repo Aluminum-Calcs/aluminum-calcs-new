@@ -4,23 +4,25 @@ import "../scss/pages/Home.scss";
 import { Helmet } from "react-helmet-async";
 import { PageContext } from "../context/PageContext.jsx";
 import { Greeting } from "../components/Greeting.jsx";
-import logo from '../assets/react.svg';
-import logo2 from '../assets/vite.svg';
-import logo3 from '../assets/images/channels/height.svg';
+
+import quoteSvg from '../assets/images/svgs/quote.svg';
+import glassSvg from '../assets/images/svgs/glass.svg';
+import transom from '../assets/images/svgs/transom.svg';
+import lockStile from '../assets/images/svgs/lock-stile.svg';
 
 export default function Home() {
   const { setCurrentPage } = useContext(PageContext)
   useEffect(() => {
     setCurrentPage('Make Life Easier');
   }, []);
-  // let name = 'Ehi';
+  let name = 'Ehi';
 
   return (
     <>
       <main className="home">
         <section className="hero">
           <div className="container">
-            <h1><Greeting />{name && `, ${name}`}!</h1>
+            <h1><Greeting />{name && <span>, <span className="special">{name}!</span></span>}</h1>
             
             <p>Enjoy the variety of tools here to create windows, calculate dimensions and efficiently manage your business.</p>
           </div>
@@ -32,7 +34,7 @@ export default function Home() {
             <div className="cards">
               <div className="card quote">
                 <div className="card__img">
-                  <img src={logo} alt="img" />
+                  <img src={quoteSvg} alt="img" />
                 </div>
                 <h3>Quote Builder</h3>
                 <p>Create complete window quotations in minutes (sliding, casement, frameless).</p>
@@ -40,7 +42,7 @@ export default function Home() {
               </div>
               <div className="card glass">
                 <div className="card__img">
-                  <img src={logo2} alt="img" />
+                  <img src={glassSvg} alt="img" />
                 </div>
                 <h3>Glass Calculator</h3>
                 <p>Calculate glass price bassed on dimensions, thickness and colors.</p>
@@ -48,13 +50,16 @@ export default function Home() {
               </div>
               <div className="card channels">
                 <div className="card__img">
-                  <img src={logo3} alt="img" />
+                  <img src={transom} alt="img" />
                 </div>
                 <h3>Channels</h3>
                 <p>View Aluminum channels reference, lengths, and applications.</p>
                 <NavLink to="/aluminum-calcs-new/channels" className="btn">Explore Channels</NavLink>
               </div>
               <div className="card">
+                <div className="card__img">
+                  <img src={lockStile} alt="img" />
+                </div>
                 <h3>Profile/Stile Calc</h3>
                 <p>Calculate the dimensions of stiles based on the type of stile and the dimensions of the window</p>
                 <NavLink to="/aluminum-calcs-new/stile-calculator" className="btn">Calculate Profiles</NavLink>

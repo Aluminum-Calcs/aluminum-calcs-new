@@ -1,35 +1,89 @@
-import { useContext, useEffect, useState } from "react";
 import { PageContext } from "../context/PageContext";
+import { Fragment, useContext, useEffect, useState } from "react";
 import "../scss/pages/Quote.scss";
 import "../scss/components/FormNavi.scss";
-import quoteImg from '../assets/images/ehiejakhian.jpg';
 import { NavLink } from "react-router";
-import InputField, { CheckboxField, ImageRadioField, DropdownField } from '../components/InputField.jsx';
+import InputField, { RadioField, ImageRadioField, DropdownField, ImageCheckboxField } from '../components/InputField.jsx';
+
+import quoteIllustration from '../assets/images/quote-illustration.png';
+import lockStile from '../assets/images/svgs/lock-stile.svg';
+import glassSvg from '../assets/images/svgs/glass.svg';
+import insectNetSvg from '../assets/images/svgs/net.svg';
+import protectorSvg from '../assets/images/svgs/protector.svg';
+import transom from '../assets/images/svgs/transom.svg';
+import protectorRodSvg from '../assets/images/svgs/protector-rod.svg';
+import weatherStripSvg from '../assets/images/svgs/weather-strip.svg';
+
+import slidingSvg from '../assets/images/svgs/sliding.svg';
+import casementSvg from '../assets/images/svgs/casement.svg';
+import framelessSvg from '../assets/images/svgs/frameless.svg';
 
 function QuoteBuilder() {
   const { theme, setCurrentPage } = useContext(PageContext);
   const [currentStep, setCurrentStep] = useState(0);
   let steps = [1, 2, 3, 4, 5];
+
+  const [values, setValues] = useState({
+    windowType: 'casement-window',
+    width: 1200,
+    height: 1200,
+    innerWidth: 0,
+    innerHeight: 0,
+    sashCount : 2,
+    matterTransom : true,
+    includeNet : false,
+    includeAccessories : true,
+    includeProtector : false,
+    includeProctectorRod : false,
+
+    includeGlass : true,
+    glassThickness : '4mm',
+    glassColor : 'blue',
+  });
+
+  function handleValues(property, value) {
+    console.log(property, value);
+    setValues(prev => ({ ...prev, [property]: value }));
+    console.log(values);
+    setTimeout(() => console.log(values), 2000);
+  };
+
+  let options = {
+    windowType: [
+      {
+        value: 'sliding-window',
+        image: slidingSvg
+      },
+      {
+        value: 'casement-window',
+        image: casementSvg
+      },
+      {
+        value: 'frameless-window',
+        image: framelessSvg
+      },
+    ], sashCount: [
+      { value: '1-sash' },
+      { value: '2-sashes', default: true},
+      { value: '3-sashes' },
+    ],
+  };
   
-  let windowTypes = [
-    {
-      value: 'sliding-window',
-      image: 'img'
-    },
-    {
-      value: 'casement-window',
-      image: 'img'
-    },
-    {
-      value: 'frameless-window',
-      image: 'img'
-    },
+
+  let glassThicknessOptions = [
+    { value: '4mm', default: true },
+    { value: '5mm' },
+  ];
+  let glassColorOptions = [
+    { value: 'Blue', default: true },
+    { value: 'Black' },
   ];
 
-  let sashes = [
-    { value: '1-sash' },
-    { value: '2-sashes', default: true},
-    { value: '3-sashes' },
+  let glassTypeOptions = [
+    { value: 'Partial reflective', default: true },
+    { value: 'Total-reflective' },
+    { value: 'Transparent' },
+    { value: 'Opaque' },
   ];
   
   useEffect(() => {
@@ -66,15 +120,18 @@ function QuoteBuilder() {
             <p>Tell us about the  window.</p>
           </div>
           <ImageRadioField
-            name="window-type"
-            options={windowTypes}
             label="Window Type"
+            options={options.windowType}
+            name="windowType"
+            selectedValue={values.windowType}
+            onChange={handleValues}
           />
           <DropdownField
             label="No of Sashes"
-            name='sash-select'
-            value='2 Sashes'
-            options={sashes}
+            options={options.sashCount}
+            name='sashCount'
+            selectedValue={values.sashCount}
+            onChange={handleValues}
           />
         </div>
 
@@ -105,7 +162,7 @@ function QuoteBuilder() {
             id='Window-orientation'
             value='Horizontal'
           />
-          <CheckboxField
+          <RadioField
             id='matter-transom'
             classNames={['matter-transom']}
             options={[
@@ -115,7 +172,7 @@ function QuoteBuilder() {
             name='matter-transom'
             selectedValue='yes'
           />
-          <CheckboxField
+          <RadioField
             id='opening-style'
             classNames={['opening-style']}
             options={[
@@ -139,20 +196,20 @@ function QuoteBuilder() {
             <h2>Glass Details</h2>
             <p>Choose your glass specifications.</p>
           </div>
-          <InputField
-            inputType="dropdown"
-            id='Glass-thickness'
-            value='4mm'
+          <DropdownField
+            label='Glass thickness'
+            name='glass-thickness'
+            options={glassThicknessOptions}
           />
-          <InputField
-            inputType="dropdown"
-            id='Glass-color'
-            value='Blue'
+          <DropdownField
+            label='Glass Color'
+            name='glass-color'
+            options={glassColorOptions}
           />
-          <InputField
-            inputType="dropdown"
-            id='Glass-type'
-            value='Float Glass'
+          <DropdownField
+            label='Glass Type'
+            name='glass-type'
+            options={glassTypeOptions}
           />
           <InputField
             inputType="number"
@@ -172,25 +229,30 @@ function QuoteBuilder() {
             <h2>Accesories &amp; Add-ons</h2>
             <p>Select additional items.</p>
           </div>
-          <InputField
-            inputType="dropdown"
-            id='Glass-thickness'
-            value='4mm'
+          <ImageCheckboxField
+            label='Insect Net'
+            name='insect-net'
+            info='Include insect net for ventilation'
+            image={insectNetSvg}
+            selected={true}
           />
-          <InputField
-            inputType="dropdown"
-            id='Glass-color'
-            value='Blue'
+          <ImageCheckboxField
+            label='Protector'
+            name='protector'
+            info='Include window protector'
+            image={protectorSvg}
           />
-          <InputField
-            inputType="dropdown"
-            id='Glass-type'
-            value='Float Glass'
+          <ImageCheckboxField
+            label='Protector Rod'
+            name='protector-red'
+            info='Include protector rod'
+            image={protectorRodSvg}
           />
-          <InputField
-            inputType="number"
-            id='Glass-quantity'
-            value='2'
+          <ImageCheckboxField
+            label='Weather Strip'
+            name='weather-strip'
+            info='Reduce noise & dust'
+            image={weatherStripSvg}
           />
         </div>
       </form>
@@ -227,7 +289,7 @@ function QuoteBuilder() {
           </ul>
         </div>
         <div className="right">
-          {/* <img src={quoteImg} alt="quote illustration" className="quote_hero_img" /> */}
+          <img src={quoteIllustration} alt="quote illustration" className="quote_hero_img" />
         </div>
       </div>
     </section>
@@ -278,11 +340,31 @@ function QuoteBuilder() {
           </button>
         </div>
         <div className={`counter step${currentStep}`}>
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
+          {steps.map((step, i) => {
+            return <Fragment key={step}>
+              <span
+                className={
+                  step == currentStep
+                    ? 'active'
+                    : step < currentStep
+                      ? 'completed'
+                      : ''
+                }
+              >
+                {step}
+              </span>
+
+              {i < steps.length - 1 && (
+                <div
+                  className={
+                    step < currentStep
+                      ? 'line completed'
+                      : 'line'
+                  }
+                />
+              )}
+            </Fragment>
+          })}
         </div>
       </div>
     </section>

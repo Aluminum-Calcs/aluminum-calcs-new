@@ -134,3 +134,38 @@ form {
     @include df(normal, normal, column, 20px);
   }
 }
+
+.quotation {
+  padding: var(--sp);
+  .container {
+    @include df(normal, normal, column, 10px);
+  }
+  .review {
+    border: 2px solid var(--green-500);
+    background: var(--green-100);
+    padding: 20px;
+    border-radius: 10px;
+    @include df(normal, normal, column, 20px);
+    .header {
+      font-size: .8rem;
+      text-transform: uppercase;
+      color: $green;
+      letter-spacing: 5px;
+      @include dash('bottom', $green-bg);
+    }
+    table {
+      border: none;
+      text-transform: capitalize;
+      td {
+        border: none;
+        padding: 5px 0;
+        &:first-of-type {
+          font-weight: bold;
+        }
+        &:last-of-type {
+          text-align: right;
+        }
+      }
+    }
+  }
+}

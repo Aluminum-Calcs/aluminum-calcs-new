@@ -165,40 +165,45 @@
   }
   .options {
     @include df(normal, normal, column, 10px);
-    @media (min-width: $tab) {
+    @media (min-width: $mini-tab) {
       @include df(normal, normal, row wrap, 10px);
       label {
+        min-width: 150px;
         flex: 1;
       }
     }
     label {
+      text-align: center;
       border: 1px solid var(--medium);
       border-radius: 10px;
       padding: 20px;
       text-transform: capitalize;
       position: relative;
       background: var(--cream);
+      transition: all 0.3s;
       @include df(center, center, column, 10px);
       img {
         width: 50px;
       }
-      input {
-        // display: none;
-       &:checked ~ label {
-        background: $green-bg;
-          &::after {
-            content: '✓';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            color: var(--text);
-            background: $green;
-            border-radius: 50%;
-            @include df(center, center);
-          }
-        } 
+    }
+    input {
+      display: none;
+    }
+    input:checked + label {
+      background: $green-bg;
+      border-color: $green;
+      font-weight: bold;
+      &::after {
+        content: '✓';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+        color: var(--inv-text);
+        background: $green;
+        border-radius: 50%;
+        @include df(center, center);
       }
     }
   }
@@ -211,14 +216,15 @@
     position: relative;
     @include df(normal, normal, column, 5px);
     label {
-      font-size: 13px;
-      font-weight: bold;
+      /*
       position: absolute;
       top: 0;
       left: 10px;
       padding: 0 10px;
-      background-color: var(--bg);
       transform: translateY(-50%);
+      */
+      font-weight: bold;
+      background-color: var(--bg);
       text-transform: capitalize;
     }
     select {
@@ -232,6 +238,9 @@
       outline: transparent;
       background: transparent;
       color: var(--text);
+      appearance: base-select;
+      position: relative;
+      accent-color: green;
       @include df(normal, normal, row);
       &:focus {
         border: 1px solid green;
@@ -239,11 +248,19 @@
       &:focus ~ label {
         color: green;
       }
+      
+      option {
+        accent-color: green;
+        background: var(--bg);
+        color: var(--text);
+      }
       &::picker-icon {
-        border: 1px solid;
-        color: red;
-        margin-right: 20px;
-        transform: scale(1.02);
+        color: var(--medium);
+      }
+    }
+    &:focus-within {
+      label {
+        color: green;
       }
     }
   }

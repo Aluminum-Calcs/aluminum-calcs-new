@@ -54,15 +54,15 @@ function InputField ({
 export function RadioField({
   id,
   classNames = [],
-  options = [],
+  options,
   name,
   selectedValue,
   onChange,
 }) {
-  console.log(selectedValue);
-  useEffect(() => {
-    selectedValue = selectedValue;
-  },[selectedValue]);
+  // useEffect(() => {
+  //   selectedValue = selectedValue;
+  // },[selectedValue]);
+  // console.log(options, selectedValue, name, onChange);
 
   return (
     <fieldset id={id} className={`RadioField ${classNames.join(" ")}`}>
@@ -86,7 +86,16 @@ export function RadioField({
 }
 
 function Radio({ data, name, selectedValue, onChange }) {
-  const value = data?.val ?? "Option";
+  const value = data?.value ?? "Option";
+
+  function handleChange() {
+    if (!onChange) return;
+    if (onChange.length === 2) {
+      onChange(name, value);
+    } else {
+      onChange(value);
+    }
+  }
 
   return (
     <label htmlFor={value}>
@@ -96,10 +105,7 @@ function Radio({ data, name, selectedValue, onChange }) {
         id={value}
         value={value}
         checked={selectedValue === value}
-        onChange={() => {
-          onChange(value);
-          console.log(data, selectedValue, value, selectedValue === value);
-        }}
+        onChange={handleChange}
       />
       <span>{value.replace('-'," ")}</span>
     </label>
@@ -112,15 +118,8 @@ export function ImageRadioField({
   name,
   selectedValue, // String
   onChange, // Function handleValues(name, value)
-  classNames = [],
+  classNames,
 }) {
-
-  useEffect(() => {
-    // console.log(`UseEffect started: selectedValue=${selectedValue}`)
-    selectedValue = selectedValue; // Update whenever changed
-    // console.log(`UseEffect ended: selectedValue=${selectedValue}`)
-  }, [selectedValue]);
-
 
   return <fieldset className={`image-radio-field ${classNames && classNames.join(' ')}`}>
     <legend>{label}</legend>
@@ -128,9 +127,21 @@ export function ImageRadioField({
       {options && options.map((option, i) =>
       
         <Fragment key={i}>
-          <input type="radio" name={name} id={`${name}-${option.value}`} value={option.value} onChange={() => {
-            onChange(name, option.value);
-          }} checked={selectedValue === option.value} />
+          <input
+            type="radio"
+            name={name}
+            id={`${name}-${option.value}`}
+            value={option.value}
+            onChange={() => {
+              if (!onChange) return;
+              if (onChange.length === 2) {
+                onChange(name, option.value);
+              } else {
+                onChange(option.value);
+              }
+            }}
+            checked={selectedValue === option.value}
+          />
           
           <label htmlFor={`${name}-${option.value}`} key={i}>
             {option.image && <img src={option.image} alt={option.image} />}
@@ -143,16 +154,32 @@ export function ImageRadioField({
 }
 
 export function DropdownField({
-  label = 'Dropdown field',
-  name = 'drop-down',
-  options = [],
-  classNames = [],
+  label,
+  name,
+  value,
+  options,
+  classNames,
+  onChange,
 }) {
-  return <div className={`dropdown-field ${classNames.join(' ')}`}>
+  return <div className={`dropdown-field ${classNames && classNames.join(' ')}`}>
     <div className="container">
       <label htmlFor={name}>{label.replace('-', ' ')}</label>
-      <select name={name} id={name}>
-        {options && options.map((option, i) => <option key={i} value={option.value} selected={option.default ? true : false}>
+      <select
+        name={name}
+        id={name}
+        onChange={(e) => {
+          if (!onChange) return;
+          if (onChange.length === 2) {
+            onChange(name, e.target.value);
+          } else {
+            onChange(e.target.value);
+          }
+        }}
+      >
+        {options && options.map((option, i) => <option
+          key={i}
+          value={option.value} selected={value === option.value}
+        >
           {option.value.replace('-', ' ')}
         </option>)}
       </select>

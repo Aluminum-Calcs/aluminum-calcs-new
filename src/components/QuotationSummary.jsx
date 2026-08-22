@@ -1,39 +1,18 @@
 import '../scss/components/QuotationSummary.scss';
-import { computeResult } from '../js/stile-calc/main.js';
-import { calculateGlassPrice } from '../js/glass-price/calculation.js';
-import { CheckGlassSheetPrice, getWindowAccessories } from '../js/global.js';
-import { useState } from 'react';
+import { getQuotationTotals } from '../js/Quote/quotationTotals.js';
 
 export default function Quotation(props) {
-  const [discount, setDiscount] = useState(0);
   const { values } = props;
-
-  
-  let breakdown = computeResult('all', values.windowType, values.sashCount, values.width, values.height);
-  
-  let profiles = breakdown.filter(e => e.category === 'profile');
-  let profilesTotal = 0;
-  profiles.forEach((profile) => {
-    profilesTotal += profile.price;
-  });
-
-  let glassPrice = calculateGlassPrice({
-    width: values.width,
-    height: values.height,
-    quantity: 1,
-    fullSheetPrice: CheckGlassSheetPrice(values.glassThickness, values.glassColor),
-  });
-  glassPrice = glassPrice.totalPrice;
-  let glassTotal = values.sashCount * glassPrice;
-
-  let accessories = getWindowAccessories(values.windowType);
-  let accessoriesTotal = 0;
-  accessories.forEach(accessory => {
-    accessoriesTotal += accessory.price;
-  });
-
-  let subTotal = profilesTotal + glassTotal + accessoriesTotal;
-  let total = subTotal - discount;
+  const {
+    profiles,
+    profilesTotal,
+    glassPrice,
+    glassTotal,
+    accessories,
+    accessoriesTotal,
+    subTotal,
+  } = getQuotationTotals(values);
+  const total = subTotal;
 
   return <section className="quotation">
     <div className="container">
@@ -139,7 +118,7 @@ export default function Quotation(props) {
         </div>
         <div className="discount">
           <span className="text">Discount</span>
-          <span className="price">- ₦{discount.toLocaleString()}</span>
+          <span className="price">- ₦0</span>
         </div>
         <div className="total">
           <span className="text">Total</span>

@@ -65,12 +65,15 @@ export const ACCESSORIES_PRICES = {
 
 export function CheckProfilePrice(profile = '', length=null) {
   profile = profile?.toLowerCase().replace(' ', '_').replace('.', '_').padStart(profile.length + 1, '_');
+  const profileKey = Object.keys(PROFILE_PRICES).find(
+    (key) => key.toLowerCase() === profile,
+  );
 
   if (length) {
-    return Math.round(((PROFILE_PRICES[profile] * length) / 5800) / 100) * 100;
+    return Math.round(((PROFILE_PRICES[profileKey] * length) / 5800) / 100) * 100;
   }
 
-  return PROFILE_PRICES[profile];
+  return PROFILE_PRICES[profileKey];
   // return profile;
 }
 

@@ -1,7 +1,16 @@
+import { CheckProfilePrice } from "../global.js";
+
 export default function calculateSliding(input, width = 0, height = 0) {
   const w = Number(width) || 0;
   const h = Number(height) || 0;
   const rows = [];
+  const profile = (label, key, length, qty = 1) => ({
+    label,
+    value: length,
+    qty,
+    price: CheckProfilePrice(key, length) * qty,
+    category: "profile",
+  });
 
   if (input === "width") {
     const track = w;
@@ -9,21 +18,12 @@ export default function calculateSliding(input, width = 0, height = 0) {
     const gw = top + 18;
     rows.push(
       {
-        label: "Track",
-        value: track,
-        price: "--",
-        category: "profile"
+        ...profile("Track", "track", track, 2),
       },
-      { 
-        label: "Top",
-        value: top,
-        price: "--",
-        category: "profile"
-      },
+      profile("Top", "top", top, 2),
       { 
         label: "Glass Width",
         value: gw,
-        price: "--"
       }
     );
   } else if (input === "height") {
@@ -32,27 +32,13 @@ export default function calculateSliding(input, width = 0, height = 0) {
     const gh = lobster - 80;
     rows.push(
       { 
-        label: "Side Jamb",
-        value: jamb,
-        price: "...",
-        category: "profile"
+        ...profile("Side Jamb", "sideJamb", jamb, 2),
       },
-      { 
-        label: "Lock Stile",
-        value: lobster,
-        price: "--",
-        category: "profile"
-      },
-      { 
-        label: "Interlock",
-        value: lobster,
-        price: "--",
-        category: "profile"
-      },
+      profile("Lock Stile", "lockStile", lobster, 2),
+      profile("Interlock", "interlock", lobster, 1),
       { 
         label: "Glass Height",
         value: gh,
-        price: "--"
       }
     );
   } else {
@@ -64,44 +50,19 @@ export default function calculateSliding(input, width = 0, height = 0) {
     const gh = lobster - 80;
     rows.push(
       {
-        label: "Track",
-        value: track,
-        price: "--",
-        category: "profile" 
+        ...profile("Track", "track", track, 2),
       },
-      {
-        label: "Side Jamb",
-        value: jamb,
-        price: "...",
-        category: "profile" 
-      },
-      {
-        label: "Lock Stile",
-        value: lobster,
-        price: "--",
-        category: "profile" 
-      },
-      {
-        label: "Interlock",
-        value: lobster,
-        price: "--",
-        category: "profile" 
-      },
-      {
-        label: "Top",
-        value: top,
-        price: "--",
-        category: "profile" 
-      },
+      profile("Side Jamb", "sideJamb", jamb, 2),
+      profile("Lock Stile", "lockStile", lobster, 2),
+      profile("Interlock", "interlock", lobster, 1),
+      profile("Top", "top", top, 2),
       {
         label: "Glass Height",
         value: gh,
-        price: "--" 
       },
       {
         label: "Glass Width",
         value: gw,
-        price: "--"
       },
     );
   }

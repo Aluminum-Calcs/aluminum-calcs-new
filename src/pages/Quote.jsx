@@ -2,7 +2,7 @@ import { PageContext } from "../context/PageContext";
 import { Fragment, useContext, useEffect, useState } from "react";
 import "../scss/pages/Quote.scss";
 import "../scss/components/FormNavi.scss";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import InputField, {
   RadioField,
   ImageRadioField,
@@ -27,10 +27,14 @@ import framelessSvg from "../assets/images/svgs/frameless.svg";
 import GlassSizeTip from "../components/GlassSizeTip.jsx";
 import { saveDraft_localStorage } from "../js/Quote/main.js";
 import { QuoteContext, QuoteContextProvider } from "../context/QuoteContext.jsx";
+import { getQuotationTotals } from "../components/QuotationSummary.jsx";
+import { addQuoteToCart } from "../js/cart/quoteCart.js";
 
 let draft_storage_key = 'aluminum-calcs/quote-builder';
 function addToCart() {
-  console.log('adding window to cart');
+  const { total } = getQuotationTotals(values);
+  addQuoteToCart(values, total);
+  navigate("/aluminum-calcs-new/quote-success");
 }
 
 let options = {
@@ -81,14 +85,15 @@ let options = {
 
 function QuoteBuilder() {
   const { theme, setCurrentPage } = useContext(PageContext);
+  const navigate = useNavigate();
 
   const { isSaveDraftVisible, setSaveDraftVisibility } = useContext(QuoteContext);
 
-  const [currentStep, setCurrentStep] = useState(5);
+  const [currentStep, setCurrentStep] = useState(0);
   let steps = [1, 2, 3, 4, 5];
 
   const [values, setValues] = useState({
-    windowType: "casement-window",
+    windowType: "frameless-window",
     width: 1200,
     height: 1200,
     innerWidth: 0,
@@ -302,6 +307,10 @@ function QuoteBuilder() {
           </div>
         </form>
         <FormNavi />
+        <SaveDraftModal
+          values={values}
+          storageKey={draft_storage_key}
+        />
       </main>
     );
   } else if (currentStep == 5) {
@@ -418,7 +427,7 @@ function QuoteBuilder() {
               <i className="fa fa-angle-left"></i>
             </button>
             <h3>{headerText}</h3>
-            <button id="save">
+            <button id="save" onClick={() => setSaveDraftVisibility(true)}>
               <i className="fa fa-save"></i>
             </button>
           </div>

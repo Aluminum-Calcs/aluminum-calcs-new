@@ -1,0 +1,40 @@
+@use '../util/' as *;
+
+.quote-success {
+  min-height: 60dvh;
+  padding: 80px var(--sp);
+  text-align: center;
+
+  .container {
+    @include df(center, center, column, 18px);
+  }
+
+  .fa-check-circle {
+    color: $green;
+    font-size: 4rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .actions {
+    @include df(center, center, row wrap, 12px);
+    margin-top: 18px;
+  }
+
+  a {
+    padding: 12px 18px;
+    text-decoration: none;
+    border: 1px solid $green;
+  }
+
+  .primary {
+    color: var(--inv-text);
+    background: $green;
+  }
+
+  .secondary {
+    color: var(--text);
+  }
+}

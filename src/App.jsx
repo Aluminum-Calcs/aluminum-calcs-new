@@ -12,6 +12,8 @@ import StileCalc from './pages/StileCalc.jsx';
 import Cart from './pages/Cart.jsx';
 import GlassPrice from './pages/GlassPrice.jsx';
 import QuoteBuilder from './pages/Quote.jsx';
+import QuoteSuccess from './pages/QuoteSuccess.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 import "./assets/fontawesome/css/font-awesome.min.css";
 import { HelmetProvider } from 'react-helmet-async';
@@ -27,6 +29,7 @@ function App() {
         <BrowserRouter>
           <Header/>
           <CalculatorModal />
+          <ScrollToTop/>
 
           <Routes>
             <Route
@@ -42,6 +45,10 @@ function App() {
               }
             >
             </Route>
+            <Route
+              path="/aluminum-calcs-new/quote-success"
+              element={<QuoteSuccess />}
+            />
             <Route
               path="/aluminum-calcs-new/glass-price-calculator"
               element={<GlassPrice />}

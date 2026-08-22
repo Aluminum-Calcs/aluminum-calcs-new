@@ -6,7 +6,7 @@ export const PageContext = createContext();
 export default function PageContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState("Home");
   const [theme, setTheme] = useState('light-mode')
-  const [carts, updatecarts] = useState([]);
+  const [carts, updateCarts] = useState([]);
   const [calcMode, setCalcMode] = useState('hide');
 
   useEffect(() => {

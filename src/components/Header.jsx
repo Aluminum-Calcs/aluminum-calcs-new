@@ -71,61 +71,61 @@ export default function Header() {
       <nav>    
         <ul>
           <li>
-            <NavLink to="/aluminum-calcs-new/">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/" end>
               <i className="fa fa-home"></i>
               Dashboard
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/quote-builder">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/quote-builder">
               <i className="fa fa-magic"></i>
               Quote Builder
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/glass-price-calculator">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/glass-price-calculator">
               <i className="fa fa-simplybuilt"></i>
               Glass Calculator
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/stile-calculator">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/stile-calculator">
               <i className="fa fa-slack"></i>
               Profile / Stile Calc
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/channels">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/channels">
               <i className="fa fa-columns"></i>
               Channels
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/cart">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/cart">
               <i className="fa fa-shopping-cart"></i>
               Cart
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/quotes">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/quotes">
               <i className="fa fa-circle-o"></i>
               Quotes
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/clients">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/clients">
               <i className="fa fa-btc"></i>
               Clients
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/settings">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/settings">
               <i className="fa fa-gear"></i>
               Settings
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aluminum-calcs-new/settings">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/settings">
               <i className="fa fa-frown-o"></i>
               Help and support
             </NavLink>

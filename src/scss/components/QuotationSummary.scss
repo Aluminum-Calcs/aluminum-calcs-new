@@ -2,35 +2,55 @@
 
 
 .quotation {
-  padding: var(--sp);
+  padding: 30px var(--sp) 50px;
   .container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
     @include df(normal, normal, column, 0px);
   }
 }
 
 .quotation_summary {
-  border: 1px solid var(--green-500);
-  padding: 15px;
-  border-radius: 5px 5px 0 0;
+  border: 1px solid var(--green-300);
+  padding: 28px;
+  border-radius: 8px;
+  background: var(--cream);
+  box-shadow: 0 12px 30px rgba(var(--text-rgb), .06);
   @include df(normal, normal, column, 20px);
   .header {
     text-transform: uppercase;
     color: $green;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
+    font-size: .78rem;
     @include dash('bottom', $green-bg);
+    align-items: flex-start;
+    h3 {
+      font-size: 1rem;
+    }
   }
   table {
     border: none;
     text-transform: capitalize;
+    width: 100%;
+    border-collapse: collapse;
     td {
       border: none;
-      padding: 5px 0;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--green-100);
       &:first-of-type {
         font-weight: bold;
+        color: var(--medium);
+        width: 42%;
       }
       &:last-of-type {
         text-align: right;
+        font-weight: 600;
+        overflow-wrap: anywhere;
       }
+    }
+    tr:last-child td {
+      border-bottom: none;
     }
   }
 }
@@ -39,18 +59,23 @@
   @extend .quotation_summary;
   & {
     background: var(--green-100);
-    border-radius: 0;
-    border-top: none;
+    border-radius: 8px 8px 0 0;
+    border-top: 1px solid var(--green-300);
+    box-shadow: 0 12px 30px rgba(var(--text-rgb), .04);
   }
 
   .section {
-    padding: 0 0 10px 0;
+    padding: 0 0 14px;
     &:not(:last-of-type) {
       border-bottom: 1px solid $green-bg;
+      margin-bottom: 14px;
     }
     .details {
       @include df(normal, normal, column, 10px);
       &_summary {
+        width: 100%;
+        padding: 4px 0;
+        cursor: pointer;
         outline: transparent;
         font-weight: bold;
         color: inherit;
@@ -63,15 +88,26 @@
           @include df(right, center, row, 20px);
           i {
             width: 20px;
+            text-align: center;
+            color: var(--green);
           }
         }
       }
       &_content {
-        padding: 0 40px 0 20px;
+        padding: 4px 20px 0;
+        color: var(--medium);
+        font-size: .9rem;
         @include df(normal, normal, column, 10px);
       }
       &_item {
         @include df(space-between, center, row, 10px);
+        .item_name {
+          color: var(--text);
+        }
+        .item_qty {
+          text-align: right;
+          white-space: nowrap;
+        }
       }
     }
   }
@@ -82,6 +118,7 @@
   & {
     border-radius: 0 0 5px 5px;
     padding: 0;
+    border-top: 1px solid var(--green-300);
     @include df(normal, normal, column, 5px);
   }
   >* {
@@ -93,7 +130,7 @@
   }
   .total {
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--inv-text);
     text-transform: uppercase;
     background: $green;
@@ -102,11 +139,10 @@
 }
 
 .quotation_warning {
-  border: 1px solid;
-  margin-top: 20px;
   border: 1px solid var(--tl);
+  margin-top: 24px;
   background: var(--cream-10);
-  padding: 20px;
+  padding: 16px 20px;
   color: var(--tl);
   @include df(normal, center, row, 20px);
   i {
@@ -122,8 +158,8 @@
   .quotation {
     .container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0 20px;
+      grid-template-columns: minmax(280px, .85fr) minmax(420px, 1.15fr);
+      gap: 20px 28px;
       grid-template-areas: 
       "summary breakdown"
       ". breakdown"
@@ -136,13 +172,33 @@
     }
     &_breakdown {
       grid-area: breakdown;
-      border-top: 1px solid var(--green-500);
     }
     &_warning {
       grid-area: warning;
     }
     &_totals {
       grid-area: totals;
+    }
+  }
+}
+
+@media (min-width: $desktop) {
+  .quotation {
+    padding-top: 45px;
+    .container {
+      grid-template-columns: minmax(330px, .8fr) minmax(560px, 1.2fr);
+      gap: 24px 36px;
+    }
+  }
+
+  .quotation_summary,
+  .quotation_breakdown {
+    padding: 32px;
+  }
+
+  .quotation_totals {
+    .total {
+      font-size: 2rem;
     }
   }
 }

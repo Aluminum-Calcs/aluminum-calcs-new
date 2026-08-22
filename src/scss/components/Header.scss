@@ -90,7 +90,7 @@ header.page-header {
       span {
         width: 25px;
         height: 3px;
-        background: darkgreen;
+        background: var(--green);
         transition: all .3s;
       }
       &.open {

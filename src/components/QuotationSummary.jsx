@@ -80,7 +80,7 @@ export default function Quotation(props) {
             <button className="details_summary">
               <h4>Aluminum Profiles</h4>
               <span className="right">
-                <span className="price">₦ {profilesTotal && profilesTotal}</span>
+                <span className="price">₦ {profilesTotal && profilesTotal.toLocaleString()}</span>
                 <i className="fa fa-chevron-down"></i>
               </span>
             </button>
@@ -88,7 +88,7 @@ export default function Quotation(props) {
               {profiles && profiles !== null && profiles.map((obj, i) => {
                 return <div className="details_item" key={i}>
                   <span className="item_name">{obj.label}</span>
-                  <span className="item_qty">{obj.qty ?? 1} × {obj.price ?? 0}</span>
+                  <span className="item_qty">{obj.qty ?? 1} × {obj.price.toLocaleString() ?? 0}</span>
                 </div>
               })}
             </div>
@@ -99,14 +99,14 @@ export default function Quotation(props) {
             <button className="details_summary">
               <h4>Glass</h4>
               <span className="right">
-                <span className="price">₦ {glassTotal && glassTotal}</span>
+                <span className="price">₦ {glassTotal && glassTotal.toLocaleString()}</span>
                 <i className="fa fa-chevron-down"></i>
               </span>
             </button>
             <div className="details_content">
               <div className="details_item">
                 <span className="item_name">Profile 1</span>
-                <span className="item_qty">{values.sashCount} × {glassPrice ?? 0.00}</span>
+                <span className="item_qty">{values.sashCount} × {glassPrice.toLocaleString() ?? 0.00}</span>
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function Quotation(props) {
             <button className="details_summary">
               <h4>Accesories</h4>
               <span className="right">
-                <span className="price">₦ {accessoriesTotal && accessoriesTotal}</span>
+                <span className="price">₦ {accessoriesTotal && accessoriesTotal.toLocaleString()}</span>
                 <i className="fa fa-chevron-down"></i>
               </span>
             </button>
@@ -124,7 +124,7 @@ export default function Quotation(props) {
               {accessories && accessories.length > 0 && accessories.map((accessory, i) => {
                 return <div className="details_item" key={i}>
                   <span className="item_name">{accessory.label}</span>
-                  <span className="item_qty">{accessory.qty * values.sashCount} × {accessory.price}</span>
+                  <span className="item_qty">{accessory.qty * values.sashCount} × {accessory.price.toLocaleString()}</span>
                 </div>;
               })}
             </div>
@@ -135,15 +135,15 @@ export default function Quotation(props) {
       <div className="quotation_totals">
         <div className="subtotal">
           <span className="text">Subtotal</span>
-          <span className="price">₦{subTotal}</span>
+          <span className="price">₦{subTotal.toLocaleString()}</span>
         </div>
         <div className="discount">
           <span className="text">Discount</span>
-          <span className="price">- ₦{discount}</span>
+          <span className="price">- ₦{discount.toLocaleString()}</span>
         </div>
         <div className="total">
           <span className="text">Total</span>
-          <span className="price">₦{total}</span>
+          <span className="price">₦{total.toLocaleString()}</span>
         </div>
       </div>
 

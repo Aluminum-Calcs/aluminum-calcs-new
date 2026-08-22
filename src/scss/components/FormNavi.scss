@@ -24,9 +24,9 @@
     }
     &.forward {
       // font-weight: 600;
-      background: rgba(darkgreen,.5);
+      background: var(--green-500);
       color: var(--text);
-      border: 2px solid darkgreen;
+      border: 2px solid var(--green);
     }
   }
 }

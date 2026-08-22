@@ -234,24 +234,24 @@
       font-weight: 700;
       width: 100%;
       padding: 20px 20px 15px 20px;
-      border: 1px solid #aaa;
+      border: 1px solid var(--medium);
       border-radius: 5px;
       outline: transparent;
       background: transparent;
       color: var(--text);
       appearance: base-select;
       position: relative;
-      accent-color: green;
+      accent-color: var(--green);
       @include df(normal, normal, row);
       &:focus {
-        border: 1px solid green;
+        border: 1px solid var(--green);
       }
       &:focus ~ label {
-        color: green;
+        color: var(--green);
       }
       
       option {
-        accent-color: green;
+        accent-color: var(--green);
         background: var(--bg);
         color: var(--text);
       }
@@ -261,7 +261,7 @@
     }
     &:focus-within {
       label {
-        color: green;
+        color: var(--green);
       }
     }
   }
@@ -296,7 +296,7 @@
       height: 23px;
       border-radius: 50%;
       left: 3px;
-      background: #fff;
+      background: var(--cream);
       transition: all .3s;
       border: 1px solid var(--medium);
     }
@@ -304,7 +304,7 @@
       background: $green;
       border-color: var(--text);
       &::after {
-        border-color: darkgreen;
+        border-color: var(--green);
         right: 3px;
         transform: translateX(calc(100% - 7px));
       }

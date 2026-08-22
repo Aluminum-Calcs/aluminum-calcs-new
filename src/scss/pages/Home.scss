@@ -32,9 +32,9 @@ section.tools {
 
     .card {
       padding: 20px;
-      border: 1px solid darkgreen;
+      border: 1px solid var(--green);
       border-radius: 10px;
-      background-color: rgba(darkgreen, .1);
+      background-color: var(--green-100);
       transition: all .3s ease-in-out;
       text-align: center;
       @include df(center, center, column, 10px);
@@ -44,7 +44,7 @@ section.tools {
       }
 
       &__img {
-        border: 1px solid rgba(darkgreen, .5);
+        border: 1px solid var(--green-500);
         padding: 30px;
         width: 100px;
         height: 100px;

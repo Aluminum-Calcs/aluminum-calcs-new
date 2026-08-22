@@ -16,6 +16,7 @@ import QuoteBuilder from './pages/Quote.jsx';
 import "./assets/fontawesome/css/font-awesome.min.css";
 import { HelmetProvider } from 'react-helmet-async';
 import StileContextProvider from './context/StileContext.jsx';
+import { QuoteContextProvider } from './context/QuoteContext.jsx';
 
 
 function App() {
@@ -34,8 +35,13 @@ function App() {
             />
             <Route
               path="/aluminum-calcs-new/quote-builder"
-              element={<QuoteBuilder />}
-            />
+              element={
+                <QuoteContextProvider>
+                  <QuoteBuilder/>
+                </QuoteContextProvider>
+              }
+            >
+            </Route>
             <Route
               path="/aluminum-calcs-new/glass-price-calculator"
               element={<GlassPrice />}

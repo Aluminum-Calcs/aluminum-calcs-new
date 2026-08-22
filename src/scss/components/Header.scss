@@ -2,7 +2,7 @@
 
 header.page-header {
   line-height: 1;
-  border-bottom: 1px solid var(--green);
+  border-bottom: 1px solid $green;
   anchor-name: --header;
   position: fixed;
   z-index: 10;
@@ -20,9 +20,14 @@ header.page-header {
 
   .logo {
     @include df(normal, normal, row, 15px);
-    svg {
+    img {
       height: 50px;
+      width: 50px;
       stroke: var(--text);
+      border: 1px solid $green;
+      padding: 10px;
+      border-radius: 50%;
+      background: $green-bg;
     }
     &__text {
       @include df(normal, normal, column, 5px);
@@ -30,7 +35,7 @@ header.page-header {
         font-size: 1.5rem;
       }
       span {
-        color: #555;
+        color: $green;
         // font-weight: 700;
       }
     }
@@ -40,9 +45,11 @@ header.page-header {
   .quick-btns {
     @include df(right, center, row, 10px);
     .theme-btn {
+      width: 30px;
+      height: 30px;
       padding: 5px;
       background: inherit;
-      border: 1px solid transparent;
+      border: 2px solid $green;
       border-radius: 50%;
       transition: all .3s;
       outline: none;
@@ -52,9 +59,7 @@ header.page-header {
         border-color: var(--green-400);
       }
 
-      img {
-        width: 30px;
-      }
+      
 
       &.light-mode {
         .icon-sun {
@@ -103,9 +108,9 @@ header.page-header {
         }
       }
       &:hover {
-        background: #00ff0011;
-        border: 1px solid #00550022;
-        color: #005500;
+        background: var(--green-100);
+        border: 1px solid var(--green-300);
+        color: var(--green);
       }
     }
   }
@@ -143,12 +148,12 @@ aside {
           transition: all .3s;
           @include df(normal, center, row, 20px);
           &:hover {
-            color: #007700;
-            background: #00770011;
+            color: var(--green);
+            background: var(--green-100);
           }
           &.active {
-            color: green;
-            background: rgba(green,.2);
+            color: var(--green);
+            background: var(--green-200);
           }
         }
       }

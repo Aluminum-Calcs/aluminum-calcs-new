@@ -2,7 +2,7 @@ import calculateCasement from "./casement.js";
 import calculateFrameless from "./frameless.js";
 import calculateSliding from "./sliding.js";
 
-function normalizeWindowType(windowType) {
+export function normalizeWindowType(windowType) {
   return windowType?.toString().replace(/-window$/i, "").toLowerCase() || "";
 }
 

@@ -1,0 +1,107 @@
+@use '../util/' as *;
+
+.saveDraftModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all .3s;
+  @include df(center, center);
+  @media (min-width: $mini-tab) {
+    padding: 0 var(--sp);
+  }
+
+  &.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .overlay {
+    appearance: none;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(#000,.5);
+    &:hover {
+      background-color: rgba(#000,.7);
+    }
+  }
+
+  .container {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: var(--cream);
+    padding: 20px;
+    border-top: 3px solid $green;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    @media (min-width: $mini-tab) {
+      position: relative;
+      max-width: 600px;
+      bottom: auto;
+      border: 3px solid $green;
+    }
+    @include df(normal, normal, column, 20px);
+
+    &_header {
+      @include df(space-between, center, row, 10px);
+      h3 {
+        font-size: 1.5rem;
+        @include dash('left', $green);
+        @include df(normal, normal, row, 10px);
+      }
+      #closeModal {
+        align-self: flex-end;
+        @include btn;
+        & {
+          padding: 10px;
+          border-radius: 50%;
+        }
+  
+        svg {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
+
+  form {
+    padding: 0 !important;
+    background-color: var(--cream);
+    @include df(normal, normal, column, 10px);
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    input,textarea {
+      font-family: 'cascadia-code';
+      background: var(--bg);
+      border: 1px solid $green;
+      padding: 10px;
+      font-size: 1rem;
+      resize: vertical;
+      color: var(--text);
+    }
+  }
+
+  .saveDraftButton {
+    margin-top: 100px;
+    font-weight: 700;
+    @include btn(
+      var(--text),
+      $green-bg,
+    );
+  }
+}

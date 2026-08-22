@@ -25,11 +25,21 @@
   font-size: 15px;
   transition: all .3s;
   text-align: center;
+  svg {
+    path {
+      fill: $c;
+    }
+  }
   @include df(center, center, row, 10px);
   &:hover {
     background: $c;
     border-color: $c;
-    color: #fff;
+    color: $bg;
+    svg {
+      path {
+        fill: $bg;
+      }
+    }
   }
 }
 
@@ -47,7 +57,7 @@
     border-radius: 50%;
     width: 1.5rem;
     height: 1.5rem;
-    background: rgba(crimson, 0.1);
+    background: rgba(var(--error-rgb), 0.1);
     @include df(center, center);
   }
 }

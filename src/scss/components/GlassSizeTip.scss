@@ -1,0 +1,26 @@
+@use '../util/' as *;
+
+.GlassSizeTip {
+  padding: 20px var(--sp);
+  .container {
+    background: var(--green-200);
+    border: 1px solid $green;
+    padding: 20px;
+    @include df(normal, center, row wrap, 20px);
+    i {
+      color: $green;
+      border: 2px solid;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      @include df(center, center);
+    }
+    .content {
+      @include df(normal, normal, column, 5px);
+    }
+    img {
+      width: 50px;
+      margin-left: auto;
+    }
+  }
+}

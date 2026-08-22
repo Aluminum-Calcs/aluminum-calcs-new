@@ -9,6 +9,7 @@
       font-size: 13px;
       font-weight: bold;
       position: absolute;
+      background-color: inherit;
       top: 0;
       left: 10px;
       padding: 0 10px;
@@ -22,7 +23,7 @@
       font-weight: 700;
       width: 100%;
       padding: 20px 20px 15px 20px;
-      border: 1px solid #aaa;
+      border: 1px solid;
       border-radius: 5px;
       outline: transparent;
       background: transparent;
@@ -64,15 +65,15 @@
   &.error {
     .field__container {
       label {
-        color: crimson;
+        color: var(--error);
       }
       input {
-        border-color: crimson;
+        border-color: var(--error);
       }
     }
     .error-message {
       opacity: 1;
-      color: crimson;
+      color: var(--error);
     }
   }
 }
@@ -126,18 +127,18 @@
     }
   }
   &.error {
-    border-color: crimson;
+    border-color: var(--error);
     legend {
-      color: crimson;
+      color: var(--error);
     }
     .error-msg {
       opacity: 1;
       height: 100%;
-      color: crimson;
+      color: var(--error);
     }
   }
   &.sash-field {
-    background: rgba(#67a32d, 0.1);
+    background: var(--green-100);
     height: 0;
     opacity: 0;
     transition: all 0.5s;

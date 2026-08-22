@@ -17,47 +17,59 @@ $tab: 700px;
 $big-tab: 900px;
 $desktop: 1100px;
 
-$green: #3a5a40;
-$green-bg: rgba(#315F1E,.26);
+$green: #2f6f4e;
+$green-bg: rgba(#2f6f4e, .18);
+$cream: #fffdf5;
+$cream-200: rgba($cream, .1);
 
 :root {
   --sp: clamp(10px, 5dvw, 10%);
-  --text: #000;
-  --inv-text: #fff;
-  --bg: #fff;
-  --cream: beige;
-  --cream-10: rgba(beige, 0.1);
-  --cream-50: rgba(beige, 0.5);
-  --dark-cream: #121212;
-  --medium: #aaa;
-  --tl: teal;
+  --text: #17231b;
+  --text-rgb: 23, 35, 27;
+  --inv-text: #fffdf5;
+  --bg: #f3f6f1;
+  --cream: #fffdf5;
+  --cream-10: rgba(255, 253, 245, 0.1);
+  --cream-50: rgba(255, 253, 245, 0.5);
+  --dark-cream: #26352b;
+  --medium: #5e6c63;
+  --tl: #147d80;
   
-  --error: crimson;
-  --correct: goldenrod;
-  --active: blue;
+  --error: #b42318;
+  --error-rgb: 180, 35, 24;
+  --correct: #9a6700;
+  --active: #1769aa;
 
-  --green: #053f05;
-  --dark-green: #033003;
-  --light-green: #086808;
-  --green-100: rgba(152, 233, 152, 0.1);
-  --green-200: rgba(132, 202, 132, 0.2);
-  --green-300: rgba(104, 177, 104, 0.3);
-  --green-400: rgba(71, 134, 71, 0.4);
-  --green-500: rgba(42, 109, 42, 0.5);
-  --green-600: rgba(42, 107, 42, 0.6);
-  --green-700: rgba(35, 100, 35, 0.7);
-  --green-800: rgba(31, 100, 31, 0.8);
-  --green-900: rgba(18, 75, 18, 0.9);
-  --green: rgba(3, 39, 3, 1);
+  --green: #2f6f4e;
+  --dark-green: #1f4d36;
+  --light-green: #5eaa7d;
+  --green-100: rgba(47, 111, 78, 0.1);
+  --green-200: rgba(47, 111, 78, 0.2);
+  --green-300: rgba(47, 111, 78, 0.3);
+  --green-400: rgba(47, 111, 78, 0.4);
+  --green-500: rgba(47, 111, 78, 0.5);
+  --green-600: rgba(47, 111, 78, 0.6);
+  --green-700: rgba(47, 111, 78, 0.7);
+  --green-800: rgba(47, 111, 78, 0.8);
+  --green-900: rgba(47, 111, 78, 0.9);
 
 }
 
 html.dark-mode {
-  --text: #fff;
+  --text: #edf4ed;
+  --text-rgb: 237, 244, 237;
   --inv-text: #000;
-  --bg: #000;
-  --cream: #121212;
-  --cream-10: rgba(#121212, 0.1);
-  --cream-50: rgba(#121212, 0.5);
-  --dark-cream: beige;
+  --bg: #101914;
+  --cream: #1d2a22;
+  --cream-10: rgba(237, 244, 237, 0.1);
+  --cream-50: rgba(237, 244, 237, 0.5);
+  --dark-cream: #d6e2d7;
+  --medium: #a8b8ac;
+  --error: #ff8a80;
+  --error-rgb: 255, 138, 128;
+  --correct: #e5b94c;
+  --active: #80bfff;
+  --green: #78c497;
+  --dark-green: #4c9b70;
+  --light-green: #a1d9b5;
 }

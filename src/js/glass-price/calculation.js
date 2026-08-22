@@ -3,7 +3,7 @@ import { STANDARD_HEIGHT_MM, STANDARD_WIDTH_MM } from "./constants.js";
 export function calculateGlassPrice(values) {
   const width = Number(values.width);
   const height = Number(values.height);
-  const quantity = Number(values.quantity);
+  const quantity = Number(values.quantity) ?? 1;
   const fullSheetPrice = Number(values.fullSheetPrice);
 
   const widthScale = STANDARD_WIDTH_MM / width;

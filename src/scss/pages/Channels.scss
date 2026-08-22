@@ -2,7 +2,7 @@
 
 .button-back {
   padding: 40px var(--side-padding);
-  background: rgba(#ccc,.1);
+  background: var(--cream-10);
   .back {
     @include btn;
     & {
@@ -14,7 +14,7 @@
 
 .intro {
   text-align: center;
-  background: rgba(#ccc,.1);
+  background: var(--cream-10);
   padding: 20px var(--side-padding);
   min-height: 50dvh;
   @include df(center,center, column, 10px);
@@ -46,7 +46,7 @@
       &__content {
         flex: 3;
         padding: 20px;
-        background: rgba(#ccc,.3);
+        background: var(--green-100);
         @include df(normal, start, column, 10px);
         &::before {
           counter-increment: count;
@@ -56,14 +56,14 @@
           height: 25px;
           font-weight: 600;
           border-radius: 50%;
-          background: #ccc;
+          background: var(--green-200);
           @include df(center, center);
         }
         & .tags {
           @include df(normal, center, row wrap, 5px);
           span {
             font-size: 90%;
-            background: #fff;
+            background: var(--cream);
             padding: 5px;
             border-radius: 30px;
           }

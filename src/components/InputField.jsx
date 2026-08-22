@@ -6,6 +6,7 @@ import { PageContext } from "../context/PageContext";
 function InputField ({
   inputType = "number",
   id,
+  label,
   val,
   value,
   msgType,
@@ -35,7 +36,10 @@ function InputField ({
         />
         <label
           htmlFor={`${id}_input`}>
-          {id && id.replace('-', ' ')}
+          { label
+            ? label
+            : id && id.replace('-', ' ')
+          }
         </label>
       </div>
 

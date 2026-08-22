@@ -10,8 +10,8 @@ export default function calculateFrameless(input, sash = 1, width = 0, height = 
 
   if (input === "width") {
     rows.push(
-      { label: "Width", value: w, price: "--" },
-      { label: "Inner Width", value: in_w, price: "--" },
+      { label: "Width", value: w, price: "--" , category: 'profile',},
+      { label: "Inner Width", value: in_w, price: "--" , category: 'profile',},
       { label: "Glass Width", value: gw, price: "--" }
     );
     if (sash === 2) {
@@ -19,25 +19,25 @@ export default function calculateFrameless(input, sash = 1, width = 0, height = 
     }
   } else if (input === "height") {
     rows.push(
-      { label: "Height", value: th, price: "..." },
-      { label: "Inner Height", value: in_h, price: "--" },
+      { label: "Height", value: th, price: "..." , category: 'profile',},
+      { label: "Inner Height", value: in_h, price: "--" , category: 'profile',},
       { label: "Glass Height", value: gh, price: "--" }
     );
     if (sash === 2) {
-      rows.push({ label: "Molium height", value: th - 110, price: "--" });
+      rows.push({ label: "Molium height", value: th - 110, price: "--" , category: 'profile',});
     }
   } else {
     rows.push(
-      { label: "Width", value: w, price: "--" },
-      { label: "Inner Width", value: in_w, price: "--" },
+      { label: "Width", value: w, price: "--" , category: 'profile',},
+      { label: "Inner Width", value: in_w, price: "--" , category: 'profile',},
       { label: "Glass Width", value: gw, price: "--" },
-      { label: "Height", value: th, price: "..." },
-      { label: "Inner Height", value: in_h, price: "--" },
+      { label: "Height", value: th, price: "..." , category: 'profile',},
+      { label: "Inner Height", value: in_h, price: "--" , category: 'profile',},
       { label: "Glass Height", value: gh, price: "--" }
     );
     if (sash === 2) {
       rows.push(
-        { label: "Molium height", value: th - 110, price: "--" },
+        { label: "Molium height", value: th - 110, price: "--" , category: 'profile',},
         { label: "Molium Placement", value: (w - 55) / 2, price: "--" }
       );
     }

@@ -9,6 +9,8 @@ import InputField, {
   DropdownField,
   ImageCheckboxField,
 } from "../components/InputField.jsx";
+import Quotation from "../components/QuotationSummary.jsx";
+import SaveDraftModal from "../components/saveDraftModal.jsx";
 
 import quoteIllustration from "../assets/images/quote-illustration.png";
 import lockStile from "../assets/images/svgs/lock-stile.svg";
@@ -22,10 +24,67 @@ import weatherStripSvg from "../assets/images/svgs/weather-strip.svg";
 import slidingSvg from "../assets/images/svgs/sliding.svg";
 import casementSvg from "../assets/images/svgs/casement.svg";
 import framelessSvg from "../assets/images/svgs/frameless.svg";
+import GlassSizeTip from "../components/GlassSizeTip.jsx";
+import { saveDraft_localStorage } from "../js/Quote/main.js";
+import { QuoteContext, QuoteContextProvider } from "../context/QuoteContext.jsx";
+
+let draft_storage_key = 'aluminum-calcs/quote-builder';
+function addToCart() {
+  console.log('adding window to cart');
+}
+
+let options = {
+  windowType: [
+    {
+      value: "sliding-window",
+      image: slidingSvg,
+    },
+    {
+      value: "casement-window",
+      image: casementSvg,
+    },
+    {
+      value: "frameless-window",
+      image: framelessSvg,
+    },
+  ],
+  sashCount: [
+    { value: "1-sash" },
+    { value: "2-sashes", default: true },
+    { value: "3-sashes" },
+  ],
+  matterTransom: [
+    { value: "yes" },
+    { value: "no" }
+  ],
+  openingStyle: [
+    { value: "left-open" },
+    { value: "right-open" },
+    { value: "both" },
+  ],
+  glassThickness: [
+    { value: "4mm", default: true },
+    { value: "5mm" },
+  ],
+  glassColor: [
+    { value: "Blue", default: true },
+    { value: "Black" },
+  ],
+  glassType: [
+    { value: "Partial reflective", default: true },
+    { value: "Total-reflective" },
+    { value: "Transparent" },
+    { value: "Opaque" },
+  ],
+};
+
 
 function QuoteBuilder() {
   const { theme, setCurrentPage } = useContext(PageContext);
-  const [currentStep, setCurrentStep] = useState(0);
+
+  const { isSaveDraftVisible, setSaveDraftVisibility } = useContext(QuoteContext);
+
+  const [currentStep, setCurrentStep] = useState(5);
   let steps = [1, 2, 3, 4, 5];
 
   const [values, setValues] = useState({
@@ -52,51 +111,9 @@ function QuoteBuilder() {
     setValues((prev) => ({ ...prev, [property]: value }));
   }
 
-  let options = {
-    windowType: [
-      {
-        value: "sliding-window",
-        image: slidingSvg,
-      },
-      {
-        value: "casement-window",
-        image: casementSvg,
-      },
-      {
-        value: "frameless-window",
-        image: framelessSvg,
-      },
-    ],
-    sashCount: [
-      { value: "1-sash" },
-      { value: "2-sashes", default: true },
-      { value: "3-sashes" },
-    ],
-    matterTransom: [
-      { value: "yes" },
-      { value: "no" }
-    ],
-    openingStyle: [
-      { value: "left-open" },
-      { value: "right-open" },
-      { value: "both" },
-    ],
-    glassThickness: [
-      { value: "4mm", default: true },
-      { value: "5mm" },
-    ],
-    glassColor: [
-      { value: "Blue", default: true },
-      { value: "Black" },
-    ],
-    glassType: [
-      { value: "Partial reflective", default: true },
-      { value: "Total-reflective" },
-      { value: "Transparent" },
-      { value: "Opaque" },
-    ],
-  };
-
+  function displaySaveDraftModal(values, storage_key) {
+    return <SaveDraftModal/>;
+  }
 
   useEffect(() => {
     setCurrentPage("Quote Builder");
@@ -115,6 +132,11 @@ function QuoteBuilder() {
       <main className="quote-builder-page">
         <CreateQuoteIntro />
         <FormNavi />
+        
+        <SaveDraftModal
+          values={values}
+          storageKey={draft_storage_key}
+        />
       </main>
     );
   } else if (currentStep == 1) {
@@ -144,6 +166,11 @@ function QuoteBuilder() {
           </div>
         </form>
         <FormNavi />
+
+        <SaveDraftModal
+          values={values}
+          storageKey={draft_storage_key}
+        />
       </main>
     );
   } else if (currentStep == 2) {
@@ -182,6 +209,11 @@ function QuoteBuilder() {
           </div>
         </form>
         <FormNavi />
+
+        <SaveDraftModal
+          values={values}
+          storageKey={draft_storage_key}
+        />
       </main>
     );
   } else if (currentStep == 3) {
@@ -217,7 +249,19 @@ function QuoteBuilder() {
             />
           </div>
         </form>
+        <GlassSizeTip
+          windowType={values.windowType}
+          sashes={values.sashCount}
+          width={values.width}
+          height={values.height}
+        />
+        
         <FormNavi />
+
+        <SaveDraftModal
+          values={values}
+          storageKey={draft_storage_key}
+        />
       </main>
     );
   } else if (currentStep == 4) {
@@ -274,11 +318,29 @@ function QuoteBuilder() {
             </div>
           </div>
         </form>
-        <Quotation values={values}/>
-        <FormNavi />
+        <Quotation values={values} />
+
+        <FormNavi
+          backTo={() => setSaveDraftVisibility(true)}
+          nextTo={() => addToCart()}
+          backwardText={<>
+            <i className="fa fa-save"></i>
+            Save Draft
+          </>}
+          forwardText={<>
+          <i className="fa fa-cart-plus"></i>
+          Add to cart
+          </>}
+        />
+
+        <SaveDraftModal
+          values={values}
+          storageKey={draft_storage_key}
+        />
       </main>
     );
   }
+
 
   function CreateQuoteIntro() {
     return (
@@ -309,23 +371,27 @@ function QuoteBuilder() {
     );
   }
 
-  function FormNavi() {
+  function FormNavi({
+    backTo = () => handleStepSetting("backward"),
+    nextTo = () => handleStepSetting("forward"),
+    backwardText = <><i className="fa fa-chevron-left"></i>Back</>,
+    forwardText = <>Next<i className="fa fa-chevron-right"></i></>,
+  }) {
     return (
       <section className="form-navigation">
         <div className="container">
           {currentStep > 0 && (
             <button
               className="backward"
-              onClick={() => handleStepSetting("backward")}
+              onClick={backTo}
             >
-              <i className="fa fa-chevron-left"></i>
-              Back
+              {backwardText}
             </button>
           )}
           {currentStep == 0 ? (
             <button
               className="forward"
-              onClick={() => handleStepSetting("forward")}
+              onClick={nextTo}
             >
               Create a Quote
               <i className="fa fa-chevron-right"></i>
@@ -333,10 +399,9 @@ function QuoteBuilder() {
           ) : (
             <button
               className="forward"
-              onClick={() => handleStepSetting("forward")}
+              onClick={nextTo}
             >
-              Next
-              <i className="fa fa-chevron-right"></i>
+              {forwardText}
             </button>
           )}
         </div>
@@ -397,71 +462,5 @@ function QuoteBuilder() {
   };
 }
 
-
-
-function Quotation(props) {
-  const { values } = props;
-  console.log(values);
-  
-  return <section className="quotation">
-    <div className="container">
-      <div className="review summary">
-        <div className="header">
-          <h3>Window Summary</h3>
-        </div>
-        <table>
-          <tbody>
-            <tr>
-              <td>Type</td>
-              <td>{values.windowType.replace('-', ' ')}</td>
-            </tr>
-            <tr>
-              <td>Sashes</td>
-              <td>{values.sashCount}</td>
-            </tr>
-            <tr>
-              <td>Size (W × H)</td>
-              <td>{`${values.width} × ${values.height} mm`}</td>
-            </tr>
-            <tr>
-              <td>Orientation</td>
-              <td>{values.orientation}</td>
-            </tr>
-            <tr>
-              <td>Opening</td>
-              <td>{values.openingStyle}</td>
-            </tr>
-            <tr>
-              <td>Matter Transom</td>
-              <td>{values.matterTransom}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="review summary">
-        <div className="header">
-          <h3>Quotation Breakdown</h3>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <td>Aluminum profiles</td>
-              <td>
-                <span className="total">₦34, 100</span>
-                <button className="collapse-btn">&gt;</button>
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Top rail</td>
-              <td>1 × 6, 450</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>;
-}
 
 export default QuoteBuilder;

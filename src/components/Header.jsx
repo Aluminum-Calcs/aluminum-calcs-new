@@ -5,6 +5,7 @@ import { NavLink } from "react-router";
 import { Helmet } from "react-helmet-async";
 import iconSun from '../assets/images/svgs/icon-sun.svg';
 import iconMoon from '../assets/images/svgs/icon-moon.svg';
+import siteLogo from '../assets/images/svgs/lock-stile-green.svg';
 
 export default function Header() {
   const [navState, setNavState] = useState('closed');
@@ -39,10 +40,7 @@ export default function Header() {
     <header className="page-header">
       <div className="wrapper">
         <div className="logo">
-          <svg className="logo__svg" viewBox="0 0 10 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0.5" y="0.5" width="9" height="17"/>
-            <path d="M0.5 15.5V26H3V24M9.5 15.5V26H7V24" />
-          </svg>
+          {/* <img src={siteLogo}alt='site logo'/> */}
           <div className="logo__text">
             <h2>Aluminum Calc</h2>
             <span>{currentPage}</span>

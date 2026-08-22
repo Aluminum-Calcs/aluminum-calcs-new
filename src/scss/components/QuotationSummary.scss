@@ -1,0 +1,148 @@
+@use '../util/' as *;
+
+
+.quotation {
+  padding: var(--sp);
+  .container {
+    @include df(normal, normal, column, 0px);
+  }
+}
+
+.quotation_summary {
+  border: 1px solid var(--green-500);
+  padding: 15px;
+  border-radius: 5px 5px 0 0;
+  @include df(normal, normal, column, 20px);
+  .header {
+    text-transform: uppercase;
+    color: $green;
+    letter-spacing: 5px;
+    @include dash('bottom', $green-bg);
+  }
+  table {
+    border: none;
+    text-transform: capitalize;
+    td {
+      border: none;
+      padding: 5px 0;
+      &:first-of-type {
+        font-weight: bold;
+      }
+      &:last-of-type {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.quotation_breakdown {
+  @extend .quotation_summary;
+  & {
+    background: var(--green-100);
+    border-radius: 0;
+    border-top: none;
+  }
+
+  .section {
+    padding: 0 0 10px 0;
+    &:not(:last-of-type) {
+      border-bottom: 1px solid $green-bg;
+    }
+    .details {
+      @include df(normal, normal, column, 10px);
+      &_summary {
+        outline: transparent;
+        font-weight: bold;
+        color: inherit;
+        background: inherit;
+        border: none;
+        font: inherit;
+        @include df(space-between, center, row, 10px);
+        .right {
+          font-weight: bold;
+          @include df(right, center, row, 20px);
+          i {
+            width: 20px;
+          }
+        }
+      }
+      &_content {
+        padding: 0 40px 0 20px;
+        @include df(normal, normal, column, 10px);
+      }
+      &_item {
+        @include df(space-between, center, row, 10px);
+      }
+    }
+  }
+}
+
+.quotation_totals {
+  @extend .quotation_breakdown;
+  & {
+    border-radius: 0 0 5px 5px;
+    padding: 0;
+    @include df(normal, normal, column, 5px);
+  }
+  >* {
+    padding: 10px 20px;
+    @include df(space-between, center, row, 10px);
+    .price {
+      font-weight: bold;
+    }
+  }
+  .total {
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--inv-text);
+    text-transform: uppercase;
+    background: $green;
+    border-top: 1px solid var(--green-500);
+  }
+}
+
+.quotation_warning {
+  border: 1px solid;
+  margin-top: 20px;
+  border: 1px solid var(--tl);
+  background: var(--cream-10);
+  padding: 20px;
+  color: var(--tl);
+  @include df(normal, center, row, 20px);
+  i {
+    border: 2px solid var(--tl);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    @include df(center, center);
+  }
+}
+
+@media (min-width: $tab) {
+  .quotation {
+    .container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 20px;
+      grid-template-areas: 
+      "summary breakdown"
+      ". breakdown"
+      ". totals"
+      "warning warning";
+      align-items: start;
+    }
+    &_summary {
+      grid-area: summary;
+    }
+    &_breakdown {
+      grid-area: breakdown;
+      border-top: 1px solid var(--green-500);
+    }
+    &_warning {
+      grid-area: warning;
+    }
+    &_totals {
+      grid-area: totals;
+    }
+  }
+}

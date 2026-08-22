@@ -27,7 +27,7 @@ import framelessSvg from "../assets/images/svgs/frameless.svg";
 import GlassSizeTip from "../components/GlassSizeTip.jsx";
 import { saveDraft_localStorage } from "../js/Quote/main.js";
 import { QuoteContext, QuoteContextProvider } from "../context/QuoteContext.jsx";
-import { getQuotationTotals } from "../components/QuotationSummary.jsx";
+import { getQuotationTotals } from "../js/Quote/quotationTotals.js";
 import { addQuoteToCart } from "../js/cart/quoteCart.js";
 
 let draft_storage_key = 'aluminum-calcs/quote-builder';

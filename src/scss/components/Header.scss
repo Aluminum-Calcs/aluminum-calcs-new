@@ -177,7 +177,7 @@ aside {
 
 @media (min-width: $desktop) {
   header.page-header {
-    width: 400px;
+    width: 300px;
     padding: 10px 20px;
     .hamburger {
       display: none !important;
@@ -185,8 +185,12 @@ aside {
   }
   aside {
     right: auto;
-    width: 400px;
+    width: 300px;
     padding: 10px 20px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &.closed {
       transform: translateX(0);

@@ -85,9 +85,8 @@ let options = {
 
 function QuoteBuilder() {
   const { theme, setCurrentPage } = useContext(PageContext);
-  const navigate = useNavigate();
 
-  const { isSaveDraftVisible, setSaveDraftVisibility } = useContext(QuoteContext);
+  const { setSaveDraftVisibility } = useContext(QuoteContext);
 
   const [currentStep, setCurrentStep] = useState(0);
   let steps = [1, 2, 3, 4, 5];
@@ -112,12 +111,11 @@ function QuoteBuilder() {
     glassColor: "blue",
   });
 
-  function handleValues(property, value) {
-    setValues((prev) => ({ ...prev, [property]: value }));
-  }
+  
 
-  function displaySaveDraftModal(values, storage_key) {
-    return <SaveDraftModal/>;
+  function handleValues(property, value) {
+    property == sashCount && (value = Number(value.toString().replace(/-sash(es)?/i, "")));
+    setValues((prev) => ({ ...prev, [property]: value }));
   }
 
   useEffect(() => {
@@ -131,6 +129,161 @@ function QuoteBuilder() {
       currentStep == 5 ? setCurrentStep(5) : setCurrentStep(currentStep + 1);
     }
   }
+
+  if (window.innerWidth >= 1100) {
+    return <>
+      <main className="quote-builder-page desktop">
+        <section className="intro">
+          <div className="container">
+            <div className="left">
+              <h1><span className="special">Quote</span> Builder ✨</h1>
+              <p>
+                Create complete window quotations in minutes.
+              </p>
+            </div>
+            <div className="right">
+              <button className="saveDraftButton">
+                <i className="fa fa-save"></i>
+                Save Draft
+              </button>
+              <button className="clear-all">
+                <i className="fa fa-refresh"></i>
+                Clear All
+              </button>
+              <button className="cartButton">
+                <i className="fa fa-shopping-cart"></i>
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </section>
+        <form className="form">
+          <div className="form_section 1" onClick={()=> setCurrentStep(1)}>
+            <h2 className="form_section_name">
+              1. Window Details
+            </h2>
+            <div className="form_section_fields">
+              <ImageRadioField
+                label="Window Type"
+                options={options.windowType}
+                name="windowType"
+                selectedValue={values.windowType}
+                onChange={handleValues}
+              />
+              <DropdownField
+                label="No of Sashes"
+                options={options.sashCount}
+                name="sashCount"
+                selectedValue={values.sashCount}
+                onChange={handleValues}
+              />
+              <InputField
+                inputType="number" id="overall-width"
+                value="1200"
+                onChange={handleValues}
+                unit ="mm"
+              />
+              <InputField
+                inputType="number" id="overall-height"
+                value="1200"
+                onChange={handleValues}
+                unit="mm"
+              />
+              <InputField
+                inputType="dropdown"
+                id="Window-orientation"
+                value="Horizontal"
+              />
+              <RadioField
+                id="matterTransom"
+                name="matterTransom"
+                classNames={["matterTransom"]}
+                options={options.matterTransom}
+                selectedValue={values.matterTransom}
+                onChange={handleValues}
+              />
+              <RadioField
+                id="openingStyle"
+                classNames={["opening-style"]}
+                options={options.openingStyle}
+                name="openingStyle"
+                selectedValue={values.openingStyle}
+                onChange={handleValues}
+              />
+            </div>
+          </div>
+          <div className="form_section 2" onClick={()=> setCurrentStep(2)}>
+            <h2 className="form_section_name">
+              2. Glass Details
+            </h2>
+            <div className="form_section_fields">
+              <DropdownField
+                label="Glass thickness"
+                name="glassThickness"
+                options={options.glassThickness}
+                value={values.glassThickness}
+                onChange={handleValues}
+              />
+              <DropdownField
+                label="Glass Color"
+                name="glassColor"
+                options={options.glassColor}
+                value={values.glassColor}
+                onChange={handleValues}
+              />
+              <DropdownField
+                label="Glass Type"
+                name="glassType"
+                options={options.glassType}
+                value={values.glassType}
+                onChange={handleValues}
+              />
+              <GlassSizeTip
+                windowType={values.windowType}
+                sashes={values.sashCount}
+                width={values.width}
+                height={values.height}
+              />
+            </div>
+          </div>
+          <div className="form_section 3" onClick={()=> setCurrentStep(3)}>
+            <h2 className="form_section_name">
+              3. Accessories &amp; Add-ons
+            </h2>
+            <div className="form_section_fields">
+              <ImageCheckboxField
+                label="Insect Net"
+                name="insect-net"
+                info="Include insect net for ventilation"
+                image={insectNetSvg}
+                selected={false}
+              />
+              <ImageCheckboxField
+                label="Protector"
+                name="protector"
+                info="Include window protector"
+                image={protectorSvg}
+              />
+              <ImageCheckboxField
+                label="Protector Rod"
+                name="protector-red"
+                info="Include protector rod"
+                image={protectorRodSvg}
+              />
+              <ImageCheckboxField
+                label="Weather Strip"
+                name="weather-strip"
+                info="Reduce noise & dust"
+                image={weatherStripSvg}
+              />
+            </div>
+          </div>
+        </form>
+        <Quotation values ={values}/>
+      </main>
+    </>;
+  }
+
 
   if (currentStep == 0) {
     return (
@@ -188,8 +341,18 @@ function QuoteBuilder() {
               <h2>Dimensions &amp; Opening</h2>
               <p>Enter the measurements.</p>
             </div>
-            <InputField inputType="number" id="overall-width" value="1200" />
-            <InputField inputType="number" id="overall-height" value="1200" />
+            <InputField
+              inputType="number" id="overall-width"
+              value="1200"
+              onChange={handleValues}
+              unit ="mm"
+            />
+            <InputField
+              inputType="number" id="overall-height"
+              value="1200"
+              onChange={handleValues}
+              unit="mm"
+            />
             <InputField
               inputType="dropdown"
               id="Window-orientation"
@@ -284,7 +447,7 @@ function QuoteBuilder() {
               name="insect-net"
               info="Include insect net for ventilation"
               image={insectNetSvg}
-              selected={true}
+              selected={false}
             />
             <ImageCheckboxField
               label="Protector"
@@ -337,8 +500,10 @@ function QuoteBuilder() {
             Save Draft
           </>}
           forwardText={<>
-          <i className="fa fa-cart-plus"></i>
-          Add to cart
+            <NavLink to="/aluminum-calcs-new/quote-success" className="absolute">
+              <i className="fa fa-cart-plus"></i>
+              Add to cart
+            </NavLink>
           </>}
         />
 

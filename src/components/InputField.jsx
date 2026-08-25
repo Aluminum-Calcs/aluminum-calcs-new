@@ -11,7 +11,8 @@ function InputField ({
   value,
   msgType,
   msg,
-  onChange
+  onChange,
+  unit,
 }) {
   const { theme } = useContext(PageContext);
   const [valueState, setValueState] = useState(value ?? val ?? "");
@@ -41,6 +42,8 @@ function InputField ({
             : id && id.replace('-', ' ')
           }
         </label>
+        
+        {unit && <span className="input_unit">{unit}</span>}
       </div>
 
       <div
@@ -192,23 +195,29 @@ export function DropdownField({
 }
 
 export function ImageCheckboxField({
-  label='Image Checkbox Field',
+  label = 'Image Checkbox Field',
   name = 'name',
   info = 'Lorem ipsium donor sit amet',
   onChange,
   classNames = [],
   image,
-  selected=false,
+  selected = false,
 }) {
+  const [tick, setTick] = useState(selected ?? false);
+
+  function handleTicking() {
+    setTick(!tick);
+    onChange(name.replace('-', ''), tick);
+  }
   
   return <div className="image-checkbox-field" id={`parent-of-${name}`}>
     {image && <img src={image} alt={image} />}
     <div className="info">
-      <label htmlFor={name}>{label.replace('-', ' ')}</label>
+      <label htmlFor={name}><h4>{label.replace('-', ' ')}</h4></label>
       {info && <p>{info}</p>}
     </div>
 
-    <input type="checkbox" name={name} id={name} />
+    <input type="checkbox" name={name} id={name} onChange={handleTicking} checked={tick}/>
   </div>
 }
 

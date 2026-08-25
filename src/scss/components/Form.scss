@@ -7,7 +7,8 @@
     @include df(normal, normal, column, 10px);
   }
 
-  fieldset {
+  // Set am later.
+  fieldset.another {
     grid-row: span 2;
     border: 1px solid;
     @include df(normal, normal, column);

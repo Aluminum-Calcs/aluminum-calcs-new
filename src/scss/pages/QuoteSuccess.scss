@@ -24,6 +24,7 @@
   }
 
   a {
+    @include btn;
     padding: 12px 18px;
     text-decoration: none;
     border: 1px solid $green;

@@ -16,6 +16,7 @@
     // }
   }
   button,a {
+    position: relative;
     flex: 1;
     @include btn;
     & {
@@ -26,7 +27,13 @@
       // font-weight: 600;
       background: var(--green-500);
       color: var(--text);
-      border: 2px solid var(--green);
+      border: 1px solid var(--green);
+    }
+    &.absolute {
+      padding: 0;
+      outline: none;
+      border: none;
+      background: none;
     }
   }
 }

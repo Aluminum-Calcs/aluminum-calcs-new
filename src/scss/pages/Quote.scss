@@ -27,7 +27,7 @@ main.quote-builder-page {
             content: counter(num);
             color: $green;
             font-weight: 600;
-            background: var(--green-200);
+            background: var(--cream);
             border: 1px solid;
             width: 30px;
             height: 30px;
@@ -132,5 +132,70 @@ form {
     width: 100%;
     max-width: 1200px;
     @include df(normal, normal, column, 20px);
+  }
+}
+
+@media (min-width: $desktop) {
+  main.quote-builder-page.desktop {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-areas: 
+    "intro intro intro"
+    "form form quotation";
+  }
+  .intro {
+    grid-area: intro;
+    min-height: auto;
+    padding: 20px var(--sp) !important;
+    background: transparent;
+    .container {
+      text-align: left;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      @include df(space-between, center, row, 10px);
+      .left {
+        text-align: left;
+        @include df(normal, normal, column, 20px);
+      }
+      .right {
+        @include df(right, center, row, 20px);
+        button {
+          @include btn;
+          &.cartButton {
+            @include btn(var(--bg), var(--green));
+          }
+        }
+      }
+    }
+  }
+  .form {
+    grid-area: form;
+    padding: 0 var(--sp);
+    @include df(normal, normal, column, 40px);
+    &_section {
+      border: 1px solid var(--green-500);
+      width: 100%;
+      padding: 20px;
+      @include df(normal, normal, column, 20px);
+      &_fields {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        .image-radio-field {
+          grid-column: span 3;
+        }
+        .InputField {
+          grid-column: span 1;
+        }
+        .GlassSizeTip {
+          padding: 0;
+          grid-column: span 2;
+        }
+      }
+    }
+  }
+  .quotation {
+    grid-area: quotation;
   }
 }

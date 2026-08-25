@@ -4,11 +4,11 @@
   @include df(normal, normal, column, 5px);
   &__container {
     position: relative;
-    @include df(normal, normal, column, 5px);
+    @include df(normal, normal, column-reverse, 5px);
     label {
       font-size: 13px;
       font-weight: bold;
-      position: absolute;
+      position: relative;
       background-color: inherit;
       top: 0;
       left: 10px;
@@ -34,6 +34,31 @@
       }
       &:focus ~ label {
         color: green;
+      }
+    }
+    .input_unit {
+      background: transparent;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding-right: 20px;
+      top: 23px;
+      color: var(--medium);
+      @include df(center, center);
+    }
+    @media (min-width: $desktop) {
+      label {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        left: 0;
+        text-transform: uppercase;
+        // font-weight: normal;
+      }
+      input {
+        font-family: 'cascadia-code';
+        border-radius: 0;
+        background: var(--cream);
       }
     }
     // &.dark-mode {
@@ -154,6 +179,19 @@
       }
     }
   }
+  @media (min-width: $desktop) {
+    legend {
+      font-size: 13px;
+      text-transform: uppercase;
+      padding: 0;
+    }
+    .types {
+      @include df(normal, center, row wrap, 20px);
+      label {
+        border-radius: 0px;
+      }
+    }
+  }
 }
 
 .image-radio-field {
@@ -162,7 +200,7 @@
   @include df(normal, normal, column, 10px);
   legend {
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   .options {
     @include df(normal, normal, column, 10px);
@@ -205,6 +243,18 @@
         background: $green;
         border-radius: 50%;
         @include df(center, center);
+      }
+    }
+  }
+  @media (min-width: $desktop) {
+    legend {
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .options {
+      label {
+        border-radius: 0;
+        @include df(normal, center, row wrap, 15px);
       }
     }
   }
@@ -264,6 +314,17 @@
         color: var(--green);
       }
     }
+    @media (min-width: $desktop) {
+      label {
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+      select {
+        background: var(--cream);
+        font-family: 'cascadia-code';
+        border-radius: 0;
+      }
+    }
   }
 }
 
@@ -271,10 +332,17 @@
   border: 1px solid var(--medium);
   border-radius: 10px;
   padding: 10px 20px;
+  position: relative;
+  background: var(--cream);
   @include df(normal, center, row, 20px);
   img {
     height: 40px;
     width: 40px;
+  }
+  .info {
+    p {
+      color: var(--medium);
+    }
   }
   input {
     cursor: pointer;
@@ -310,5 +378,8 @@
         transform: translateX(calc(100% - 7px));
       }
     }
+  }
+  @media (min-width: $desktop) {
+    border-radius: 0;
   }
 }

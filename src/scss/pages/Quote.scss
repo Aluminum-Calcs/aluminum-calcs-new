@@ -88,7 +88,11 @@ main.quote-builder-page {
       border: none;
       color: inherit;
       background: transparent;
+      transition: all .3s;
       @include df(center, center);
+      &:hover {
+        background: var(--green-100);
+      }
     }
   }
   .counter {
@@ -138,21 +142,22 @@ form {
 @media (min-width: $desktop) {
   main.quote-builder-page.desktop {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-template-areas: 
     "intro intro intro"
     "form form quotation";
   }
-  .intro {
+  .desktop_intro {
     grid-area: intro;
-    min-height: auto;
-    padding: 20px var(--sp) !important;
+    min-height: 0;
+    max-height: fit-content;
+    height: auto;
+    padding: 20px var(--sp) 50px var(--sp);
     background: transparent;
     .container {
       text-align: left;
-      width: 100%;
-      height: 100%;
-      max-width: none;
+      width: 100% !important;
+      max-width: 100%;
       @include df(space-between, center, row, 10px);
       .left {
         text-align: left;
@@ -171,12 +176,12 @@ form {
   }
   .form {
     grid-area: form;
-    padding: 0 var(--sp);
+    padding: 0 20px 0 var(--sp) !important;
     @include df(normal, normal, column, 40px);
     &_section {
-      border: 1px solid var(--green-500);
+      // border: 1px solid var(--green-500);
       width: 100%;
-      padding: 20px;
+      // padding: 20px;
       @include df(normal, normal, column, 20px);
       &_fields {
         display: grid;
@@ -194,8 +199,5 @@ form {
         }
       }
     }
-  }
-  .quotation {
-    grid-area: quotation;
   }
 }

@@ -1,0 +1,27 @@
+@use '../util/' as *;
+
+.SignIn-page {
+  @include df(normal, normal, column, 50px);
+  min-height: 100dvh;
+  padding: 100px var(--sp) 20px var(--sp);
+  @media (min-width: $tab) {
+    @include df(space-between, center, row, 50px);
+  }
+}
+
+.welcome {
+  border: 1px solid;
+  @include df(normal, normal, column, 20px);
+}
+.SignIn-form {
+  border: 1px solid;
+  padding: 20px;
+  @include df(normal, normal, column, 30px);
+  form {
+    padding: 0 !important;
+    @include df(normal, normal, column, 30px);
+  }
+  .SignIn-button {
+    @include btn;
+  }
+}

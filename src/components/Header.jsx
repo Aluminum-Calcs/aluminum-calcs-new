@@ -7,11 +7,14 @@ import iconSun from '../assets/images/svgs/icon-sun.svg';
 import iconMoon from '../assets/images/svgs/icon-moon.svg';
 import siteLogo from '../assets/images/svgs/lock-stile-green.svg';
 
+import glassSvg from '../assets/images/svgs/glass.svg';
+
 export default function Header() {
   const [navState, setNavState] = useState('closed');
   const { currentPage, setCalcMode } = useContext(PageContext);
   const [title, setTitle] = useState('');
   const { theme, setTheme } = useContext(PageContext);
+  const { preferences } = useContext(PageContext);
 
   useEffect(() => {
     setTitle(currentPage);
@@ -33,17 +36,18 @@ export default function Header() {
   return (<>
     <Helmet>
       <title>
-        {`Aluminum Calcs | ${title && title}`}
+        {`Aluminum Calcs${title && ` | ${title}`}`}
       </title>
     </Helmet>
     
-    <header className="page-header">
+    {preferences.includeHeader && <header className="page-header">
       <div className="wrapper">
         <div className="logo">
           {/* <img src={siteLogo}alt='site logo'/> */}
           <div className="logo__text">
             <h2>Aluminum Calc</h2>
             <span>{currentPage}</span>
+            {/* {window.innerWidth >= 1100 && <span>{currentPage}</span>} */}
           </div>
         </div>
           
@@ -55,19 +59,20 @@ export default function Header() {
             <img src={iconSun} className='icon-sun' alt="icon sun" />
             <img src={iconMoon} className='icon-moon' alt="icon moon" />
           </button>
-          <button
+          {preferences.includeAside && <button
             title="Open navigation menu"
             className={`${navState} hamburger`} onClick={handleNavState}>
             <span></span>
             <span></span>
             <span></span>
-          </button>
+          </button>}
+          
         </div>
           
       </div>
-    </header>
-
-    <aside className={`${navState}`}>
+    </header>}
+    
+    {preferences.includeAside && <aside className={`${navState}`}>
       <nav>    
         <ul>
           <li>
@@ -84,7 +89,7 @@ export default function Header() {
           </li>
           <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/glass-price-calculator">
-              <i className="fa fa-simplybuilt"></i>
+              <img src={glassSvg} alt="glassSvg"/>
               Glass Calculator
             </NavLink>
           </li>
@@ -134,8 +139,10 @@ export default function Header() {
       </nav>
 
       <div className="use">
-        <button>
-          <i className="fa fa-adjust"></i>
+        <button className={`${theme}`}
+            onClick={changeTheme}>
+            <img src={iconSun} className='icon-sun' alt="icon sun" />
+            <img src={iconMoon} className='icon-moon' alt="icon moon" />
           Light Mode
         </button>
         <button
@@ -147,7 +154,8 @@ export default function Header() {
           Calculator
         </button>
       </div>
-    </aside>
+    </aside>}
+    
   </>)
 }
 

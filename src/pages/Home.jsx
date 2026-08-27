@@ -15,14 +15,14 @@ export default function Home() {
   useEffect(() => {
     setCurrentPage('Make Life Easier');
   }, []);
-  let name = 'Ehi';
+  const { user } = useContext(PageContext);
 
   return (
     <>
       <main className="home">
         <section className="hero">
           <div className="container">
-            <h1><Greeting />{name && <span>, <span className="special">{name}!</span></span>}</h1>
+            <h1><Greeting />{user.name && <span>, <span className="special">{user.name}!</span></span>}</h1>
             
             <p>Enjoy the variety of tools here to create windows, calculate dimensions and efficiently manage your business.</p>
           </div>

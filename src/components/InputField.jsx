@@ -6,13 +6,16 @@ import { PageContext } from "../context/PageContext";
 function InputField ({
   inputType = "number",
   id,
+  name,
   label,
   val,
   value,
+  placeholder = "",
+  unit,
+
   msgType,
   msg,
   onChange,
-  unit,
 }) {
   const { theme } = useContext(PageContext);
   const [valueState, setValueState] = useState(value ?? val ?? "");
@@ -23,17 +26,36 @@ function InputField ({
 
   function handleChange(e) {
     setValueState(e.target.value);
-    if (onChange) onChange(e.target.value);
+    if (onChange) onChange(name, e.target.value);
+  }
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  if (inputType === 'password') {
+    unit = <button onClick={(e) => {
+      e.preventDefault();
+      setShowPassword(!showPassword);
+    }}>
+      {showPassword
+        ? 'hide'
+        : 'show'}
+    </button>
   }
 
   return (
     <div className="InputField">
       <div className={`InputField__container ${theme}`}>
         <input
-          type={inputType}
+          type={inputType == 'password'
+            ? showPassword
+              ? 'text'
+              : inputType
+            : inputType
+          }
           id={`${id}_input`}
           value={valueState}
           onChange={handleChange}
+          placeholder={placeholder}
         />
         <label
           htmlFor={`${id}_input`}>
@@ -46,19 +68,20 @@ function InputField ({
         {unit && <span className="input_unit">{unit}</span>}
       </div>
 
-      <div
+      {msg && <div
         className={`error-message ${id}Error ${msgType && msgType}`}>
         {(msg)
           ? msg
           : <>Please input a valid number</>
         }
         
-      </div>
+      </div>}
     </div>
   )
 }
 
 export function RadioField({
+  label,
   id,
   classNames = [],
   options,
@@ -73,7 +96,11 @@ export function RadioField({
 
   return (
     <fieldset id={id} className={`RadioField ${classNames.join(" ")}`}>
-      <legend>{id.replace('-',' ')}</legend>
+      <legend>{
+        label
+          ? label
+          : id.replace('-',' ')
+      }</legend>
 
       <div className="types">
         {options.map((option, key) => (

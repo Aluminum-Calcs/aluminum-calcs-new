@@ -114,7 +114,7 @@ function QuoteBuilder() {
   
 
   function handleValues(property, value) {
-    property == sashCount && (value = Number(value.toString().replace(/-sash(es)?/i, "")));
+    property == values.sashCount && (value = Number(value.toString().replace(/-sash(es)?/i, "")));
     setValues((prev) => ({ ...prev, [property]: value }));
   }
 
@@ -133,7 +133,7 @@ function QuoteBuilder() {
   if (window.innerWidth >= 1100) {
     return <>
       <main className="quote-builder-page desktop">
-        <section className="intro">
+        <section className="desktop_intro">
           <div className="container">
             <div className="left">
               <h1><span className="special">Quote</span> Builder ✨</h1>
@@ -358,22 +358,24 @@ function QuoteBuilder() {
               id="Window-orientation"
               value="Horizontal"
             />
-            <RadioField
+            {values.windowType == 'frameless-window' && <RadioField
+              label='Matter Transom'
               id="matterTransom"
               name="matterTransom"
               classNames={["matterTransom"]}
               options={options.matterTransom}
               selectedValue={values.matterTransom}
               onChange={handleValues}
-            />
-            <RadioField
+            />}
+            {values.windowType != 'sliding-window' && <RadioField
+              label="Opening Style"
               id="openingStyle"
               classNames={["opening-style"]}
               options={options.openingStyle}
               name="openingStyle"
               selectedValue={values.openingStyle}
               onChange={handleValues}
-            />
+            />}
           </div>
         </form>
         <FormNavi />

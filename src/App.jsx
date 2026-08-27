@@ -19,10 +19,10 @@ import "./assets/fontawesome/css/font-awesome.min.css";
 import { HelmetProvider } from 'react-helmet-async';
 import StileContextProvider from './context/StileContext.jsx';
 import { QuoteContextProvider } from './context/QuoteContext.jsx';
+import SignIn from './pages/SignIn.jsx';
 
 
 function App() {
-
   return (
     <HelmetProvider>
       <PageContextProvider>
@@ -35,6 +35,10 @@ function App() {
             <Route
               path="/aluminum-calcs-new/"
               element={<Home />}
+            />
+            <Route
+              path="/aluminum-calcs-new/sign-in"
+              element={<SignIn/>}
             />
             <Route
               path="/aluminum-calcs-new/quote-builder"

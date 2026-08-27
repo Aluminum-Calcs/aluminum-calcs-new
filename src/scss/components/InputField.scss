@@ -8,26 +8,27 @@
     label {
       font-size: 13px;
       font-weight: bold;
-      position: relative;
       background-color: inherit;
-      top: 0;
-      left: 10px;
-      padding: 0 10px;
       background-color: var(--bg);
-      transform: translateY(-50%);
       text-transform: capitalize;
+      position: relative;
+      padding: 0;
+      margin: 0;
+      left: 0;
+      text-transform: uppercase;
     }
     input {
-      font-family: 'jetbrains-mono';
       font-size: 1.5rem;
       font-weight: 700;
       width: 100%;
       padding: 20px 20px 15px 20px;
       border: 1px solid;
-      border-radius: 5px;
       outline: transparent;
       background: transparent;
       color: var(--text);
+      font-family: 'cascadia-code';
+      border-radius: 0;
+      background: var(--cream);
       @include df(normal, normal, row);
       &:focus {
         border: 1px solid green;
@@ -45,27 +46,12 @@
       top: 23px;
       color: var(--medium);
       @include df(center, center);
-    }
-    @media (min-width: $desktop) {
-      label {
-        position: relative;
-        padding: 0;
-        margin: 0;
-        left: 0;
-        text-transform: uppercase;
-        // font-weight: normal;
-      }
-      input {
-        font-family: 'cascadia-code';
-        border-radius: 0;
-        background: var(--cream);
+
+      button {
+        text-transform: capitalize;
+        @include btn;
       }
     }
-    // &.dark-mode {
-    //   label {
-    //     // background: ;
-    //   }
-    // }
   }
   .error-message {
     opacity: 0;
@@ -108,24 +94,25 @@
   border: none;
   @include df(normal, normal, column);
   legend {
-    padding: 0px 10px 0 0;
     font-weight: 700;
-    text-transform: capitalize;
+    font-size: 13px;
+    text-transform: uppercase;
+    padding: 0;
   }
   .types {
-    padding: 10px 0;
+    padding: 5px 0;
     width: 100%;
     // border: 1px solid;
     @include df(normal, center, row, 20px);
     label {
       text-transform: capitalize;
       font-size: 14px;
-      border-radius: 10px;
       background: var(--cream);
       white-space: nowrap;
-      border: 1px solid var(--medium);
+      border: 1px solid var(--text);
       padding: 10px;
       position: relative;
+      border-radius: 0px;
       @include df(normal, center, row, 10px);
       input {
         accent-color: $green;
@@ -139,6 +126,7 @@
             content: '';
             background: $green-bg;
             position: absolute;
+            border: 1px solid var(--green);
             top: 0;
             right: 0;
             left: 0;
@@ -180,16 +168,8 @@
     }
   }
   @media (min-width: $desktop) {
-    legend {
-      font-size: 13px;
-      text-transform: uppercase;
-      padding: 0;
-    }
     .types {
       @include df(normal, center, row wrap, 20px);
-      label {
-        border-radius: 0px;
-      }
     }
   }
 }
@@ -200,7 +180,9 @@
   @include df(normal, normal, column, 10px);
   legend {
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-size: 13px;
   }
   .options {
     @include df(normal, normal, column, 10px);
@@ -214,7 +196,7 @@
     label {
       text-align: center;
       border: 1px solid var(--medium);
-      border-radius: 10px;
+      border-radius: 0px;
       padding: 20px;
       text-transform: capitalize;
       position: relative;
@@ -247,10 +229,6 @@
     }
   }
   @media (min-width: $desktop) {
-    legend {
-      text-transform: uppercase;
-      font-size: 13px;
-    }
     .options {
       label {
         border-radius: 0;
@@ -267,31 +245,25 @@
     position: relative;
     @include df(normal, normal, column, 5px);
     label {
-      /*
-      position: absolute;
-      top: 0;
-      left: 10px;
-      padding: 0 10px;
-      transform: translateY(-50%);
-      */
       font-weight: bold;
       background-color: var(--bg);
-      text-transform: capitalize;
+      font-size: 13px;
+      text-transform: uppercase;
     }
     select {
-      font-family: 'jetbrains-mono';
       font-size: 1.2rem;
       font-weight: 700;
       width: 100%;
       padding: 20px 20px 15px 20px;
-      border: 1px solid var(--medium);
-      border-radius: 5px;
+      border: 1px solid var(--text);
       outline: transparent;
-      background: transparent;
       color: var(--text);
       appearance: base-select;
       position: relative;
       accent-color: var(--green);
+      background: var(--cream);
+      font-family: 'cascadia-code';
+      border-radius: 0;
       @include df(normal, normal, row);
       &:focus {
         border: 1px solid var(--green);
@@ -314,23 +286,12 @@
         color: var(--green);
       }
     }
-    @media (min-width: $desktop) {
-      label {
-        font-size: 13px;
-        text-transform: uppercase;
-      }
-      select {
-        background: var(--cream);
-        font-family: 'cascadia-code';
-        border-radius: 0;
-      }
-    }
   }
 }
 
 .image-checkbox-field {
   border: 1px solid var(--medium);
-  border-radius: 10px;
+  // border-radius: 10px;
   padding: 10px 20px;
   position: relative;
   background: var(--cream);
@@ -378,8 +339,5 @@
         transform: translateX(calc(100% - 7px));
       }
     }
-  }
-  @media (min-width: $desktop) {
-    border-radius: 0;
   }
 }

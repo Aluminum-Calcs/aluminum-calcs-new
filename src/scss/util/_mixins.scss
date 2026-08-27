@@ -130,5 +130,14 @@
       height: 100%;
       width: 4px;
     }
+  } @else if ($side == right) {
+    margin: 0 20px 0 0;
+    @include df(normal, center, row);
+    &::after {
+      transform: translate(-20px,0);
+      right: 0;
+      height: 100%;
+      width: 4px;
+    }
   }
 }

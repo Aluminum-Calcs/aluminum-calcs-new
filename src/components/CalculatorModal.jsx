@@ -118,7 +118,7 @@ export default function CalculatorModal() {
 
           <div className="calculator-modal__result">
             <span>Result</span>
-            <strong>{result}</strong>
+            <strong>{result.toLocaleString()}</strong>
           </div>
         </section>
 

@@ -7,23 +7,21 @@
     width: 100%;
     max-width: 1180px;
     margin: 0 auto;
-    @include df(normal, normal, column, 0px);
+    @include df(normal, normal, column, 5px);
   }
 }
 
 .quotation_summary {
-  border: 1px solid var(--green-300);
+  border: 1px solid var(--green);
   padding: 28px;
-  border-radius: 8px;
   background: var(--cream);
-  box-shadow: 0 12px 30px rgba(var(--text-rgb), .06);
   @include df(normal, normal, column, 20px);
   .header {
     text-transform: uppercase;
-    color: $green;
+    color: var(--green);
     letter-spacing: 3px;
     font-size: .78rem;
-    @include dash('bottom', $green-bg);
+    @include dash('bottom', var(--green));
     align-items: flex-start;
     h3 {
       font-size: 1rem;
@@ -37,7 +35,7 @@
     td {
       border: none;
       padding: 11px 0;
-      border-bottom: 1px solid var(--green-100);
+      border-bottom: 1px solid var(--green-300);
       &:first-of-type {
         font-weight: bold;
         color: var(--medium);
@@ -59,9 +57,6 @@
   @extend .quotation_summary;
   & {
     background: var(--green-100);
-    border-radius: 8px 8px 0 0;
-    border-top: 1px solid var(--green-300);
-    box-shadow: 0 12px 30px rgba(var(--text-rgb), .04);
   }
 
   .section {
@@ -107,7 +102,11 @@
         .item_qty {
           text-align: right;
           white-space: nowrap;
+          font-family: 'cascadia-code';
         }
+      }
+      .price {
+        font-family: 'cascadia-code';
       }
     }
   }
@@ -116,9 +115,7 @@
 .quotation_totals {
   @extend .quotation_breakdown;
   & {
-    border-radius: 0 0 5px 5px;
     padding: 0;
-    border-top: 1px solid var(--green-300);
     @include df(normal, normal, column, 5px);
   }
   >* {
@@ -126,6 +123,29 @@
     @include df(space-between, center, row, 10px);
     .price {
       font-weight: bold;
+      font-family: cascadia-code;
+    }
+  }
+  .discount {
+    input {
+      appearance: none;
+      text-align: right;
+      padding: 0;
+      font: inherit;
+      width: 100px;
+      justify-self: right;
+      background: var(--cream);
+      border: 1px solid var(--green-500);
+      outline: none;
+      padding: 5px;
+      color: inherit;
+      @include df(right, center, row);
+      &:focus {
+        border-color: var(--green);
+      }
+      &::-webkit-inner-spin-button {
+        display: none;
+      }
     }
   }
   .total {
@@ -141,9 +161,10 @@
 .quotation_warning {
   border: 1px solid var(--tl);
   margin-top: 24px;
-  background: var(--cream-10);
+  background: rgba(teal,.1);
   padding: 16px 20px;
   color: var(--tl);
+  font-size: .9rem;
   @include df(normal, center, row, 20px);
   i {
     border: 2px solid var(--tl);
@@ -199,6 +220,197 @@
   .quotation_totals {
     .total {
       font-size: 2rem;
+    }
+  }
+}
+
+
+.desktop_quotation {
+  position: sticky;
+  top: 20px;
+  grid-area: quotation;
+  padding: 0 var(--sp) 0 0;
+  min-width: 0;
+  @include df(normal, normal, column);
+  .container {
+    @include df(normal, normal, column, 30px);
+    
+    .preview {
+      border: 1px solid var(--green-500);
+      &_header {
+        background: var(--green-100);
+        padding: 10px 20px;
+        color: var(--green);
+        border-bottom: 1px solid var(--green);
+        h2 {
+          font-family: 'cascadia-code';
+          font-variant: small-caps;
+          letter-spacing: 3px;
+        }
+      }
+      &_content {
+        padding: 20px;
+        table.breakdown {
+          width: 100%;
+          border-collapse: collapse;
+          display: grid;
+          grid-template-columns: 100px auto 100px 100px;
+
+          th,td {
+            &:first-of-type {
+              text-align: left;
+            }
+            &:last-of-type {
+              text-align: right;
+            }
+          }
+          thead {
+            border-bottom: 1px solid $green;
+            padding: 5px 0;
+            display: grid;
+            grid-template-columns: subgrid;
+            grid-column: 1/-1;
+            
+            tr {
+              display: grid;
+              grid-template-columns: subgrid;
+              grid-column: 1/-1;
+              
+              :nth-child(2) {
+                text-align: left;
+              }
+              :nth-child(3) {
+                text-align: center;
+              }
+            }
+
+            
+          }
+          tbody {
+            padding: 15px 0;
+            display: grid;
+            grid-template-columns: subgrid;
+            gap: 10px;
+            grid-column: 1/-1;
+            >* {
+              grid-column: 1/-1;
+            }
+            .preview_content_group_header {
+              text-transform: uppercase;
+              color: $green;
+              font-family: 'cascadia-code';
+              &:not(:first-of-type) {
+                border-top: 1px solid var(--green-500);
+                padding: 10px 0;
+              }
+            }
+            .preview_content_group {
+              display: grid;
+              grid-template-columns: subgrid;
+              :nth-child(3) {
+                text-align: center;
+              }
+              :nth-child(4) {
+                text-align: right;
+                font-family: 'cascadia-code';
+              }
+            }
+          }
+        }
+
+        table.totals {
+          width: 100%;
+          background: var(--green-100);
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          tbody {
+            padding: 10px;
+            border: 1px solid var(--green-700);
+            display: grid;
+            grid-template-columns: subgrid;
+            grid-column: 1/-1;
+            gap: 15px;
+            tr {
+              display: grid;
+              grid-template-columns: subgrid;
+              grid-column: 1/-1;
+              font-family: 'cascadia-code';
+              align-items: center;
+
+              td:last-of-type {
+                font-weight: bold;
+                font-size: 1.2rem;
+                text-align: right;
+                input {
+                  appearance: none;
+                  text-align: right;
+                  padding: 0;
+                  font: inherit;
+                  width: 100px;
+                  justify-self: right;
+                  background: var(--cream);
+                  border: 1px solid var(--green-500);
+                  outline: none;
+                  padding: 5px;
+                  color: inherit;
+                  @include df(right, center, row);
+                  &:focus {
+                    border-color: var(--green);
+                  }
+                  &::-webkit-inner-spin-button {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+          tfoot {
+            background: $green;
+            padding: 10px;
+            font-weight: 700;
+            color: var(--text);
+            display: grid;
+            grid-template-columns: subgrid;
+            grid-column: 1/-1;
+            tr {
+              grid-column: 1/-1;
+              display: grid;
+              grid-template-columns: subgrid;
+              font-size: 1.5rem;
+              text-transform: uppercase;
+              color: var(--inv-text);
+              :last-child {
+                text-align: right;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .buttons {
+      @include df(space-between, center, row, 10px);
+      .addToCartButton {
+        flex: 3;
+        @include btn(var(--bg), var(--dark-green));
+        padding: 10px;
+        border-color: black;
+        font-weight: 700;
+        &:hover {
+          border: 1px solid var(--text);
+          background: var(--green-500);
+          color: var(--text);
+        }
+      }
+      .saveDraftButton {
+        flex: 2;
+        @include btn(var(--text), var(--cream));
+        & {
+          border: 1px solid var(--text);
+          font-weight: 700;
+          padding: 10px;
+        }
+      }
     }
   }
 }

@@ -5,9 +5,29 @@ export const PageContext = createContext();
 
 export default function PageContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState("Home");
+
   const [theme, setTheme] = useState('light-mode')
+
   const [carts, updateCarts] = useState([]);
   const [calcMode, setCalcMode] = useState('hide');
+
+  const [preferences, setPreferences] = useState({
+    includeHeader: true,
+    includeAside: true,
+    includeFooter: true,
+  });
+
+  const [user, setUser] = useState({
+    name: 'Ehi',
+    password: '',
+  });
+
+  function handleUser(key, value) {
+    setUser(prev => ({
+      ...prev,
+      [key]: value,
+    }))
+  }
 
   useEffect(() => {
     setPageTheme(theme);
@@ -23,6 +43,11 @@ export default function PageContextProvider({ children }) {
         setCalcMode,
         theme,
         setTheme,
+        preferences,
+        setPreferences,
+        user,
+        setUser,
+        handleUser,
       }}
     >
       {children}

@@ -13,9 +13,9 @@
 .calculator-modal {
   width: min(460px, 100%);
   background: var(--cream);
-  border-radius: 0 10px;
   box-shadow: 0 24px 70px rgba(#000, 0.12);
-  border-top: 5px solid var(--tl);
+  border: 2px solid var(--green);
+  border-top: 5px solid var(--green);
   overflow: hidden;
   display: grid;
   gap: 20px;
@@ -27,7 +27,7 @@
   h2 {
     font-size: 1.2rem;
     position: relative;
-    @include after-styles;
+    @include dash('bottom', var(--green));
     @include df(normal, normal, column);
   }
   .calculator-modal__close {
@@ -52,15 +52,6 @@
 
   label {
     background: var(--cream) !important;
-  }
-
-  input {
-    border-radius: 10px;
-    padding: 12px 14px;
-    background: var(--cream);
-    color: var(--text);
-    font-size: 1rem;
-    outline: none;
   }
 }
 
@@ -91,13 +82,15 @@
     & {
       border-color: var(--medium);
       padding: 10px;
+      font-size: 1.5rem;
+      font-weight: 700;
     }
 
     &:hover,
     &.active {
-      background: var(--text);
+      background: var(--green);
       color: var(--cream);
-      border-color: var(--text);
+      border-color: var(--green);
     }
   }
 }
@@ -106,12 +99,12 @@
   display: grid;
   gap: 8px;
   padding: 16px;
-  border: 1px solid rgba(var(--text-rgb), 0.12);
-  border-radius: 16px;
-  background: rgba(var(--text-rgb), 0.04);
+  border: 1px solid var(--green);
+  background: var(--green-200);
+  border-radius: 0;
 
   span {
-    color: var(--medium);
+    color: var(--green);
     font-size: 0.95rem;
   }
 
@@ -119,10 +112,13 @@
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--text);
+    font-family: 'cascadia-code';
   }
 }
 
 .calculator-modal__footer {
+  width: 100%;
+  padding: 0;
   @include df(flex-end, center, row wrap, 15px);
   @media (max-width: $mini-tab) {
     @include df(normal, normal, column, 10px);
@@ -134,7 +130,6 @@
   button {
     @include btn;
     & {
-      border-radius: 5px;
       min-width: 110px;
       padding: 10px;
     }
@@ -147,7 +142,7 @@
   }
 
   .primary {
-    background: var(--text);
+    background: var(--green);
     color: var(--cream);
   }
 }

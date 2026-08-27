@@ -53,6 +53,10 @@ $cream-200: rgba($cream, .1);
   --green-800: rgba(47, 111, 78, 0.8);
   --green-900: rgba(47, 111, 78, 0.9);
 
+  --max-w: 1200px;
+  @media (min-width: $desktop) {
+    --max-w: 100%;
+  }
 }
 
 html.dark-mode {

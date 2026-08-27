@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import EhiEjakhian from "../assets/images/ehiejakhian.jpg";
 import "../scss/components/Footer.scss";
+import { PageContext } from "../context/PageContext";
 
 function Footer() {
+  const {preferences} = useContext(PageContext);
+
+  if (preferences.includeFooter == false) return;
+
   return (
     <footer>
       <div className="container">

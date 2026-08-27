@@ -8,6 +8,26 @@
   transition: color .3s;
 }
 
+:root {
+  ::-webkit-scrollbar {
+    appearance: none;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  ::-webkit-scrollbar-track-piece {
+    background: var(--cream);
+    width: 2px;
+  }
+  ::-webkit-scrollbar-thumb {
+    appearance: none;
+    background: var(--dark-green);
+  }
+  ::-webkit-scrollbar-track {
+    background: green;
+  }
+}
+
 body {
   background: var(--bg);
   color: var(--text);
@@ -34,7 +54,7 @@ main {
     @include df(center, center);
     &>.container {
       width: 100%;
-      max-width: 1200px;
+      max-width: var(--max-w);
     }
   }
 

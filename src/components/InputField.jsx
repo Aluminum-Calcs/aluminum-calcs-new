@@ -225,26 +225,35 @@ export function ImageCheckboxField({
   label = 'Image Checkbox Field',
   name = 'name',
   info = 'Lorem ipsium donor sit amet',
-  onChange,
   classNames = [],
   image,
-  selected = false,
+  selected,
+  
+  onChange,
+  includeInfo,//{groupname, value}
 }) {
-  const [tick, setTick] = useState(selected ?? false);
+  console.log(classNames)
+  const [isChecked, setIsChecked] = useState(selected ?? false);
 
   function handleTicking() {
-    setTick(!tick);
-    onChange(name.replace('-', ''), tick);
+    setIsChecked(!isChecked);
+    onChange(includeInfo.groupName, includeInfo.value);
   }
   
-  return <div className="image-checkbox-field" id={`parent-of-${name}`}>
+  return <div className={`image-checkbox-field `} id={`parent-of-${name}`}>
     {image && <img src={image} alt={image} />}
     <div className="info">
       <label htmlFor={name}><h4>{label.replace('-', ' ')}</h4></label>
       {info && <p>{info}</p>}
     </div>
 
-    <input type="checkbox" name={name} id={name} onChange={handleTicking} checked={tick}/>
+    <input
+      type="checkbox"
+      name={name}
+      id={name}
+      checked={isChecked}
+      onChange={handleTicking}
+    />
   </div>
 }
 

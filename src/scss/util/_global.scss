@@ -9,6 +9,11 @@
 }
 
 :root {
+  interpolate-size: allow-keywords;
+  scroll-behavior: smooth;
+
+
+
   ::-webkit-scrollbar {
     appearance: none;
   }

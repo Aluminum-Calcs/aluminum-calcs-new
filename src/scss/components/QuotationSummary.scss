@@ -92,6 +92,8 @@
         padding: 4px 20px 0;
         color: var(--medium);
         font-size: .9rem;
+        transition: all .3s;
+        height: auto;
         @include df(normal, normal, column, 10px);
       }
       &_item {
@@ -107,6 +109,21 @@
       }
       .price {
         font-family: 'cascadia-code';
+      }
+
+      //Open and close animation
+      &.closed {
+        .details_summary {
+          i {
+            transform: rotate(-180deg);
+          }
+        }
+        .details_content {
+          height: 0;
+          overflow: hidden;
+          transition: all .3s;
+          transition-behavior: allow-discrete;
+        }
       }
     }
   }

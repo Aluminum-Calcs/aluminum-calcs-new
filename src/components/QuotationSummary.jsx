@@ -120,6 +120,11 @@ export default function Quotation(props) {
     </section>;
   }
 
+  function toggleDetails(e) {
+    const details = e.target.closest('.details');
+    details.classList.toggle('closed');
+  }
+
   return <section className="quotation">
     <div className="container">
       <div className="quotation_summary">
@@ -144,14 +149,14 @@ export default function Quotation(props) {
               <td>Orientation</td>
               <td>{values.orientation}</td>
             </tr>
-            <tr>
+            {values.windowType != "sliding-window" && <tr>
               <td>Opening</td>
               <td>{values.openingStyle}</td>
-            </tr>
-            <tr>
+            </tr>}
+           {values.windowType == "frameless-window" &&  <tr>
               <td>Matter Transom</td>
               <td>{values.matterTransom}</td>
-            </tr>
+            </tr>}
           </tbody>
         </table>
       </div>
@@ -162,11 +167,11 @@ export default function Quotation(props) {
         </div>
         <div className="quotation_profiles section">
           <div className="details">
-            <button className="details_summary">
+            <button className="details_summary" onClick={(e)=>toggleDetails(e)}>
               <h4>Aluminum Profiles</h4>
               <span className="right">
                 <span className="price">₦ {profilesTotal && profilesTotal.toLocaleString()}</span>
-                <i className="fa fa-chevron-down"></i>
+                <i className="fa fa-chevron-up"></i>
               </span>
             </button>
             <div className="details_content">
@@ -181,16 +186,16 @@ export default function Quotation(props) {
         </div>
         <div className="quotation_glass section">
           <div className="details">
-            <button className="details_summary">
+            <button className="details_summary" onClick={(e)=>toggleDetails(e)}>
               <h4>Glass</h4>
               <span className="right">
                 <span className="price">₦ {glassTotal && glassTotal.toLocaleString()}</span>
-                <i className="fa fa-chevron-down"></i>
+                <i className="fa fa-chevron-up"></i>
               </span>
             </button>
             <div className="details_content">
               <div className="details_item">
-                <span className="item_name">{`${values.glassWidth} ${values.glassColor} glass`}</span>
+                <span className="item_name">{`${values.glassThickness} ${values.glassColor} glass`}</span>
                 <span className="item_qty">{values.sashCount} × {glassPrice.toLocaleString() ?? 0.00}</span>
               </div>
             </div>
@@ -198,11 +203,11 @@ export default function Quotation(props) {
         </div>
         <div className="quotation_accesories section">
           <div className="details">
-            <button className="details_summary">
+            <button className="details_summary" onClick={(e)=>toggleDetails(e)}>
               <h4>Accesories</h4>
               <span className="right">
                 <span className="price">₦ {accessoriesTotal && accessoriesTotal.toLocaleString()}</span>
-                <i className="fa fa-chevron-down"></i>
+                <i className="fa fa-chevron-up"></i>
               </span>
             </button>
             <div className="details_content">

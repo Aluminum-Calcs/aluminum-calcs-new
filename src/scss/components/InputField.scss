@@ -340,4 +340,9 @@
       }
     }
   }
+
+  .disable {
+    pointer-events: none;
+    opacity: .6;
+  }
 }

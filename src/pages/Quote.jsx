@@ -101,19 +101,37 @@ function QuoteBuilder() {
     orientation: 'horizontal',
     matterTransom: "yes",
     openingStyle: "both",
-    includeNet: false,
-    includeAccessories: true,
-    includeProtector: false,
-    includeProctectorRod: false,
 
     includeGlass: true,
     glassThickness: "4mm",
     glassColor: "blue",
+
+    // Accessories
+    accessories: [
+      '30m net',
+      'weather strip',
+    ]
   });
 
   
 
   function handleValues(property, value) {
+
+    // Special case for accessories, add or remove the value from the array
+    if (property == 'accessories') {
+      setValues((prev) => {
+        let newAccessories = [...prev.accessories];
+        if (newAccessories.includes(value)) {
+          newAccessories = newAccessories.filter((item) => item !== value);
+        } else {
+          newAccessories.push(value);
+        }
+        return { ...prev, accessories: newAccessories };
+      });
+      return;
+    }
+
+    // Special case for sashCount, remove the "-sash" or "-sashes" suffix from the value before setting it in state
     property == values.sashCount && (value = Number(value.toString().replace(/-sash(es)?/i, "")));
     setValues((prev) => ({ ...prev, [property]: value }));
   }
@@ -342,14 +360,17 @@ function QuoteBuilder() {
               <p>Enter the measurements.</p>
             </div>
             <InputField
-              inputType="number" id="overall-width"
-              value="1200"
+              inputType="number"
+              id="overall-width"
+              name='width'
+              value={values.width}
               onChange={handleValues}
               unit ="mm"
             />
             <InputField
               inputType="number" id="overall-height"
-              value="1200"
+              name='height'
+              value={values.height}
               onChange={handleValues}
               unit="mm"
             />
@@ -447,27 +468,57 @@ function QuoteBuilder() {
             <ImageCheckboxField
               label="Insect Net"
               name="insect-net"
-              info="Include insect net for ventilation"
+              info="Net for ventilation and protection"
               image={insectNetSvg}
-              selected={false}
+              selected={values.accessories.includes('30m net') ?? true}
+
+              onChange={handleValues}
+              includeInfo={{ groupName: 'accessories', value: '30m net' }}
+              />
+            <ImageCheckboxField
+              label="Stainless Steel Pipe"
+              name="steel-pipe"
+              info="Include stainless steel pipe"
+              // classNames={
+              //   (values.accessories.includes('ify pipe') && values.accessories.includes('25mm galvanized pipe'))
+              //   ? ['invalid']: []
+              // }
+              image={protectorSvg}
+              selected = {values.accessories.includes('25mm stainless pipe')}
+              
+              onChange={handleValues}
+              includeInfo={{ groupName: 'accessories', value: '25mm stainless pipe' }}
             />
             <ImageCheckboxField
-              label="Protector"
-              name="protector"
-              info="Include window protector"
+              label="Ify pipe"
+              name="ify-pipe"
+              info="Use Ify-pipe as protector"
               image={protectorSvg}
+              selected = {values.accessories.includes('ify pipe')}
+              
+              onChange={handleValues}
+              includeInfo={{ groupName: 'accessories', value: 'ify pipe' }}
             />
             <ImageCheckboxField
               label="Protector Rod"
               name="protector-red"
-              info="Include protector rod"
+              info=<>
+                <b>16mm</b> rod for maximized protection</>
               image={protectorRodSvg}
+              selected={values.accessories.includes('16mm rod')}
+
+              onChange={handleValues}
+              includeInfo={{ groupName: 'accessories', value: '16mm rod' }}
             />
             <ImageCheckboxField
-              label="Weather Strip"
+              label="Weather Strip / Brush"
               name="weather-strip"
               info="Reduce noise & dust"
+              selected={values.accessories.includes('weather strip') ?? true}
               image={weatherStripSvg}
+
+              onChange={handleValues}
+              includeInfo={{ groupName: 'accessories', value: 'weather strip' }}
             />
           </div>
         </form>

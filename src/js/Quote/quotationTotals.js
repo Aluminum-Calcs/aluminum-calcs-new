@@ -16,8 +16,9 @@ export function getQuotationTotals(values) {
   const glassPrice = glassCalculation.totalPrice;
   const glassTotal = values.sashCount * glassPrice;
 
-  const accessories = getWindowAccessories(values.windowType);
-  const accessoriesTotal = accessories.reduce((total, accessory) => total + accessory.price, 0);
+  const accessories = getWindowAccessories(values);
+  const accessoriesTotal = accessories.reduce(
+    (total, accessory) => total + (values.sashCount * accessory.qty * accessory.price), 0);
   const subTotal = profilesTotal + glassTotal + accessoriesTotal;
 
   return {

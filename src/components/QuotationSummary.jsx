@@ -36,6 +36,7 @@ export default function Quotation(props) {
               <tbody>
                 <tr className='preview_content_group_header'>
                   <th>Aluminum Profiles</th>
+                  <th>₦{profilesTotal.toLocaleString()}</th>
                 </tr>
                 {profiles && profiles !== null && profiles.map((obj, i) => {
                   return <tr className="preview_content_group" key={i}>
@@ -49,6 +50,7 @@ export default function Quotation(props) {
                 })}
                 <tr className='preview_content_group_header'>
                   <th>Glass</th>
+                  <th>₦{glassTotal.toLocaleString()}</th>
                 </tr>
                 <tr className="preview_content_group">
                   <td></td>
@@ -61,6 +63,7 @@ export default function Quotation(props) {
                 </tr>
                 <tr className='preview_content_group_header'>
                   <th>Accesories</th>
+                  <th>₦{accessoriesTotal.toLocaleString()}</th>
                 </tr>
                 {accessories && accessories.length > 0 && accessories.map((accessory, i) => {
                   return <tr className="preview_content_group" key={i}>
@@ -80,7 +83,7 @@ export default function Quotation(props) {
               <tbody className="totals_subTotals">
                 <tr>
                   <td>Subtotal</td>
-                  <td>₦ {subTotal.toLocaleString()}</td>
+                  <td>₦{subTotal.toLocaleString()}</td>
                 </tr>
                 <tr>
                   <td><label htmlFor="discount">Discount</label></td>
@@ -95,7 +98,7 @@ export default function Quotation(props) {
               <tfoot className='totals_totals'>
                 <tr>
                   <td>Total</td>
-                  <td>₦ {total.toLocaleString()}</td>
+                  <td>₦{total.toLocaleString()}</td>
                 </tr>
               </tfoot>
             </table>
@@ -135,7 +138,7 @@ export default function Quotation(props) {
           <tbody>
             <tr>
               <td>Type</td>
-              <td>{values.windowType.replace('-', ' ')}</td>
+              <td>{values.windowType.replaceAll('-', ' ')}</td>
             </tr>
             <tr>
               <td>Sashes</td>
@@ -214,7 +217,7 @@ export default function Quotation(props) {
               {accessories && accessories.length > 0 && accessories.map((accessory, i) => {
                 return <div className="details_item" key={i}>
                   <span className="item_name">{accessory.label}</span>
-                  <span className="item_qty">{accessory.qty * values.sashCount} × {accessory.price.toLocaleString()}</span>
+                  <span className="item_qty">{accessory.qty} × {accessory.price.toLocaleString()}</span>
                 </div>;
               })}
             </div>

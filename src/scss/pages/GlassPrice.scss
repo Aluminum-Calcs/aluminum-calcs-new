@@ -1,43 +1,824 @@
 @use '../util/' as *;
 
 main.glass-price-page {
-  padding-top: 100px;
-  @include df(normal, normal, column, 20px);
-  @include responsiveGrid;
+  min-height: 100dvh;
+  @include df(normal, normal, column);
 
-  @media (min-width: $mini-tab) {
-    .form {
-      padding-top: 50px;
+  &.desktop {
+    padding: 0;
+    background: var(--bg);
+  }
+}
+
+// ===== INTRO SECTION (Mobile) =====
+.intro {
+  padding: 40px var(--sp);
+  background: transparent;
+
+  .container {
+    @include df(space-between, center, row wrap, 20px);
+
+    .left {
+      text-align: left;
+      @include df(normal, normal, column, 20px);
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+
+        .special {
+          color: var(--green);
+        }
+      }
+
+      p {
+        font-size: 1rem;
+        color: var(--medium);
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      ul {
+        counter-reset: num;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        @include df(normal, normal, column, 20px);
+
+        li {
+          font-weight: 600;
+          position: relative;
+          padding: 15px 0;
+          counter-increment: num;
+          @include df(normal, center, row, 20px);
+
+          &::before {
+            content: counter(num);
+            color: $green;
+            font-weight: 600;
+            background: var(--cream);
+            border: 1px solid $green;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            z-index: 2;
+            flex-shrink: 0;
+            @include df(center, center);
+          }
+
+          &:not(:last-of-type)::after {
+            content: '';
+            width: 1px;
+            height: 100%;
+            position: absolute;
+            transform: translate(15px, 15px);
+            background: var(--text);
+            z-index: 1;
+          }
+        }
+      }
+    }
+
+    .right {
+      @include df;
+      text-align: center;
+
+      .illustration-placeholder {
+        width: 200px;
+        height: 200px;
+        @include df(center, center);
+        font-size: 4rem;
+        color: var(--green-200);
+      }
+    }
+
+    @media (min-width: $tab) {
+      > * {
+        flex: 1;
+      }
     }
   }
 }
 
-.results {
-  padding: 20px var(--sp);
-  @include df(normal, normal, column, 20px);
-  & .container {
-    @include df(normal, normal, column, 20px);
-  }
-  
-  &__current {
-    @include df(normal, normal, column, 5px);
-    h1 {
-      border-top: 1px solid;
-      padding-top: 10px;
+// ===== DESKTOP STYLES =====
+.page-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--green-300);
+  padding: 40px 0;
+
+  .container {
+    .header-content {
+      @include df(space-between, center, row, 20px);
+
+      .title-section {
+        @include df(normal, normal, column, 8px);
+
+        h1 {
+          font-size: 2rem;
+          font-weight: 700;
+          color: var(--text);
+          margin: 0;
+
+          .special {
+            color: var(--green);
+          }
+        }
+
+        p {
+          font-size: 1rem;
+          color: var(--medium);
+          margin: 0;
+        }
+      }
+
+      .new-calculation-btn {
+        @include btn(var(--green), var(--cream));
+        border: 2px solid var(--green);
+        padding: 12px 24px;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.2s;
+
+        &:hover {
+          background: var(--green);
+          color: var(--inv-text);
+        }
+      }
     }
   }
-  
-  &__table {
-    @include df(normal, normal,  column, 5px);
-    .head {
-      @include df(space-between, center, row wrap, 5px);
-      button {
-        @include btn;
+}
+
+.main-content {
+  padding: 40px 0;
+  background: var(--bg);
+
+  .container {
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+
+      @media (max-width: $desktop) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
+
+.section-header {
+  background: $green;
+  color: var(--inv-text);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border-radius: 4px 4px 0 0;
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &.with-action {
+    @include df(space-between, center, row, 20px);
+
+    .clear-all {
+      @include btn(var(--inv-text), rgba(0, 0, 0, 0.2));
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
+
+.glass-details,
+.price-summary {
+  border: 1px solid var(--green-500);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.glass-details-form {
+  // padding: 24px;
+  padding: 0 !important;
+  border: none !important;
+  @include df(normal, normal, column, 20px);
+
+  .calculate-btn {
+    @include btn(var(--inv-text), var(--green));
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    margin-top: 12px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      background: var(--green-700);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(47, 111, 78, 0.2);
+    }
+  }
+}
+
+.price-summary-empty,
+.items-empty {
+  padding: 40px 24px;
+  @include df(normal, center, column, 16px);
+  text-align: center;
+  background: var(--cream);
+
+  i {
+    font-size: 3.5rem;
+    color: var(--green-200);
+  }
+
+  .empty-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .empty-text {
+    font-size: 0.95rem;
+    color: var(--medium);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.price-summary-content {
+  padding: 24px;
+  @include df(normal, normal, column, 20px);
+
+  .summary-item {
+    @include df(space-between, center, row, 20px);
+    padding: 16px;
+    background: var(--bg);
+    border: 1px solid var(--green-200);
+    border-radius: 4px;
+
+    .label {
+      font-weight: 600;
+      color: var(--medium);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+
+    .value {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--green);
+      font-family: 'cascadia-code';
+    }
+
+    &.highlight {
+      background: var(--green-100);
+      border-color: var(--green);
+
+      .value {
+        color: var(--green-700);
+        font-size: 1.8rem;
       }
     }
   }
 
-  &__empty {
-    @include empty;
+  .breakdown {
+    border-top: 2px solid var(--green-200);
+    padding-top: 20px;
+    @include df(normal, normal, column, 12px);
+
+    .breakdown-row {
+      @include df(space-between, center, row, 20px);
+      padding: 8px 0;
+      font-size: 0.9rem;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      span:first-child {
+        color: var(--medium);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+      }
+
+      span:last-child {
+        color: var(--text);
+        font-weight: 600;
+      }
+    }
+  }
+
+  .add-to-quote-btn {
+    @include btn(var(--inv-text), var(--tl));
+    padding: 12px 20px;
+    font-weight: 700;
+    border: none;
+    border-radius: 4px;
+    margin-top: 12px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      background: #0d5a5d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(20, 125, 128, 0.2);
+    }
+  }
+}
+
+.items-section {
+  padding: 40px 0;
+  background: var(--bg);
+  border-top: 1px solid var(--green-300);
+
+  .container {
+    @include df(normal, normal, column, 20px);
+  }
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cream);
+  border: 1px solid var(--green-500);
+  border-radius: 4px;
+  overflow: hidden;
+
+  thead {
+    background: $green;
+    color: var(--inv-text);
+
+    th {
+      padding: 16px 12px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid var(--green-200);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      td {
+        padding: 14px 12px;
+        font-size: 0.9rem;
+        color: var(--text);
+
+        &:last-child {
+          text-align: center;
+
+          .delete-btn {
+            @include btn(var(--error), transparent);
+            border: none;
+            padding: 6px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+
+            &:hover {
+              background: rgba(180, 35, 24, 0.1);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.note-section {
+  padding: 40px 0;
+  background: var(--bg);
+  border-top: 1px solid var(--green-300);
+
+  .container {
+    border: 1px solid var(--green-300);
+    border-radius: 4px;
+    padding: 24px;
+    background: var(--cream);
+
+    .note-header {
+      @include df(normal, center, row, 16px);
+      margin-bottom: 20px;
+
+      i {
+        font-size: 1.5rem;
+        color: var(--green);
+      }
+
+      h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+
+    .note-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      @include df(normal, normal, column, 12px);
+
+      li {
+        padding-left: 20px;
+        position: relative;
+        color: var(--medium);
+        font-size: 0.95rem;
+        line-height: 1.6;
+
+        &::before {
+          content: '•';
+          position: absolute;
+          left: 0;
+          color: var(--green);
+          font-weight: bold;
+        }
+      }
+    }
+
+    .export-btn {
+      @include btn(var(--green), transparent);
+      border: 2px solid var(--green);
+      padding: 10px 20px;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &:hover {
+        background: var(--green-100);
+      }
+    }
+  }
+}
+
+// ===== MOBILE STYLES =====
+@media (max-width: $desktop) {
+  .quote-form,
+  .mobile-price-summary,
+  .mobile-items-list,
+  .mobile-review {
+    padding: 30px var(--sp);
+    @include df(normal, normal, column, 20px);
+
+    .container {
+      @include df(normal, normal, column, 20px);
+
+      > div:first-child {
+        h2 {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--text);
+          margin: 0 0 8px 0;
+        }
+
+        p {
+          font-size: 0.95rem;
+          color: var(--medium);
+          margin: 0;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+
+  .glass-details-form {
+    padding: 20px;
+    @include df(normal, normal, column, 18px);
+    background: var(--bg);
+    border: 1px solid var(--green-300);
+    border-radius: 8px;
+
+    .form-group {
+      @include df(normal, normal, column, 8px);
+
+      label {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--text);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        i {
+          margin-left: 6px;
+          color: var(--green);
+          cursor: help;
+        }
+      }
+
+      input,
+      select {
+        padding: 12px 14px;
+        border: 1px solid var(--green-300);
+        border-radius: 6px;
+        font-size: 0.95rem;
+        background: var(--bg);
+        color: var(--text);
+        font-family: inherit;
+        transition: all 0.2s;
+
+        &::placeholder {
+          color: var(--medium);
+        }
+
+        &:focus {
+          outline: none;
+          border-color: var(--green);
+          box-shadow: 0 0 0 3px rgba(47, 111, 78, 0.1);
+        }
+      }
+
+      select {
+        appearance: none;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232f6f4e' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 32px;
+      }
+    }
+
+    .calculate-btn {
+      @include btn(var(--inv-text), var(--green));
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 8px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: 100%;
+
+      &:hover {
+        background: var(--green-700);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .price-summary-empty,
+  .items-empty,
+  .empty-review {
+    padding: 40px 24px;
+    @include df(normal, center, column, 16px);
+    text-align: center;
+    background: var(--cream);
+    border: 1px solid var(--green-300);
+    border-radius: 8px;
+
+    i {
+      font-size: 3rem;
+      color: var(--green-200);
+    }
+
+    p {
+      margin: 0;
+      color: var(--medium);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  }
+
+  .price-summary-content {
+    padding: 20px;
+    @include df(normal, normal, column, 16px);
+    background: var(--cream);
+    border: 1px solid var(--green-300);
+    border-radius: 8px;
+
+    .summary-item {
+      @include df(space-between, center, row, 16px);
+      padding: 14px;
+      background: var(--bg);
+      border: 1px solid var(--green-200);
+      border-radius: 6px;
+
+      .label {
+        font-weight: 600;
+        color: var(--medium);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+      }
+
+      .value {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--green);
+        font-family: 'cascadia-code';
+      }
+
+      &.highlight {
+        background: var(--green-100);
+        border-color: var(--green);
+
+        .value {
+          color: var(--green-700);
+          font-size: 1.6rem;
+        }
+      }
+    }
+
+    .breakdown {
+      border-top: 2px solid var(--green-200);
+      padding-top: 16px;
+      @include df(normal, normal, column, 10px);
+
+      .breakdown-row {
+        @include df(space-between, center, row, 16px);
+        padding: 8px 0;
+        font-size: 0.85rem;
+
+        span:first-child {
+          color: var(--medium);
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          letter-spacing: 0.5px;
+        }
+
+        span:last-child {
+          color: var(--text);
+          font-weight: 600;
+        }
+      }
+    }
+
+    .add-to-quote-btn {
+      @include btn(var(--inv-text), var(--tl));
+      padding: 12px 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      margin-top: 10px;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+      width: 100%;
+
+      &:hover {
+        background: #0d5a5d;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .items-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--cream);
+    border: 1px solid var(--green-500);
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 0.85rem;
+
+    thead {
+      background: $green;
+      color: var(--inv-text);
+
+      th {
+        padding: 12px 8px;
+        text-align: left;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid var(--green-200);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          padding: 10px 8px;
+          font-size: 0.8rem;
+          color: var(--text);
+
+          &:last-child {
+            text-align: center;
+
+            .delete-btn {
+              @include btn(var(--error), transparent);
+              border: none;
+              padding: 4px 6px;
+              border-radius: 4px;
+              transition: all 0.2s;
+              font-size: 0.8rem;
+
+              &:hover {
+                background: rgba(180, 35, 24, 0.1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .review-summary {
+    .review-content {
+      padding: 20px;
+      @include df(normal, normal, column, 14px);
+      background: var(--cream);
+      border: 1px solid var(--green-300);
+      border-radius: 8px;
+
+      .review-item {
+        @include df(space-between, center, row, 16px);
+        padding: 12px;
+        background: var(--bg);
+        border: 1px solid var(--green-200);
+        border-radius: 6px;
+        font-size: 0.9rem;
+
+        .value {
+          font-weight: 700;
+          color: var(--text);
+        }
+
+        &.highlight {
+          background: var(--green-100);
+          border-color: var(--green);
+          font-size: 1rem;
+
+          .value {
+            color: var(--green-700);
+            font-size: 1.3rem;
+            font-family: 'cascadia-code';
+          }
+        }
+      }
+
+      .generate-quote-btn {
+        @include btn(var(--inv-text), var(--tl));
+        padding: 14px 20px;
+        font-weight: 700;
+        border: none;
+        border-radius: 6px;
+        margin-top: 10px;
+        transition: all 0.2s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+        width: 100%;
+
+        &:hover {
+          background: #0d5a5d;
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .empty-review {
+      padding: 40px 20px;
+    }
   }
 }

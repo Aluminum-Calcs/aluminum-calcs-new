@@ -1,6 +1,6 @@
 import { STORAGE_KEYS } from "./constants.js";
 
-function readStorageItem(key) {
+export function readStorageItem(key) {
   if (typeof window === "undefined") return null;
 
   try {
@@ -12,7 +12,7 @@ function readStorageItem(key) {
   }
 }
 
-function writeStorageItem(key, value) {
+export function writeStorageItem(key, value) {
   if (typeof window === "undefined") return;
 
   try {

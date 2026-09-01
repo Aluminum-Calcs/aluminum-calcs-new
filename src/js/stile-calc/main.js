@@ -28,8 +28,23 @@ export function computeResult(input = "all", windowType, sashes, width = 0, heig
   const parsedWidth = Number(width) || 0;
   const parsedHeight = Number(height) || 0;
 
-  if (normalizedType === "sliding") return calculateSliding(input, parsedWidth, parsedHeight);
-  if (normalizedType === "casement") return calculateCasement(input, sashCount, parsedWidth, parsedHeight);
-  if (normalizedType === "frameless") return calculateFrameless(input, sashCount, parsedWidth, parsedHeight);
+  if (normalizedType === "sliding") return calculateSliding({
+    inputType: input,
+    sashCount: sashCount,
+    width: parsedWidth,
+    height: parsedHeight,
+  });
+  if (normalizedType === "casement") return calculateCasement({
+    inputType: input,
+    sashCount: sashCount,
+    width: parsedWidth,
+    height: parsedHeight,
+  });
+  if (normalizedType === "frameless") return calculateFrameless({
+    inputType: input,
+    sashCount: sashCount,
+    width: parsedWidth,
+    height: parsedHeight,
+  });
   return [];
 }

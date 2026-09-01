@@ -12,7 +12,7 @@ export function addQuoteToCart(values, total) {
   const item = {
     name: `${values.windowType.replaceAll("-", " ")} (${values.width} x ${values.height} mm)`,
     price: total,
-    qt: 1,
+    qty: 1,
     details: { ...values },
   };
 

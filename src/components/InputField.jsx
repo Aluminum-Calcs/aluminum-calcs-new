@@ -214,7 +214,10 @@ export function DropdownField({
           key={i}
           value={option.value} selected={value === option.value}
         >
-          {option.value.replace('-', ' ')}
+          { typeof option.value == 'string'
+            ? option.value.replaceAll('-', ' ')
+            : option.value
+          }
         </option>)}
       </select>
     </div>
@@ -232,7 +235,6 @@ export function ImageCheckboxField({
   onChange,
   includeInfo,//{groupname, value}
 }) {
-  console.log(classNames)
   const [isChecked, setIsChecked] = useState(selected ?? false);
 
   function handleTicking() {
@@ -240,7 +242,7 @@ export function ImageCheckboxField({
     onChange(includeInfo.groupName, includeInfo.value);
   }
   
-  return <div className={`image-checkbox-field `} id={`parent-of-${name}`}>
+  return <div className={`image-checkbox-field  ${classNames.join(' ')}`} id={`parent-of-${name}`}>
     {image && <img src={image} alt={image} />}
     <div className="info">
       <label htmlFor={name}><h4>{label.replace('-', ' ')}</h4></label>

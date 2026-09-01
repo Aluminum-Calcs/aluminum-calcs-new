@@ -4,8 +4,10 @@ import { CheckGlassSheetPrice, getWindowAccessories } from '../global.js';
 
 export function getQuotationTotals(values) {
   const breakdown = computeResult('all', values.windowType, values.sashCount, values.width, values.height);
+
   const profiles = breakdown.filter((entry) => entry.category === 'profile');
-  const profilesTotal = profiles.reduce((total, profile) => total + profile.price, 0);
+  const profilesTotal = profiles.reduce((total, profile) => total + (profile.price * profile.qty), 0);
+
 
   const glassCalculation = calculateGlassPrice({
     width: values.width,
@@ -16,9 +18,10 @@ export function getQuotationTotals(values) {
   const glassPrice = glassCalculation.totalPrice;
   const glassTotal = values.sashCount * glassPrice;
 
+
   const accessories = getWindowAccessories(values);
   const accessoriesTotal = accessories.reduce(
-    (total, accessory) => total + (values.sashCount * accessory.qty * accessory.price), 0);
+    (total, accessory) => total + (accessory.qty * accessory.price), 0);
   const subTotal = profilesTotal + glassTotal + accessoriesTotal;
 
   return {

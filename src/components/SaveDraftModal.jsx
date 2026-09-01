@@ -1,21 +1,35 @@
-import { useState } from 'react';
-import InputField from './InputField.jsx';
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
+
 import { QuoteContext } from '../context/QuoteContext.jsx';
+
 import '../scss/components/SaveDraftModal.scss';
 
-export default function SaveDraftModal({props}) {
-  const { values, storageKey } = props;
+import { writeStorageItem } from '../js/glass-price/storage.js';
+
+export default function SaveDraftModal({
+  values,
+  storageKey
+}) {
+  
   const [quoteHeader, setQuoteHeader] = useState({
-    name: "Mr John's residence - Living room window",
-    notes: "Add any notes about this quote..."
+    quoteName: "Mr John's residence - Living room window",
+    quoteNotes: "Add any notes about this quote..."
   });
   const {isSaveDraftVisible, setSaveDraftVisibility} = useContext(QuoteContext);
 
 
-  function handleInputChange(property, value) {
-    quoteHeader[property] = value;
+  function handleInputChange(e) {
+   setQuoteHeader((prev) => ({...prev, [e.target.id]: e.target.value}))
   }
+
+  function finallySave() {
+    const toSave = {
+      quoteHeader: quoteHeader,
+      data: values,
+    }
+
+    writeStorageItem(storageKey, toSave);
+  };
 
   return (
     <section className={
@@ -40,17 +54,24 @@ export default function SaveDraftModal({props}) {
           <input
             type='text'
             id="quoteName"
-            value={quoteHeader.name}
+            value={quoteHeader.quoteName}
             placeholder="Mr J's ..."
+            onChange={e=> handleInputChange(e)}
           />
+
           <label htmlFor="quoteNotes">Add notes</label>
           <textarea
             id="quoteNotes"
-            value={quoteHeader.notes}>
-          </textarea>
+            value={quoteHeader.quoteNotes}
+            placeholder="Add any notes about this quote..."
+            onChange={e=>handleInputChange(e)}
+          />
         </form>
 
-        <button className="saveDraftButton">
+        <button
+          className="saveDraftButton"
+          onClick={finallySave}
+        >
           <i className="fa fa-save"></i>
           Save Draft
         </button>

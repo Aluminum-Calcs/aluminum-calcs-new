@@ -10,7 +10,7 @@ import InputField, {
   ImageCheckboxField,
 } from "../components/InputField.jsx";
 import Quotation from "../components/QuotationSummary.jsx";
-import SaveDraftModal from "../components/saveDraftModal.jsx";
+import SaveDraftModal from "../components/SaveDraftModal.jsx";
 
 import quoteIllustration from "../assets/images/quote-illustration.png";
 import lockStile from "../assets/images/svgs/lock-stile.svg";
@@ -29,9 +29,11 @@ import { saveDraft_localStorage } from "../js/Quote/main.js";
 import { QuoteContext, QuoteContextProvider } from "../context/QuoteContext.jsx";
 import { getQuotationTotals } from "../js/Quote/quotationTotals.js";
 import { addQuoteToCart } from "../js/cart/quoteCart.js";
+import { readStorageItem } from "../js/glass-price/storage.js";
 
 let draft_storage_key = 'aluminum-calcs/quote-builder';
-function addToCart() {
+
+function addToCart(values) {
   const { total } = getQuotationTotals(values);
   addQuoteToCart(values, total);
   navigate("/aluminum-calcs-new/quote-success");
@@ -53,9 +55,9 @@ let options = {
     },
   ],
   sashCount: [
-    { value: "1-sash" },
-    { value: "2-sashes", default: true },
-    { value: "3-sashes" },
+    { value: 1 },
+    { value: 2, default: true },
+    { value: 3 },
   ],
   matterTransom: [
     { value: "yes" },
@@ -65,6 +67,10 @@ let options = {
     { value: "left-open" },
     { value: "right-open" },
     { value: "both" },
+  ],
+  orientation: [
+    { value: 'vertical' },
+    { value: 'horizontal' },
   ],
   glassThickness: [
     { value: "4mm", default: true },
@@ -88,30 +94,32 @@ function QuoteBuilder() {
 
   const { setSaveDraftVisibility } = useContext(QuoteContext);
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(5);
   let steps = [1, 2, 3, 4, 5];
 
-  const [values, setValues] = useState({
-    windowType: "frameless-window",
-    width: 1200,
-    height: 1200,
-    innerWidth: 0,
-    innerHeight: 0,
-    sashCount: 2,
-    orientation: 'horizontal',
-    matterTransom: "yes",
-    openingStyle: "both",
+  const [values, setValues] = useState(
+    /*readStorageItem(draft_storage_key).data ?? */{
+      windowType: "casement-window",
+      width: 1200,
+      height: 1200,
+      innerWidth: 0,
+      innerHeight: 0,
+      sashCount: 3,
+      orientation: 'horizontal',
+      matterTransom: "yes",
+      openingStyle: "both",
 
-    includeGlass: true,
-    glassThickness: "4mm",
-    glassColor: "blue",
+      includeGlass: true,
+      glassThickness: "4mm",
+      glassColor: "blue",
 
-    // Accessories
-    accessories: [
-      '30m net',
-      'weather strip',
-    ]
-  });
+      // Accessories
+      accessories: [
+        '30m net',
+        'weather strip',
+      ]
+    }
+  );
 
   
 
@@ -131,8 +139,11 @@ function QuoteBuilder() {
       return;
     }
 
-    // Special case for sashCount, remove the "-sash" or "-sashes" suffix from the value before setting it in state
-    property == values.sashCount && (value = Number(value.toString().replace(/-sash(es)?/i, "")));
+    /*
+      // Special case for sashCount, remove the "-sash" or "-sashes" suffix from the value before setting it in state
+
+      property == "sashCount" && (value = Number(value.toString().replace(/-sash(es)?/i, "")));
+    */
     setValues((prev) => ({ ...prev, [property]: value }));
   }
 
@@ -272,27 +283,75 @@ function QuoteBuilder() {
               <ImageCheckboxField
                 label="Insect Net"
                 name="insect-net"
-                info="Include insect net for ventilation"
+                info="Net for ventilation and protection"
                 image={insectNetSvg}
-                selected={false}
+                selected={values.accessories.includes('30m net') ?? true}
+
+                onChange={handleValues}
+                includeInfo={{ groupName: 'accessories', value: '30m net' }}
+                />
+              <ImageCheckboxField
+                label="Stainless Steel Pipe"
+                name="steel-pipe"
+                info="Include stainless steel pipe"
+                classNames={
+                  (values.accessories.includes('ify pipe') || values.accessories.includes('25mm galvanized pipe'))
+                  ? ['disable']: []
+                }
+                image={protectorSvg}
+                selected = {values.accessories.includes('25mm stainless pipe')}
+                
+                onChange={handleValues}
+                includeInfo={{ groupName: 'accessories', value: '25mm stainless pipe' }}
               />
               <ImageCheckboxField
-                label="Protector"
-                name="protector"
-                info="Include window protector"
+                label="Ify pipe"
+                name="ify-pipe"
+                info="Use Ify-pipe as protector"
                 image={protectorSvg}
+                selected={values.accessories.includes('ify pipe')}
+                classNames={
+                  (values.accessories.includes('25mm stainless pipe') || values.accessories.includes('25mm galvanized pipe'))
+                  ? ['disable']: []
+                }
+                
+                onChange={handleValues}
+                includeInfo={{ groupName: 'accessories', value: 'ify pipe' }}
+              />
+              <ImageCheckboxField
+                label="Galvanized pipe"
+                name="galvanized-pipe"
+                info="Use galvanized pipe as protector"
+                image={protectorSvg}
+                selected={values.accessories.includes('25mm galvanized pipe')}
+                classNames={
+                  (values.accessories.includes('ify pipe') || values.accessories.includes('25mm stainless pipe'))
+                  ? ['disable']: []
+                }
+                
+                onChange={handleValues}
+                includeInfo={{ groupName: 'accessories', value: '25mm galvanized pipe' }}
               />
               <ImageCheckboxField
                 label="Protector Rod"
                 name="protector-red"
-                info="Include protector rod"
+                info=<>
+                  <b>16mm</b> rod for maximized protection</>
                 image={protectorRodSvg}
+                selected={values.accessories.includes('16mm rod')}
+
+                onChange={handleValues}
+                includeInfo={{ groupName: 'accessories', value: '16mm rod' }}
               />
               <ImageCheckboxField
-                label="Weather Strip"
+                label="Weather Strip / Brush"
                 name="weather-strip"
                 info="Reduce noise & dust"
+                selected={values.accessories.includes('weather strip') ?? true}
                 image={weatherStripSvg}
+
+                onChange={handleValues}
+                includeInfo={{ groupName: 'accessories', value: 'weather strip' }}
               />
             </div>
           </div>
@@ -336,6 +395,7 @@ function QuoteBuilder() {
               label="No of Sashes"
               options={options.sashCount}
               name="sashCount"
+              value={values.sashCount}
               selectedValue={values.sashCount}
               onChange={handleValues}
             />
@@ -374,10 +434,13 @@ function QuoteBuilder() {
               onChange={handleValues}
               unit="mm"
             />
-            <InputField
-              inputType="dropdown"
-              id="Window-orientation"
-              value="Horizontal"
+            <DropdownField
+              label='Window Orientation'
+              name='orientation'
+              classNames={["window-orientation"]}
+              value="horizontal"
+              options={options.orientation}
+              onChange={handleValues}
             />
             {values.windowType == 'frameless-window' && <RadioField
               label='Matter Transom'
@@ -479,10 +542,10 @@ function QuoteBuilder() {
               label="Stainless Steel Pipe"
               name="steel-pipe"
               info="Include stainless steel pipe"
-              // classNames={
-              //   (values.accessories.includes('ify pipe') && values.accessories.includes('25mm galvanized pipe'))
-              //   ? ['invalid']: []
-              // }
+              classNames={
+                (values.accessories.includes('ify pipe') || values.accessories.includes('25mm galvanized pipe'))
+                ? ['disable']: []
+              }
               image={protectorSvg}
               selected = {values.accessories.includes('25mm stainless pipe')}
               
@@ -494,10 +557,28 @@ function QuoteBuilder() {
               name="ify-pipe"
               info="Use Ify-pipe as protector"
               image={protectorSvg}
-              selected = {values.accessories.includes('ify pipe')}
+              selected={values.accessories.includes('ify pipe')}
+              classNames={
+                (values.accessories.includes('25mm stainless pipe') || values.accessories.includes('25mm galvanized pipe'))
+                ? ['disable']: []
+              }
               
               onChange={handleValues}
               includeInfo={{ groupName: 'accessories', value: 'ify pipe' }}
+            />
+            <ImageCheckboxField
+              label="Galvanized pipe"
+              name="galvanized-pipe"
+              info="Use galvanized pipe as protector"
+              image={protectorSvg}
+              selected={values.accessories.includes('25mm galvanized pipe')}
+              classNames={
+                (values.accessories.includes('ify pipe') || values.accessories.includes('25mm stainless pipe'))
+                ? ['disable']: []
+              }
+              
+              onChange={handleValues}
+              includeInfo={{ groupName: 'accessories', value: '25mm galvanized pipe' }}
             />
             <ImageCheckboxField
               label="Protector Rod"
@@ -547,7 +628,7 @@ function QuoteBuilder() {
 
         <FormNavi
           backTo={() => setSaveDraftVisibility(true)}
-          nextTo={() => addToCart()}
+          nextTo={() => addToCart(values,type="quote")}
           backwardText={<>
             <i className="fa fa-save"></i>
             Save Draft

@@ -243,10 +243,8 @@
 
 
 .desktop_quotation {
-  position: sticky;
-  top: 20px;
   grid-area: quotation;
-  padding: 0 var(--sp) 0 0;
+  padding: 0 0 0 28px;
   min-width: 0;
   @include df(normal, normal, column);
   .container {
@@ -316,6 +314,7 @@
               text-transform: uppercase;
               color: $green;
               font-family: 'cascadia-code';
+              @include df(space-between, center, row, 10px);
               &:not(:first-of-type) {
                 border-top: 1px solid var(--green-500);
                 padding: 10px 0;
@@ -398,6 +397,7 @@
               color: var(--inv-text);
               :last-child {
                 text-align: right;
+                font-family: 'cascadia-code';
               }
             }
           }

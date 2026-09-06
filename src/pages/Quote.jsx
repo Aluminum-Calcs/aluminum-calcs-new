@@ -94,7 +94,7 @@ function QuoteBuilder() {
 
   const { setSaveDraftVisibility } = useContext(QuoteContext);
 
-  const [currentStep, setCurrentStep] = useState(5);
+  const [currentStep, setCurrentStep] = useState(0);
   let steps = [1, 2, 3, 4, 5];
 
   const [values, setValues] = useState(
@@ -120,8 +120,6 @@ function QuoteBuilder() {
       ]
     }
   );
-
-  
 
   function handleValues(property, value) {
 
@@ -668,11 +666,11 @@ function QuoteBuilder() {
             </ul>
           </div>
           <div className="right">
-            <img
+            {quoteIllustration && <img
               src={quoteIllustration}
               alt="quote illustration"
               className="quote_hero_img"
-            />
+            />}
           </div>
         </div>
       </section>

@@ -14,7 +14,9 @@ export default function Quotation(props) {
     subTotal,
   } = getQuotationTotals(values);
   const [discount, setDiscount] = useState(0);
-  const total = subTotal - discount;
+  const total = discount >= subTotal
+    ? 0
+    : subTotal - discount;
 
   if (window.innerWidth >= 1100) {
     return <section className="desktop_quotation">

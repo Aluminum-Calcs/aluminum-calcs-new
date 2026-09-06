@@ -14,10 +14,11 @@
   gap: $g;
 }
 
-@mixin btn($c: var(--text), $bg:var(--cream)){
+@mixin btn($c: var(--text), $bg:var(--cream), $hc:$bg, $hbg: $c){
   cursor: pointer;
   background: $bg;
   color: $c;
+  outline: transparent;
   border: 1px solid;
   padding: 5px 20px;
   text-decoration: none;
@@ -32,12 +33,12 @@
   }
   @include df(center, center, row, 10px);
   &:hover {
-    background: $c;
-    border-color: $c;
-    color: $bg;
+    background: $hbg;
+    border-color: $hc;
+    color: $hc;
     svg {
       path {
-        fill: $bg;
+        fill: $hc;
       }
     }
   }

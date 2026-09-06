@@ -1,4 +1,6 @@
 import { STANDARD_HEIGHT_MM, STANDARD_WIDTH_MM } from "./constants.js";
+import { roundUp } from '../global.js';
+import { validateForm } from './validation.js';
 
 export function calculateGlassPrice(values) {
   const width = Number(values.width);
@@ -13,14 +15,48 @@ export function calculateGlassPrice(values) {
   const perSheetCost = Math.ceil(fullSheetPrice / scale);
   const totalPrice = perSheetCost * quantity;
 
+  //Check if form is valid
+  let formIsValid = validateForm(values) || null;
+
   return {
     sizeLabel: `${width} × ${height}`,
     scale,
     perSheetCost,
     totalPrice,
-    quantity
+    quantity,
+
+    //new properties
+    price: roundUp(totalPrice),
+    area: scale,
+    unitPrice: roundUp(perSheetCost),
+    color: values.glassColor? values.glassColor: null,
+    thickness: values.glassThickness? values.glassThickness: null,
+    allowance: values.allowance ? values.allowance : null,
+    
+    formIsValid,
   };
 }
+
+// console.log(calculateGlassPrice({
+//   width: 375,
+//   height: 1070,
+//   quantity: 2,
+//   fullSheetPrice: 90000,
+// }))
+
+
+/* feedback: {
+  price,
+  area,
+  unitPrice,
+  
+  type,
+  thickness,
+  quantity,
+  allowance,
+  
+  formIsValid,
+}*/
 
 export function buildGlassEntry({ id, values, calculation }) {
   return {

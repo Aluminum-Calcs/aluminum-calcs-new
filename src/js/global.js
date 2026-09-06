@@ -6,6 +6,9 @@ export const GLASS_PRICES = {
   
   _4mm_black: 100000,
   _5mm_black: 120000,
+
+  _4mm_transparent: 100000,
+  _5mm_transparent: 120000,
 };
 
 export const PROFILE_PRICES = {
@@ -87,6 +90,7 @@ export function CheckProfilePrice(profile = '', length=null) {
 
 export function CheckGlassSheetPrice(thickness, color) {
   let query = `_${thickness.toLowerCase()}_${color.toLowerCase()}`;
+
   return GLASS_PRICES[query];
 }
 

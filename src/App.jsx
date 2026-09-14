@@ -13,6 +13,9 @@ import Cart from './pages/Cart.jsx';
 import GlassPrice from './pages/GlassPrice.jsx';
 import QuoteBuilder from './pages/Quote.jsx';
 import QuoteSuccess from './pages/QuoteSuccess.jsx';
+import Clients from './pages/Clients.jsx';
+import Quotes from './pages/Quotes.jsx';
+import HelpSupport from './pages/HelpSupport.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 import "./assets/fontawesome/css/font-awesome.min.css";
@@ -59,6 +62,18 @@ function App() {
               element={<QuoteSuccess />}
             />
             <Route
+              path="/aluminum-calcs-new/quotes"
+              element={<Quotes />}
+            />
+            <Route
+              path="/aluminum-calcs-new/clients"
+              element={<Clients />}
+            />
+            <Route
+              path="/aluminum-calcs-new/help-support"
+              element={<HelpSupport />}
+            />
+            <Route
               path="/aluminum-calcs-new/glass-price-calculator"
               element={<GlassPrice />}
             />
@@ -77,6 +92,10 @@ function App() {
             <Route
               path="/aluminum-calcs-new/cart"
               element={<Cart />}
+            />
+            <Route
+              path="/aluminum-calcs-new/clients"
+              element={<Clients />}
             />
           </Routes>
 

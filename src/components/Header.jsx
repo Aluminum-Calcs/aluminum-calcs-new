@@ -130,7 +130,7 @@ export default function Header() {
             </NavLink>
           </li>
           <li>
-            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/settings">
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/help-support">
               <i className="fa fa-frown-o"></i>
               Help and support
             </NavLink>

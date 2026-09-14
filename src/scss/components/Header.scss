@@ -20,22 +20,32 @@ header.page-header {
 
   .logo {
     @include df(normal, center, row, 15px);
+    min-width: 0;
     img {
       height: 2rem;
       stroke: var(--text);
       border: 1px solid;
     }
     &__text {
-      @include df(normal, normal, column, 5px);
+      min-width: 0;
+      @include df(normal, normal, column, 6px);
       h2 {
-        font-size: 1.2rem;
+        margin: 0;
+        color: var(--text);
+        font-size: 1.05rem;
         font-family: 'cascadia-code';
+        letter-spacing: .02em;
       }
       span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         color: $green;
         font-weight: 700;
         font-family: 'cascadia-code';
-        font-size: .8rem;
+        font-size: .68rem;
+        text-transform: uppercase;
+        letter-spacing: .08em;
       }
     }
   }
@@ -86,7 +96,8 @@ header.page-header {
           }
         }
       }
-      &:hover {
+      &:hover,
+      &:focus-visible {
         background: var(--green-100);
         border: 1px solid var(--green-300);
         color: var(--green);
@@ -122,29 +133,36 @@ aside {
   nav {
     ul {
       list-style: none;
-      @include df(normal, normal, column, 20px);
+      margin: 0;
+      padding: 0;
+      @include df(normal, normal, column, 8px);
       li {
         a {
-          // border: 1px solid #009900;
-          // border-radius: 5px;
-          // padding: 10px 20px 10px 10px;
+          min-height: 44px;
+          padding: 10px 14px;
+          border: 1px solid transparent;
           text-decoration: none;
           color: inherit;
           transition: all .3s;
-          // font-family: 'cascadia-code';
           @include df(normal, center, row, 20px);
           img,i {
             width: 1.5rem;
+            color: var(--green);
+            text-align: center;
           }
-          &:hover {
+          &:hover,
+          &:focus-visible {
             color: var(--green);
             background: var(--green-100);
+            border-color: var(--green-200);
           }
           &.active {
             font-weight: 700;
             font-family: 'cascadia-code';
-            padding: 5px;
+            color: var(--green);
             background: var(--green-200);
+            border-color: var(--green-300);
+            box-shadow: inset 3px 0 0 var(--green);
           }
         }
       }
@@ -152,17 +170,22 @@ aside {
   }
 
   .use {
-    margin-top: 50px;
-    @include df(normal, normal, row wrap, 20px);
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--green-200);
+    @include df(normal, normal, row wrap, 10px);
     button {
       flex: 1;
-      min-width: 200px;
+      min-width: 160px;
       @include btn(var(--text), var(--green-200));
       & {
-        padding: 10px;
+        min-height: 42px;
+        padding: 10px 12px;
+        border-radius: 5px;
         font-weight: 700;
       }
-      &:hover {
+      &:hover,
+      &:focus-visible {
         border: 1px solid var(--green);
         background: var(--green);
         color: var(--inv-text);
@@ -179,8 +202,8 @@ aside {
     width: 300px;
     padding: 10px 20px;
     background: var(--bg);
-    border-bottom: 1px solid var(--medium);
-    border-right: 1px solid var(--medium);
+    border-bottom: 1px solid var(--green-200);
+    border-right: 1px solid var(--green-200);
     .hamburger {
       display: none !important;
     }
@@ -190,10 +213,30 @@ aside {
     width: 300px;
     padding: 10px 20px;
     background: var(--bg);
-    border-right: 1px solid var(--medium);
+    border-right: 1px solid var(--green-200);
 
     &.closed {
       transform: translateX(0);
+    }
+  }
+}
+
+@media (max-width: $mini-tab) {
+  header.page-header {
+    .logo__text h2 {
+      font-size: .95rem;
+    }
+
+    .logo__text span {
+      max-width: 34vw;
+    }
+  }
+
+  aside {
+    padding: 20px var(--sp);
+
+    nav ul li a {
+      min-height: 48px;
     }
   }
 }

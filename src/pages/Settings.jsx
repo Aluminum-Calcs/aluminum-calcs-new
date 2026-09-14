@@ -9,11 +9,12 @@ const layoutOptions = [
 ];
 
 export default function Settings() {
-  const { theme, setTheme, preferences, setPreferences, user, handleUser } = useContext(PageContext);
+  const { theme, setTheme, preferences, setPreferences, user, handleUser, setCurrentPage } = useContext(PageContext);
 
   useEffect(() => {
+    setCurrentPage("Settings");
     document.title = "Aluminum Calcs | Settings";
-  }, []);
+  }, [setCurrentPage]);
 
   function handlePreferenceChange(key) {
     setPreferences((previous) => ({ ...previous, [key]: !previous[key] }));
@@ -99,7 +100,7 @@ export default function Settings() {
               <div><p className="eyebrow">About this tool</p><h2>Aluminum Calcs</h2></div>
             </div>
             <p className="card-description">A focused workspace for aluminum window calculations, glass pricing, and quotations.</p>
-            <div className="about-meta"><span>Version</span><strong>2026.1</strong></div>
+            <div className="about-meta"><span>Version</span><strong>2026.3.2</strong></div>
             <div className="about-meta"><span>Theme</span><strong>{theme === "dark-mode" ? "Dark" : "Light"}</strong></div>
           </section>
         </div>

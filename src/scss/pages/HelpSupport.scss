@@ -1,0 +1,42 @@
+@use '../util/' as *;
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.support-card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  h3 {
+    margin: 0;
+    font-size: 1.35rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--medium);
+    line-height: 1.7;
+  }
+}
+
+.support-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--green-300);
+  background: var(--green-100);
+  color: var(--green);
+}
+
+@media (max-width: $tab) {
+  .support-grid {
+    grid-template-columns: 1fr;
+  }
+}

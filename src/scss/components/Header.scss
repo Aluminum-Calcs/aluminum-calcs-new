@@ -104,10 +104,16 @@ aside {
   left: 0;
   bottom: 0;
 
+
   background: var(--bg);
   padding: 20px var(--sp);
   transition: all .5s;
+  overflow-y: scroll;
   @include df(space-between, normal, column, 0);
+   
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &.closed {
     transform: translateX(-100%);
@@ -146,6 +152,7 @@ aside {
   }
 
   .use {
+    margin-top: 50px;
     @include df(normal, normal, row wrap, 20px);
     button {
       flex: 1;
@@ -184,10 +191,6 @@ aside {
     padding: 10px 20px;
     background: var(--bg);
     border-right: 1px solid var(--medium);
-    overflow-y: scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
 
     &.closed {
       transform: translateX(0);

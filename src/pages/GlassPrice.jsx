@@ -209,9 +209,14 @@ export default function GlassPrice() {
         </>
       )}
 
+      {currentStep !== 0 && <CurrentStepHeader
+        currentStep={currentStep}
+        handleStepSetting={handleStepSetting}
+      />}
+
       {currentStep === 1 && (
         <>
-          <CurrentStepHeader currentStep={currentStep}/>
+          
           <form className="quote-form">
             <div className="container">
               <div>
@@ -238,7 +243,7 @@ export default function GlassPrice() {
 
       {currentStep === 2 && (
         <>
-          <CurrentStepHeader currentStep={currentStep}/>
+          
           <section className="mobile-price-summary">
             <div className="container">
               <div>
@@ -259,7 +264,7 @@ export default function GlassPrice() {
 
       {currentStep === 3 && (
         <>
-          <CurrentStepHeader currentStep={currentStep}/>
+          
           <section className="mobile-items-list">
             <div className="container">
               <div>
@@ -280,7 +285,7 @@ export default function GlassPrice() {
 
       {currentStep === 4 && (
         <>
-          <CurrentStepHeader currentStep={currentStep}/>
+          
           <section className="mobile-review">
             <div className="container">
               <div>
@@ -584,7 +589,10 @@ function NoteSection() {
   );
 }
 
-function CurrentStepHeader({ currentStep }) {
+function CurrentStepHeader({
+   currentStep,
+   handleStepSetting = ()=>console.log('Step setting'),
+  }) {
   const steps = [0, 1, 2, 3, 4];
   const stepLabels = ["Start", "Details", "Summary", "Items", "Review"];
 
@@ -592,9 +600,16 @@ function CurrentStepHeader({ currentStep }) {
     <section className="form-header">
       <div className="container">
         <div className="nav">
-          <div></div>
+          <button
+            onClick={() => handleStepSetting("backward")}>
+            <i className="fa fa-angle-left"></i>
+          </button>
           <h3>Glass Calculator</h3>
-          <div></div>
+          <button
+            id="save"
+            onClick={() => setSaveDraftVisibility(true)}>
+              <i className="fa fa-save"></i>
+          </button>
         </div>
         <div className={`counter step${currentStep}`}>
           {steps.map((step, i) => {

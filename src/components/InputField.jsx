@@ -25,8 +25,16 @@ function InputField ({
   }, [value, val]);
 
   function handleChange(e) {
-    setValueState(e.target.value);
-    if (onChange) onChange(name, e.target.value);
+    const nextValue = e.target.value;
+    setValueState(nextValue);
+    if (!onChange) return;
+
+    if (onChange.length >= 2) {
+      onChange(name ?? id ?? e.target.name, nextValue);
+      return;
+    }
+
+    onChange(nextValue);
   }
 
   const [showPassword, setShowPassword] = useState(false);
@@ -53,6 +61,7 @@ function InputField ({
             : inputType
           }
           id={`${id}_input`}
+          name={name ?? id}
           value={valueState}
           onChange={handleChange}
           placeholder={placeholder}

@@ -135,6 +135,12 @@ export default function Header() {
               Help and support
             </NavLink>
           </li>
+          <li>
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/sign-in">
+              <i className="fa fa-sign-in"></i>
+              Sign in
+            </NavLink>
+          </li>
         </ul>
       </nav>
 

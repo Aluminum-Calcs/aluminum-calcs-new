@@ -1,6 +1,6 @@
 import { CheckProfilePrice } from "../global.js";
 
-export default function calculateFrameless(input, sash = 1, width = 0, height = 0, matterTransom = false) {
+export default function calculateFrameless({ input, sash = 1, width = 0, height = 0, matterTransom = false }) {
   const w = Number(width) || 0;
   const h = Number(height) || 0;
   const rows = [];

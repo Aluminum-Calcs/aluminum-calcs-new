@@ -35,13 +35,14 @@ export function computeResult(input = "all", windowType, sashes, width = 0, heig
     height: parsedHeight,
   });
   if (normalizedType === "casement") return calculateCasement({
-    inputType: input,
+    input,
     sashCount: sashCount,
     width: parsedWidth,
     height: parsedHeight,
   });
   if (normalizedType === "frameless") return calculateFrameless({
-    inputType: input,
+    input,
+    sash: sashCount,
     sashCount: sashCount,
     width: parsedWidth,
     height: parsedHeight,

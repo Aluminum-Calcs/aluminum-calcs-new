@@ -1,17 +1,111 @@
 @use '../util/' as *;
 
 main.stileCalc-page {
-  @include df(normal, normal, column, 50px);
-  @include responsiveGrid;
+  min-height: 100dvh;
+  padding: 0 var(--sp) 50px;
+  background: var(--bg);
+  color: var(--text);
 
-  .results {
-    padding: 20px var(--sp);
+  .stile-intro {
+    padding: 35px 0;
+    border-bottom: 1px solid var(--green-300);
+
     .container {
-      height: 100%;
+      @include df(space-between, center, row wrap, 25px);
+
+      > div:first-child {
+        @include df(normal, normal, column, 8px);
+      }
     }
-    &__empty {
-      @include empty;
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      .special { color: var(--green); }
     }
+
+    p { margin: 0; color: var(--medium); }
   }
 
+  .stile-actions,
+  .stile-form-actions {
+    @include df(normal, center, row wrap, 10px);
+    button { @include btn; padding: 10px 16px; font-size: .8rem; }
+  }
+
+  .stile-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 35px;
+    padding: 35px 0;
+  }
+
+  .stile-form-panel,
+  .stile-results,
+  .stile-items { min-width: 0; }
+
+  .section-header {
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    background: var(--green-100);
+    border: 1px solid var(--green);
+    color: var(--green);
+    h2 { margin: 0; font-size: 1rem; text-transform: uppercase; letter-spacing: .08em; }
+  }
+
+  form {
+    padding: 0 !important;
+    @include df(normal, normal, column, 25px);
+  }
+
+  .step-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    fieldset { grid-column: span 2; }
+    .field-error { color: var(--error); font-size: .85rem; }
+  }
+
+  .stile-form-actions { justify-content: flex-end; }
+
+  .stile-results,
+  .stile-items { overflow: hidden; }
+
+  .results-content { height: 100%; }
+
+  .results-empty,
+  .items-empty {
+    min-height: 220px;
+    padding: 30px;
+    text-align: center;
+    background: var(--cream);
+    @include df(center, center, column, 12px);
+    i { font-size: 2.5rem; color: var(--green-500); }
+    p { margin: 0; font-weight: 700; }
+    span { color: var(--medium); font-size: .9rem; }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--cream);
+    th, td { padding: 12px 10px; border-bottom: 1px solid var(--green-200); text-align: left; }
+    th { color: var(--green); font-size: .78rem; text-transform: uppercase; }
+    td:last-child, th:last-child { text-align: right; }
+    tfoot { font-weight: 700; }
+  }
+
+  .items-table-wrap { overflow-x: auto; }
+
+  @media (min-width: $desktop) {
+    max-width: 1800px;
+    margin: 0 auto;
+    .stile-workspace { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .stile-items { padding-top: 5px; }
+  }
+
+  @media (max-width: $mini-tab) {
+    .stile-actions { width: 100%; button { flex: 1; } }
+    .step-fields { grid-template-columns: 1fr; fieldset { grid-column: span 1; } }
+  }
 }

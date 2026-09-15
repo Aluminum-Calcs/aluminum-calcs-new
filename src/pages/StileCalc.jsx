@@ -7,7 +7,6 @@ import { computeResult } from "../js/stile-calc/main.js";
 import { validateStileInputs } from "../js/stile-calc/error.js";
 
 import "../scss/pages/StileCalc.scss";
-import "../scss/components/Form.scss";
 import "../scss/components/StileTable.scss";
 
 import InputField from "../components/InputField";
@@ -31,15 +30,22 @@ const initialInputs = {
   quantity: "1",
 };
 
+function getInitialInputs() {
+  return { ...initialInputs };
+}
+
 function StileCalc() {
   const { setCurrentPage } = useContext(PageContext);
   const { windowType, setWindowType, sashType, setSashType } = useContext(StileContext);
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [inputs, setInputs] = useState(initialInputs);
+  const [inputs, setInputs] = useState(getInitialInputs);
   const [results, setResults] = useState([]);
   const [entries, setEntries] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isDesktop, setIsDesktop] = useState(() => (
+    typeof window !== "undefined" && window.matchMedia("(min-width: 1100px)").matches
+  ));
 
   function handleInputChange(id, value) {
     setInputs((prev) => ({ ...prev, [id]: value }));
@@ -48,6 +54,7 @@ function StileCalc() {
   function handleCompute(event) {
     event.preventDefault();
 
+    const quantity = Number(inputs.quantity);
     const validation = validateStileInputs({
       windowType,
       sashes: sashType,
@@ -55,7 +62,11 @@ function StileCalc() {
       height: inputs.height,
     });
 
-    if (!validation.isValid) {
+    if (!quantity || quantity < 1 || !Number.isInteger(quantity)) {
+      validation.errors.quantity = "Enter a whole quantity of at least 1.";
+    }
+
+    if (!validation.isValid || Object.keys(validation.errors).length > 0) {
       setErrors(validation.errors);
       setResults([]);
       return;
@@ -79,17 +90,19 @@ function StileCalc() {
         sashType,
         width: inputs.width,
         height: inputs.height,
-        quantity: Math.max(1, Number(inputs.quantity) || 1),
+        quantity,
         rows,
       },
     ]);
   }
 
   function handleNewCalculation() {
-    setInputs(initialInputs);
+    setInputs(getInitialInputs());
     setResults([]);
     setErrors({});
     setCurrentStep(0);
+    setWindowType("casement-window");
+    setSashType("two");
   }
 
   function clearEntries() {
@@ -100,7 +113,14 @@ function StileCalc() {
     setCurrentPage('Stile Calc');
   }, [setCurrentPage]);
 
-  const isDesktop = typeof window !== "undefined" && window.innerWidth >= 1100;
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1100px)");
+    const handleViewportChange = (event) => setIsDesktop(event.matches);
+
+    setIsDesktop(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleViewportChange);
+    return () => mediaQuery.removeEventListener("change", handleViewportChange);
+  }, []);
 
   return (
     <>
@@ -162,6 +182,7 @@ function StileCalc() {
                   {errors.height && <div className="field-error">{errors.height}</div>}
                   <InputField id="quantity" inputType="number" value={inputs.quantity}
                     onChange={(value) => handleInputChange("quantity", value)} />
+                  {errors.quantity && <div className="field-error">{errors.quantity}</div>}
                 </>}
               </div>
               <div className="stile-form-actions">
@@ -178,7 +199,7 @@ function StileCalc() {
             </form>
           </div>
 
-          <Results rows={results} quantity={inputs.quantity} />
+          <Results rows={results} quantity={inputs.quantity} windowType={windowType} sashType={sashType} />
         </section>
 
         <ItemsList entries={entries} />
@@ -187,15 +208,27 @@ function StileCalc() {
   );
 }
 
-function Results({ rows, quantity }) {
+function Results({ rows, quantity, windowType, sashType }) {
   const total = rows.reduce((sum, row) => sum + ((Number(row.price) || 0) * (Number(row.qty) || 1) * (Number(quantity) || 1)), 0);
 
   return (
     <section className="stile-results">
       <div className="results-content">
-        <div className="section-header"><h2>Current Calculation</h2></div>
+        <div className="section-header">
+          <div>
+            <p className="section-kicker">Output</p>
+            <h2>Current Calculation</h2>
+          </div>
+          {rows.length > 0 && <span className="result-count">{rows.length} cuts</span>}
+        </div>
         {rows && rows.length > 0 ? (
-          <Table rows={rows} quantity={quantity} total={total} />
+          <>
+            <div className="result-summary">
+              <span>{windowType.replace("-window", "")} / {sashType} sash</span>
+              <strong>{formatCurrency(total)}</strong>
+            </div>
+            <Table rows={rows} quantity={quantity} total={total} />
+          </>
         ) : (
           <div className="results-empty">
             <i className="fa fa-table"></i>
@@ -240,7 +273,13 @@ function Table({ rows, quantity, total }) {
 function ItemsList({ entries }) {
   return (
     <section className="stile-items">
-      <div className="section-header"><h2>Items List</h2></div>
+      <div className="section-header">
+        <div>
+          <p className="section-kicker">Saved work</p>
+          <h2>Items List</h2>
+        </div>
+        <span className="result-count">{entries.length} {entries.length === 1 ? "item" : "items"}</span>
+      </div>
       {entries.length === 0 ? (
         <div className="items-empty"><i className="fa fa-list"></i><p>No saved calculations</p></div>
       ) : (

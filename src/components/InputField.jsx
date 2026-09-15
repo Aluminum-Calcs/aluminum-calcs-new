@@ -45,7 +45,7 @@ function InputField ({
       setShowPassword(!showPassword);
     }}>
       {showPassword
-        ? 'hide'
+        ? <i className="fa fa-eye"></i>
         : 'show'}
     </button>
   }

@@ -3,6 +3,7 @@
 main.glass-price-page {
   min-height: 100dvh;
   @include df(normal, normal, column);
+  @include gradient-bg;
 
   &.desktop {
     padding: 0 var(--sp);
@@ -380,28 +381,27 @@ main.glass-price-page {
   width: 100%;
   border-collapse: collapse;
   background: var(--cream);
-  border: 1px solid var(--green);
+  border: 1px solid var(--green-500);
   white-space: nowrap;
-  font-family: 'cascadia-code';
+
+  th,
+  td {
+    padding: 16px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--green-200);
+  }
+
+  th {
+    color: var(--green);
+    font: 700 0.7rem 'jetbrains-mono';
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
 
   thead {
     background: var(--green-100);
     color: var(--text);
     font-family: 'cascadia-code';
-
-    th {
-      padding: 10px;
-      text-align: left;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.5px;
-      border-right: 1px solid var(--green);
-      border-bottom: 1px solid var(--green);
-
-      &:last-child {
-        border-right: none;
-      }
-    }
   }
 
   tbody {
@@ -430,10 +430,9 @@ main.glass-price-page {
       }
 
       td {
-        padding: 14px 12px;
-        font-size: 0.9rem;
-        color: var(--text);
-        border-right: 1px solid var(--green);
+        font-size: 1rem !important;
+        padding: 16px 18px !important;
+        text-align: left;
 
         &:last-child {
           text-align: center;
@@ -599,8 +598,7 @@ main.glass-price-page {
   .price-summary-content {
     padding: 20px;
     @include df(normal, normal, column, 16px);
-    background: var(--cream);
-    border: 1px solid var(--green);
+    @include card-shadow;
   }
 
   .items-table {

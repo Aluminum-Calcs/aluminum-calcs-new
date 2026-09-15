@@ -3,12 +3,14 @@
 main.stileCalc-page {
   min-height: 100dvh;
   padding: 0 var(--sp) 50px;
-  background: var(--bg);
+  background:
+    linear-gradient(135deg, var(--green-100), transparent 34%),
+    var(--bg);
   color: var(--text);
 
   .stile-intro {
-    padding: 35px 0;
-    border-bottom: 1px solid var(--green-300);
+    padding: 38px 0 30px;
+    border-bottom: 1px solid var(--green-200);
 
     .container {
       @include df(space-between, center, row wrap, 25px);
@@ -30,31 +32,70 @@ main.stileCalc-page {
   .stile-actions,
   .stile-form-actions {
     @include df(normal, center, row wrap, 10px);
-    button { @include btn; padding: 10px 16px; font-size: .8rem; }
+    button {
+      @include btn;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 5px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
   }
 
   .stile-workspace {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 35px;
-    padding: 35px 0;
+    gap: 28px;
+    padding: 32px 0 38px;
   }
 
   .stile-form-panel,
   .stile-results,
-  .stile-items { min-width: 0; }
+  .stile-items {
+    min-width: 0;
+    border: 1px solid var(--green-200);
+    background: color-mix(in srgb, var(--bg) 94%, var(--green-100));
+    box-shadow: 7px 7px 0 var(--green-100);
+  }
 
   .section-header {
+    min-height: 68px;
     padding: 14px 18px;
     margin-bottom: 20px;
     background: var(--green-100);
-    border: 1px solid var(--green);
+    border-bottom: 1px solid var(--green-300);
     color: var(--green);
-    h2 { margin: 0; font-size: 1rem; text-transform: uppercase; letter-spacing: .08em; }
+    @include df(space-between, center, row, 16px);
+
+    h2 {
+      margin: 3px 0 0;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .section-kicker {
+      margin: 0;
+      color: var(--medium);
+      font: 700 .65rem 'jetbrains-mono';
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .result-count {
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border: 1px solid var(--green-300);
+      color: var(--green);
+      font: 700 .68rem 'jetbrains-mono';
+      text-transform: uppercase;
+    }
   }
 
   form {
-    padding: 0 !important;
+    padding: 0 20px 24px !important;
     @include df(normal, normal, column, 25px);
   }
 
@@ -63,7 +104,15 @@ main.stileCalc-page {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
     fieldset { grid-column: span 2; }
-    .field-error { color: var(--error); font-size: .85rem; }
+    .field-error {
+      grid-column: span 2;
+      margin-top: -10px;
+      padding: 9px 12px;
+      border-left: 3px solid var(--error);
+      background: rgba(var(--error-rgb), .08);
+      color: var(--error);
+      font-size: .82rem;
+    }
   }
 
   .stile-form-actions { justify-content: flex-end; }
@@ -73,12 +122,36 @@ main.stileCalc-page {
 
   .results-content { height: 100%; }
 
+  .result-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 20px 18px;
+    padding: 12px 14px;
+    border: 1px solid var(--green-200);
+    background: color-mix(in srgb, var(--bg) 90%, var(--green-100));
+
+    span {
+      color: var(--medium);
+      font-size: .85rem;
+      text-transform: capitalize;
+    }
+
+    strong {
+      color: var(--green);
+      font-family: 'cascadia-code';
+      white-space: nowrap;
+    }
+  }
+
   .results-empty,
   .items-empty {
     min-height: 220px;
     padding: 30px;
     text-align: center;
-    background: var(--cream);
+    background: color-mix(in srgb, var(--bg) 88%, var(--green-100));
+    border-top: 1px solid var(--green-200);
     @include df(center, center, column, 12px);
     i { font-size: 2.5rem; color: var(--green-500); }
     p { margin: 0; font-weight: 700; }
@@ -88,9 +161,15 @@ main.stileCalc-page {
   table {
     width: 100%;
     border-collapse: collapse;
-    background: var(--cream);
+    background: transparent;
     th, td { padding: 12px 10px; border-bottom: 1px solid var(--green-200); text-align: left; }
-    th { color: var(--green); font-size: .78rem; text-transform: uppercase; }
+    th {
+      color: var(--green);
+      background: var(--green-100);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
     td:last-child, th:last-child { text-align: right; }
     tfoot { font-weight: 700; }
   }
@@ -104,8 +183,54 @@ main.stileCalc-page {
     .stile-items { padding-top: 5px; }
   }
 
+  @media (max-width: $tab) {
+    .stile-intro .container {
+      align-items: flex-start;
+    }
+
+    .stile-actions {
+      width: 100%;
+    }
+  }
+
   @media (max-width: $mini-tab) {
-    .stile-actions { width: 100%; button { flex: 1; } }
+    padding-bottom: 30px;
+
+    .stile-intro {
+      padding-top: 26px;
+    }
+
+    .stile-actions {
+      button {
+        flex: 1 1 100%;
+      }
+    }
+
     .step-fields { grid-template-columns: 1fr; fieldset { grid-column: span 1; } }
+
+    .step-fields .field-error {
+      grid-column: span 1;
+    }
+
+    .stile-form-actions {
+      button {
+        flex: 1;
+      }
+    }
+
+    .section-header {
+      padding-inline: 14px;
+    }
+
+    .result-summary {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 6px;
+      margin-inline: 14px;
+    }
+
+    table {
+      min-width: 520px;
+    }
   }
 }

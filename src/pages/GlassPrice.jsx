@@ -184,6 +184,7 @@ export default function GlassPrice() {
           <section className="intro">
             <div className="container">
               <div className="left">
+                <p className="eyebrow">Calculator</p>
                 <h1>
                   <span className="special">Glass Price</span> Calculator
                 </h1>

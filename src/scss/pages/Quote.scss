@@ -2,6 +2,7 @@
 
 main.quote-builder-page {
   min-height: 100dvh;
+  @include gradient-bg;
   @include df(normal, normal, column);
 }
 
@@ -12,7 +13,8 @@ main.quote-builder-page {
     @include df(space-between, center, row wrap, 20px);
     .left {
       text-align: left;
-      @include df(normal, normal, column, 20px);
+      @include df(normal, normal, column, 5px);
+      @include eyebrow;
   
       ul {
         counter-reset: num;

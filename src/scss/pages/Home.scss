@@ -15,6 +15,9 @@
     grid-template-columns: 1.3fr 0.7fr;
     gap: 20px;
     align-items: stretch;
+    @media (max-width: $mini-tab) {
+      @include df(normal, normal, column, 20px);
+    }
   }
 }
 

@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 import { PageContext } from '../context/PageContext';
 
 import "../scss/pages/SignIn.scss";
+import InputField from '../components/InputField';
 
 const initialForm = {
   fullName: '',
@@ -91,16 +92,24 @@ export default function SignIn() {
 
             <form className="auth-form" onSubmit={handleSubmit}>
               {authMode === 'sign-up' && (
-                <label className="field">
-                  <span>Full name</span>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleFormData}
-                    placeholder="Enter your full name"
-                  />
-                </label>
+                <InputField
+                  label="Full name"
+                  inputType="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  placeholder='Enter your full name'
+                  onChange={handleFormData}
+                />
+                // <label className="field">
+                //   <span>Full name</span>
+                //   <input
+                //     type="text"
+                //     name="fullName"
+                //     value={formData.fullName}
+                //     onChange={handleFormData}
+                //     placeholder="Enter your full name"
+                //   />
+                // </label>
               )}
 
               <label className="field">
@@ -115,6 +124,12 @@ export default function SignIn() {
               </label>
 
               {authMode === 'sign-up' && (
+                <>
+                  <InputField
+                    inputType='password'
+                    label="Password"
+                    placeholder='Create a strong password'
+                />
                 <label className="field">
                   <span>Password</span>
                   <input
@@ -125,6 +140,7 @@ export default function SignIn() {
                     placeholder="Create a strong password"
                   />
                 </label>
+                </>
               )}
 
               {authMode === 'sign-in' && (

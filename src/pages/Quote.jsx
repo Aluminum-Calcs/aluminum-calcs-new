@@ -653,6 +653,7 @@ function QuoteBuilder() {
       <section className="intro">
         <div className="container">
           <div className="left">
+            <p className="eyebrow">Start planning</p>
             <h1>
               <span className="special">Quote</span> Builder
             </h1>

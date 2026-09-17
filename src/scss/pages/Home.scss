@@ -52,10 +52,8 @@
 }
 
 .hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
   margin-top: 30px;
+  @include df(normal, normal, row wrap, 12px);
 }
 
 .primary-btn,

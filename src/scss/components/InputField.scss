@@ -71,7 +71,7 @@
     padding: 5px 0;
     width: 100%;
     // border: 1px solid;
-    @include df(normal, center, row, 20px);
+    @include df(normal, center, row wrap, 20px);
     label {
       text-transform: capitalize;
       font-size: 14px;

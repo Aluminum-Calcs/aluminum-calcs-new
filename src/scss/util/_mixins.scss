@@ -14,27 +14,31 @@
   gap: $g;
 }
 
-@mixin btn($c: var(--text), $bg:var(--cream), $hc:$bg, $hbg: $c){
+@mixin btn($c: var(--text), $bg:var(--cream), $hc: var(--green), $hbg: var(--green-100), $hbor: var(--green)){
   cursor: pointer;
   background: $bg;
   color: $c;
   outline: transparent;
-  border: 1px solid;
-  padding: 5px 20px;
+  border: 1px solid $c;
+  padding: 12px 18px;
   text-decoration: none;
-  font-family: 'jetbrains-mono';
-  font-size: 15px;
-  transition: all .3s;
+  text-transform: uppercase;
   text-align: center;
+
+  font: 700 0.75rem 'jetbrains-mono';
+
+  letter-spacing: 0.08em;
+  transition: all .3s;
+  @include df(center, center, row, 10px);
+
   svg {
     path {
       fill: $c;
     }
   }
-  @include df(center, center, row, 10px);
   &:hover {
     background: $hbg;
-    border-color: $hc;
+    border-color: $hbor;
     color: $hc;
     svg {
       path {
@@ -208,7 +212,7 @@
   font-family: 'cascadia-code';
   @include df(normal, normal, row);
 
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   padding: 13px 14px;
   outline: none;

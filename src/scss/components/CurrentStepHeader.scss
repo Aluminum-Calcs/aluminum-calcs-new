@@ -1,0 +1,70 @@
+@use '../util/' as *;
+
+.Step-header {
+  // border-bottom: 1px solid var(--green);
+  padding: 10px var(--sp) 16px var(--sp);
+  @include df(center, center);
+  .container {
+    width: 100%;
+    @include df(normal, normal, column, 15px);
+  }
+  .nav {
+    // border: 1px solid;
+    @include df(right, center, row, 16px);
+    button {
+      // width: 30px;
+      // height: 30px;
+      border-radius: 50%;
+      padding: 0;
+      font-size: 1.5rem;
+      border: none;
+      color: inherit;
+      background: transparent;
+      transition: all .3s;
+      cursor: pointer;
+      @include df(center, center);
+      &:hover {
+        background: var(--green-100);
+        color: var(--green);
+      }
+      &:first-of-type {
+        margin-right: auto;
+      }
+    }
+  }
+  .counter {
+    position: relative;
+    // margin: 0 var(--sp);
+    @include df(space-between, center, row, 0px);
+    span {
+      border: 1px solid var(--medium);
+      width: 25px;
+      height: 25px;
+      // border-radius: 50%;
+      position: relative;
+      background: var(--bg);
+      transition: all .3s;
+      @include df(center, center);
+      &.active {
+        background: var(--green-100);
+        font-weight: 600;
+        color: var(--green);
+        border-color: var(--green);
+      }
+      &.completed {
+        color: var(--inv-text);
+        background: var(--green);
+        border-color: var(--green);
+      }
+    }
+    .line {
+      flex: 1;
+      height: 2px;
+      background: var(--medium);
+      transition: all .3s;
+      &.completed {
+        background: var(--green);
+      }
+    }
+  }
+}

@@ -183,6 +183,7 @@
 }
 
 @mixin input-unit {
+  padding: 0 15px;
   background: var(--cream);
   border: 1px solid var(--text);
   border-left: none;
@@ -236,6 +237,56 @@
     }
     &::picker-icon, &::-webkit-inner-spin-button {
       color: var(--green);
+    }
+  }
+}
+
+@mixin result-list($addShadow: 'yes') {
+  width: 100%;
+  padding: 20px var(--sp);
+
+  .container {
+    width: 100%;
+    @include card-shadow;
+    & {
+      padding: 0;
+    }
+  }
+
+  .summary {
+    margin: 0 18px 18px;
+    padding: 12px 14px;
+    border: 1px solid var(--green-200);
+    @include df(space-between, center, row, 16px);
+
+    span {
+      color: var(--medium);
+      text-transform: capitalize;
+    }
+
+    strong {
+      color: var(--green);
+      font-family: 'cascadia-code';
+      white-space: nowrap;
+    }
+  }
+
+  .empty {
+    min-height: 220px;
+    padding: 30px;
+    text-align: center;
+    color: var(--medium);
+    @include df(center, center, column, 10px);
+
+    i {
+      color: var(--green-300);
+      font-size: 2.5rem;
+    }
+
+    p {
+      margin: 0;
+      color: var(--text);
+      font-weight: 700;
     }
   }
 }

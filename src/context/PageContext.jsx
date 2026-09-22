@@ -22,6 +22,8 @@ export default function PageContextProvider({ children }) {
     password: '',
   });
 
+  const [formSteps, setFormSteps] = useState([]);
+
   function handleUser(key, value) {
     setUser(prev => ({
       ...prev,
@@ -38,9 +40,11 @@ export default function PageContextProvider({ children }) {
       value={{
         currentPage,
         setCurrentPage,
+
         carts,
         calcMode,
         setCalcMode,
+
         theme,
         setTheme,
         preferences,
@@ -48,6 +52,9 @@ export default function PageContextProvider({ children }) {
         user,
         setUser,
         handleUser,
+
+        formSteps,
+        setFormSteps,
       }}
     >
       {children}

@@ -2,7 +2,7 @@ import { PageContext } from "../context/PageContext";
 import { Fragment, useContext, useEffect, useState } from "react";
 import "../scss/pages/Quote.scss";
 import "../scss/components/FormNavi.scss";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import InputField, {
   RadioField,
   ImageRadioField,
@@ -11,6 +11,7 @@ import InputField, {
 } from "../components/InputField.jsx";
 import Quotation from "../components/QuotationSummary.jsx";
 import SaveDraftModal from "../components/SaveDraftModal.jsx";
+import '../scss/components/CurrentStepHeader.scss';
 
 import quoteIllustration from "../assets/images/quote-illustration.png";
 import lockStile from "../assets/images/svgs/lock-stile.svg";
@@ -95,7 +96,10 @@ function QuoteBuilder() {
   const { setSaveDraftVisibility } = useContext(QuoteContext);
 
   const [currentStep, setCurrentStep] = useState(0);
+
+  const { setFormSteps } = useContext(PageContext);
   let steps = [1, 2, 3, 4, 5];
+  setFormSteps(steps);
 
   const [values, setValues] = useState(
     /*readStorageItem(draft_storage_key).data ?? */{
@@ -145,9 +149,10 @@ function QuoteBuilder() {
     setValues((prev) => ({ ...prev, [property]: value }));
   }
 
+  const { pathname } = useLocation();
   useEffect(() => {
     setCurrentPage("Quote Builder");
-  });
+  }, [pathname]);
 
   function handleStepSetting(path) {
     if (path == "backward") {
@@ -718,7 +723,7 @@ function QuoteBuilder() {
 
   function StepHeader({ headerText = "New Quote" }) {
     return (
-      <section className="form-header">
+      <section className="Step-header">
         <div className="container">
           <div className="nav">
             <button onClick={() => handleStepSetting("backward")}>

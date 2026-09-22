@@ -3,6 +3,7 @@ import { pdf } from "@react-pdf/renderer";
 import { PageContext } from "../context/PageContext";
 import { calculateGlassPrice } from '../js/glass-price/calculation.js';
 import GlassQuotePdf from "../components/GlassQuotePdf.jsx";
+import CurrentStepHeader from "../components/CurrentStepHeader.jsx";
 
 import "../scss/pages/GlassPrice.scss";
 import "../scss/components/FormNavi.scss";
@@ -590,57 +591,6 @@ function NoteSection() {
   );
 }
 
-function CurrentStepHeader({
-   currentStep,
-   handleStepSetting = ()=>console.log('Step setting'),
-  }) {
-  const steps = [0, 1, 2, 3, 4];
-  const stepLabels = ["Start", "Details", "Summary", "Items", "Review"];
-
-  return (
-    <section className="form-header">
-      <div className="container">
-        <div className="nav">
-          <button
-            onClick={() => handleStepSetting("backward")}>
-            <i className="fa fa-angle-left"></i>
-          </button>
-          <h3>Glass Calculator</h3>
-          <button
-            id="save"
-            onClick={() => setSaveDraftVisibility(true)}>
-              <i className="fa fa-save"></i>
-          </button>
-        </div>
-        <div className={`counter step${currentStep}`}>
-          {steps.map((step, i) => {
-            return (
-              <Fragment key={step}>
-                <span
-                  className={
-                    step === currentStep
-                      ? "active"
-                      : step < currentStep
-                      ? "completed"
-                      : ""
-                  }
-                >
-                  {step < currentStep ? <i className="fa fa-check"></i> : step}
-                </span>
-
-                {i < steps.length - 1 && (
-                  <div
-                    className={step < currentStep ? "line completed" : "line"}
-                  />
-                )}
-              </Fragment>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function FormNavi({
   currentStep,

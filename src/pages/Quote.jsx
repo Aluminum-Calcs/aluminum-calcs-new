@@ -99,7 +99,6 @@ function QuoteBuilder() {
 
   const { setFormSteps } = useContext(PageContext);
   let steps = [1, 2, 3, 4, 5];
-  setFormSteps(steps);
 
   const [values, setValues] = useState(
     /*readStorageItem(draft_storage_key).data ?? */{
@@ -152,6 +151,7 @@ function QuoteBuilder() {
   const { pathname } = useLocation();
   useEffect(() => {
     setCurrentPage("Quote Builder");
+    setFormSteps(steps);
   }, [pathname]);
 
   function handleStepSetting(path) {
@@ -165,35 +165,49 @@ function QuoteBuilder() {
   if (window.innerWidth >= 1100) {
     return <>
       <main className="quote-builder-page desktop">
-        <section className="desktop_intro">
-          <div className="container">
-            <div className="left">
-              <h1><span className="special">Quote</span> Builder ✨</h1>
-              <p>
-                Create complete window quotations in minutes.
+        <section className="desktop-hero">
+          <div className="desktop-hero__inner">
+            <div>
+              <p className="eyebrow">Start planning</p>
+              <h1><span className="special">Quote</span> Builder</h1>
+              <p className="hero-copy">
+                Create complete window quotations in minutes
               </p>
             </div>
-            <div className="right">
-              <button className="saveDraftButton">
-                <i className="fa fa-save"></i>
-                Save Draft
-              </button>
-              <button className="clear-all">
-                <i className="fa fa-refresh"></i>
-                Clear All
-              </button>
-              <button className="cartButton">
-                <i className="fa fa-shopping-cart"></i>
-                Add to Cart
-              </button>
+            
+            <div className="hero-mark" aria-hidden="true">
+              <i className="fa fa-cubes" />
             </div>
           </div>
         </section>
+
+        <section className="form-actions">
+          <button className="saveDraftButton">
+            <i className="fa fa-save"></i>
+            Save Draft
+          </button>
+          <button className="clear-all">
+            <i className="fa fa-refresh"></i>
+            Clear All
+          </button>
+          <button className="cartButton">
+            <i className="fa fa-shopping-cart"></i>
+            Add to Cart
+          </button>
+        </section>
+
         <form className="form">
-          <div className="form_section 1" onClick={()=> setCurrentStep(1)}>
-            <h2 className="form_section_name">
-              1. Window Details
-            </h2>
+          <div className="form_section 1" onClick={() => setCurrentStep(1)}>
+            <div className="card-heading">
+              <div className="card-icon">
+                <span>1</span>
+              </div>
+              <div>
+                <p className="eyebrow">About the window</p>
+                <h2>Window Details</h2>
+              </div>
+            </div>
+            
             <div className="form_section_fields">
               <ImageRadioField
                 label="Window Type"
@@ -245,9 +259,15 @@ function QuoteBuilder() {
             </div>
           </div>
           <div className="form_section 2" onClick={()=> setCurrentStep(2)}>
-            <h2 className="form_section_name">
-              2. Glass Details
-            </h2>
+            <div className="card-heading">
+              <div className="card-icon">
+                <span>2</span>
+              </div>
+              <div>
+                <p className="eyebrow">Which type of glass?</p>
+                <h2>Glass Details</h2>
+              </div>
+            </div>
             <div className="form_section_fields">
               <DropdownField
                 label="Glass thickness"
@@ -279,9 +299,15 @@ function QuoteBuilder() {
             </div>
           </div>
           <div className="form_section 3" onClick={()=> setCurrentStep(3)}>
-            <h2 className="form_section_name">
-              3. Accessories &amp; Add-ons
-            </h2>
+            <div className="card-heading">
+              <div className="card-icon">
+                <span>3</span>
+              </div>
+              <div>
+                <p className="eyebrow">Any additional items?</p>
+                <h2>Accesories and Add-ons</h2>
+              </div>
+            </div>
             <div className="form_section_fields">
               <ImageCheckboxField
                 label="Insect Net"

@@ -44,6 +44,7 @@ export default function CurrentStepHeader({
             <i className="fa fa-save"></i>
           </button>
         </div>
+        
         <div className={`counter step${currentStep}`}>
           {steps.map((step, i) => {
             return (

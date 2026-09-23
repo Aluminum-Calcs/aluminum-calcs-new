@@ -1,4 +1,5 @@
-
+import { useContext } from "react";
+import { PageContext } from "../context/PageContext";
 
 export default function FormNavi({
   currentStep,
@@ -17,6 +18,8 @@ export default function FormNavi({
     </>
   ),
 }) {
+  const { formSteps } = useContext(PageContext);
+
   return (
     <section className="form-navigation">
       <div className="container">

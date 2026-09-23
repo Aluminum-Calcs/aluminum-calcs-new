@@ -169,25 +169,7 @@ main.stileCalc-page {
 }
 
 .section-header {
-  padding: 16px 18px;
-  background: var(--green-100);
-  border-bottom: 1px solid var(--green-300);
-  color: var(--green);
-  @include df(space-between, center, row, 16px);
-
-  h2 {
-    margin: 4px 0 0;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-  }
-
-  .result-count {
-    padding: 6px 9px;
-    border: 1px solid var(--green-300);
-    font: 700 .68rem 'jetbrains-mono';
-    text-transform: uppercase;
-  }
+  @include section-header;
 }
 
 table {
@@ -225,51 +207,67 @@ table {
   max-width: 100%;
 }
 
-// @media (max-width: $desktop) {
-//   main.stileCalc-page.desktop .stile-workspace {
-//     grid-template-columns: 1fr;
-//   }
-// }
-
-// @media (max-width: $mini-tab) {
-//   main.stileCalc-page {
-//     .container {
-//       width: min(100% - 24px, 680px);
-//     }
-
-//     .intro {
-//       padding-top: 28px;
-//     }
-
-//     .intro .right {
-//       flex-basis: 100%;
-//       font-size: 5rem;
-//     }
-
-//     .step-fields {
-//       grid-template-columns: 1fr;
-//     }
-
-//     .step-fields .image-radio-field {
-//       grid-column: auto;
-//     }
-
-//     .stile-form {
-//       padding: 18px 14px;
-//     }
-
-//     .stile-form-actions button {
-//       flex: 1 1 100%;
-//     }
-
-//     .result-summary {
-//       align-items: flex-start;
-//       flex-direction: column;
-//       gap: 5px;
-//     }
-
-//     table {
-//       min-width: 520px;
-//     }
-//   }
-// }
+// Desktop Styles
+.desktop {
+  @include gradient-bg;
+  &-hero {
+    @include desktop-hero;
+  }
+  .main_content {
+    // border: 1px solid;
+    padding: 24px var(--sp);
+    @include df(normal, center, column, 0);
+    >.container {
+      // border: 1px solid red;
+      width: 100%;
+      padding: 0 !important;
+      max-width: 1060px !important;
+    }
+  }
+  .stile-form {
+    // border: 2px solid blue;
+    padding: 0 !important;
+    @include df(normal, normal, column, 16px);
+    .section-header {
+      margin-bottom: 0 !important;
+    }
+    .the_rest {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 16px;
+    }
+    >button {
+      @include btn(var(--text), var(--green-200), var(--bg), var(--green));
+      & {
+        padding: 10px 24px !important;
+      }
+    }
+  }
+  .stile-results {
+    @include card-shadow;
+    padding: 0;
+    border: 0;
+    .results-empty {
+      padding: 16px 24px;
+      @include df(center, center, column, 16px);
+      i {
+        width: 74px;
+        height: 74px;
+        border: 1px solid var(--green);
+        color: var(--green);
+        background: rgba(24, 114, 73, 0.04);
+        font-size: 1.8rem;
+        // transform: rotate(4deg);
+        @include df(center, center);
+      }
+    }
+  }
+  .stile-items {
+    .container {
+      max-width: 1060px !important;
+    }
+    .section-header {
+      margin-bottom: 0 !important;
+    }
+  }
+}

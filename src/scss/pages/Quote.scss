@@ -87,48 +87,31 @@ form {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-template-areas: 
-    "intro intro intro"
+    "hero hero hero"
+    "fa fa fa"
     "form form quotation";
-    padding: 0 40px;
-    max-width: 1800px;
+    padding: 0 var(--sp);//px;
+    max-width: 1800px;//1800px;
     margin: 0 auto;
-  }
-  .desktop_intro {
-    grid-area: intro;
-    min-height: 0;
-    max-height: fit-content;
-    height: auto;
-    padding: 30px 0 60px 0;
-    background: transparent;
-    .container {
-      text-align: left;
-      width: 100% !important;
-      max-width: 100%;
-      @include df(space-between, center, row, 15px);
-      .left {
-        text-align: left;
-        @include df(normal, normal, column, 20px);
-        h1 {
-          font-size: 2.5rem;
-          letter-spacing: -0.5px;
-        }
-        p {
-          font-size: 1.1rem;
-          color: var(--medium);
-        }
+    gap: 20px;
+
+    .desktop-hero {
+      grid-area: hero;
+      padding: 24px 0 !important;
+      &__inner {
+        max-width: 100% !important;
       }
-      .right {
-        @include df(right, normal, row, 15px);
-        button {
-          @include btn;
-          & {
-            padding: 10px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-          }
-          &.cartButton {
-            @include btn(var(--bg), var(--green));
-          }
+    }
+    .form-actions {
+      grid-area: fa;
+      // border: 1px solid;
+      justify-content: right;
+      gap: 26px;
+      button {
+        @include btn;
+        &.cardButton {
+          @include btn(var(--text, var(--green-100)));
+          @include card-shadow;
         }
       }
     }
@@ -139,9 +122,10 @@ form {
     @include df(normal, normal, column, 50px);
     &_section {
       width: 100%;
+      @include card-shadow;
       @include df(normal, normal, column, 28px);
       &_name {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: var(--text);
         margin-bottom: 8px;

@@ -100,73 +100,35 @@ export default function SignIn() {
                   placeholder='Enter your full name'
                   onChange={handleFormData}
                 />
-                // <label className="field">
-                //   <span>Full name</span>
-                //   <input
-                //     type="text"
-                //     name="fullName"
-                //     value={formData.fullName}
-                //     onChange={handleFormData}
-                //     placeholder="Enter your full name"
-                //   />
-                // </label>
               )}
 
-              <label className="field">
-                <span>{authMode === 'sign-up' ? 'Email address' : 'Username or email'}</span>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
+              <InputField
+                label={authMode === 'sign-up' ? 'Email address' : 'Username or email'}
+                inputType='email'
+                name="email"
+                value={formData.email}
+                onChange={handleFormData}
+                placeholder={authMode === 'sign-up' ? 'name@example.com' : 'Type your email or username'}
+              />
+
+              <InputField
+                label="Password"
+                inputType='password'
+                name="password"
+                value={formData.password}
+                onChange={handleFormData}
+                placeholder={authMode === 'sign-up'? "Create a strong password":"Enter your password"}
+              />
+
+              {authMode === 'sign-up' && (
+                <InputField
+                  label="Confirm Password"
+                  inputType='password'
+                  name="password"
+                  value={formData.confirmPassword}
                   onChange={handleFormData}
-                  placeholder={authMode === 'sign-up' ? 'name@example.com' : 'Type your email or username'}
+                  placeholder="Repeat your password"
                 />
-              </label>
-
-              {authMode === 'sign-up' && (
-                <>
-                  <InputField
-                    inputType='password'
-                    label="Password"
-                    placeholder='Create a strong password'
-                />
-                <label className="field">
-                  <span>Password</span>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleFormData}
-                    placeholder="Create a strong password"
-                  />
-                </label>
-                </>
-              )}
-
-              {authMode === 'sign-in' && (
-                <label className="field">
-                  <span>Password</span>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleFormData}
-                    placeholder="Enter your password"
-                  />
-                </label>
-              )}
-
-              {authMode === 'sign-up' && (
-                <label className="field">
-                  <span>Confirm password</span>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleFormData}
-                    placeholder="Repeat your password"
-                  />
-                </label>
               )}
 
               {authMode === 'sign-in' && (

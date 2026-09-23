@@ -16,11 +16,25 @@ import InputField, {
 import FormNavi from "../components/FormNavi.jsx";
 import CurrentStepHeader from "../components/CurrentStepHeader.jsx";
 
+import casementSvg from '../assets/images/svgs/casement.svg'
+import slidingSvg from '../assets/images/svgs/sliding.svg'
+import framelessSvg from '../assets/images/svgs/frameless.svg'
+import stileCalcIllustration from '../assets/images/stile-illustration.png';
+
 const options = {
   windowType: [
-    { value: "casement-window" },
-    { value: "sliding-window" },
-    { value: "frameless-window" },
+    {
+      value: "casement-window",
+      image: casementSvg,
+    },
+    {
+      value: "sliding-window",
+      image: slidingSvg,
+    },
+    {
+      value: "frameless-window",
+      image: framelessSvg,
+    },
   ],
   sashCount: [{ value: "one" }, { value: "two" }],
 };
@@ -41,10 +55,9 @@ function StileCalc() {
   const { setCurrentPage } = useContext(PageContext);
   const { setWindowType, setSashType } = useContext(StileContext);
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   const { setFormSteps } = useContext(PageContext);
-  setFormSteps([0,1,2,3,4])
-  const [values, setValues] = useState(getInitialValues);
+  const [values,   setValues] = useState(getInitialValues);
   const [results, setResults] = useState([]);
   const [entries, setEntries] = useState([]);
   const [errors, setErrors] = useState({});
@@ -122,6 +135,7 @@ function StileCalc() {
   const { pathname } = useLocation();
   useEffect(() => {
     setCurrentPage("Stile Calc");
+    setFormSteps([0,1,2,3,4]);
   }, [pathname]);
 
   useEffect(() => {
@@ -141,98 +155,88 @@ function StileCalc() {
     }
   };
 
-  const form = (
-    <form className="stile-form" onSubmit={handleCompute}>
-      <div className="stile-form-heading">
-        <p className="section-kicker">Specifications</p>
-        <h2>Window details</h2>
-        <p>Choose a profile system and enter the finished opening size.</p>
-      </div>
-      <div className="step-fields">
-        <ImageRadioField
-          label="Window Type"
-          options={options.windowType}
-          name="windowType"
-          selectedValue={values.windowType}
-          onChange={handleValues}
-        />
-        <DropdownField
-          label="No of Sashes"
-          options={options.sashCount}
-          name="sashType"
-          value={values.sashType}
-          onChange={handleValues}
-        />
-        <InputField
-          inputType="number"
-          id="width"
-          label="Overall width"
-          value={values.width}
-          onChange={handleValues}
-          unit="mm"
-        />
-        <InputField
-          inputType="number"
-          id="height"
-          label="Overall height"
-          value={values.height}
-          onChange={handleValues}
-          unit="mm"
-        />
-        <InputField
-          inputType="number"
-          id="quantity"
-          label="Quantity"
-          value={values.quantity}
-          onChange={handleValues}
-        />
-      </div>
-      {Object.keys(errors).length > 0 && (
-        <div className="stile-errors">
-          {Object.values(errors).map((error) => (
-            <p key={error}>{error}</p>
-          ))}
-        </div>
-      )}
-      <div className="stile-form-actions">
-        <button type="submit">
-          <i className="fa fa-calculator"></i> Calculate cuts
-        </button>
-        <button
-          type="button"
-          className="secondary"
-          onClick={handleNewCalculation}
-        >
-          <i className="fa fa-refresh"></i> New calculation
-        </button>
-      </div>
-    </form>
-  );
 
   if (isDesktop) {
     return (
       <main className="stileCalc-page desktop">
-        <section className="page-header">
-          <div className="container header-content">
+        <section className="desktop-hero">
+          <div className="desktop-hero__inner">
             <div>
               <p className="eyebrow">Profile planning</p>
-              <h1>
-                <span className="special">Stile</span> Calculator
-              </h1>
-              <p>Calculate accurate profile cuts for your window opening.</p>
+              <h1><span className="special">Stile</span> Calculator</h1>
+              <p className="hero-copy">
+                Calculate accurate profile cuts for your window opening.
+
+                <button>New calculation</button>
+              </p>
             </div>
-            <button
-              className="new-calculation-btn"
-              onClick={handleNewCalculation}
-            >
-              <i className="fa fa-refresh"></i> NEW CALCULATION
-            </button>
+            <div className="hero-mark" aria-hidden="true">
+              <i className="fa fa-cubes" />
+            </div>
           </div>
         </section>
 
-        <section className="main-content">
+        <section className="main_content">
           <div className="container stile-workspace">
-            <div className="stile-details">{form}</div>
+            <form className="stile-form" onSubmit={handleCompute}>
+              <div className="section-header">
+                <div>
+                  <p className="eyebrow">Specifications</p>
+                  <h2>Window details</h2>
+                </div>
+              </div>
+              <div className="step-fields">
+                <ImageRadioField
+                  label="Window Type"
+                  options={options.windowType}
+                  name="windowType"
+                  selectedValue={values.windowType}
+                  onChange={handleValues}
+                />
+                <div className="the_rest">
+
+                  <DropdownField
+                    label="No of Sashes"
+                    options={options.sashCount}
+                    name="sashType"
+                    value={values.sashType}
+                    onChange={handleValues}
+                  />
+                  <InputField
+                    inputType="number"
+                    id="width"
+                    label="Overall width"
+                    value={values.width}
+                    onChange={handleValues}
+                    unit="mm"
+                  />
+                  <InputField
+                    inputType="number"
+                    id="height"
+                    label="Overall height"
+                    value={values.height}
+                    onChange={handleValues}
+                    unit="mm"
+                  />
+                  <InputField
+                    inputType="number"
+                    id="quantity"
+                    label="Quantity"
+                    value={values.quantity}
+                    onChange={handleValues}
+                  />
+                </div>
+              </div>
+              {Object.keys(errors).length > 0 && (
+                <div className="stile-errors">
+                  {Object.values(errors).map((error) => (
+                    <p key={error}>{error}</p>
+                  ))}
+                </div>
+              )}
+
+              <button onClick={(e)=> {compute()}}>Calculate</button>
+            </form>
             <Results
               rows={results}
               quantity={values.quantity}
@@ -242,20 +246,7 @@ function StileCalc() {
           </div>
         </section>
 
-        <section className="items-section">
-          <div className="container">
-            <div className="section-header with-action">
-              <div>
-                <p className="section-kicker">Saved work</p>
-                <h2>Items List</h2>
-              </div>
-              <button className="clear-all" onClick={clearEntries}>
-                <i className="fa fa-trash"></i> CLEAR ALL
-              </button>
-            </div>
-            <ItemsList entries={entries} />
-          </div>
-        </section>
+        <ItemsList entries={entries} />
       </main>
     );
   }
@@ -284,7 +275,7 @@ function StileCalc() {
                   </ul>
                 </div>
                 <div className="right">
-                  <i className="fa fa-scissors"></i>
+                  {stileCalcIllustration && <img src={stileCalcIllustration} alt="stile calc illustration"/>}
                 </div>
               </div>
             </section>
@@ -356,21 +347,8 @@ function StileCalc() {
           <>
             <form className="stile-form" onSubmit={handleCompute}>
               <div className="stile-form-heading">
-                <p className="section-kicker">Specifications</p>
-                <h2>Window details</h2>
-                <p>Choose a profile system and enter the finished opening size.</p>
-              </div>
-              <div className="action-buttons">
-                <button type="submit">
-                  <i className="fa fa-calculator"></i> Calculate cuts
-                </button>
-                <button
-                  type="button"
-                  className="secondary"
-                  onClick={handleNewCalculation}
-                >
-                  <i className="fa fa-refresh"></i> New calculation
-                </button>
+                <h2>Dimensions and opening</h2>
+                <p>Enter the measurements</p>
               </div>
               <div className="step-fields">
                 <InputField
@@ -482,7 +460,7 @@ function Results({ rows, quantity, windowType, sashType }) {
         ) : (
           <div className="results-empty">
             <i className="fa fa-table"></i>
-            <p>No calculation yet</p>
+            <h3>No calculation yet</h3>
             <span>Enter the window details to see the cut list.</span>
           </div>
         )}

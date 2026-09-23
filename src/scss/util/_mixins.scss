@@ -149,7 +149,7 @@
 
 // New theme
 @mixin gradient-bg {
-  background: linear-gradient(135deg, var(--green-100), transparent 38%), var(--bg);
+  background: linear-gradient(135deg, var(--green-100), transparent 38%), var(--bg) !important;
 }
 @mixin eyebrow {
   .eyebrow {
@@ -171,7 +171,7 @@
   box-shadow: 0 0 0 3px var(--green-100);
 }
 @mixin label-styling {
-  background-color: var(--bg);
+  background-color: transparent;
   position: relative;
   padding: 0;
   margin: 0;
@@ -211,6 +211,7 @@
   outline: transparent;
   color: var(--text);
   font-family: 'cascadia-code';
+  transition: all .3s;
   @include df(normal, normal, row);
 
   background: transparent;

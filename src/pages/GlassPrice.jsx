@@ -11,6 +11,7 @@ import glassPriceIllustration from '../assets/images/glass-price-illustration.pn
 
 import InputField, { DropdownField } from "../components/InputField.jsx";
 import { CheckGlassSheetPrice } from "../js/global.js";
+import { useLocation } from "react-router";
 
 let options = {
   glassColor: [
@@ -39,10 +40,14 @@ export default function GlassPrice() {
   const [feedback, setFeedback] = useState({});
   const [entries, setEntries] = useState([]);
 
+  const { pathname } = useLocation();
+  const { setFormSteps } = useContext(PageContext);
+
 
   useEffect(() => {
     setCurrentPage("Glass Price Calc");
-  }, [setCurrentPage]);
+    setFormSteps([1, 2, 3, 4]);
+  }, [pathname]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -121,52 +126,64 @@ export default function GlassPrice() {
   if (isDesktop) {
     return (
       <main className="glass-price-page desktop">
-        <section className="page-header">
-          <div className="container">
-            <div className="header-content">
-              <div className="title-section">
-                <h1><span className="special">Glass Price</span> Calculator</h1>
-                <p>Calculate glass pricing instantly with precision</p>
-              </div>
-              <button className="new-calculation-btn" onClick={handleNewCalculation}>
-                <i className="fa fa-refresh"></i> NEW CALCULATION
-              </button>
+        <section className="desktop-hero">
+          <div className="desktop-hero__inner">
+            <div>
+              <p className="eyebrow">Calculator</p>
+              <h1><span className="special">Glass Price</span> Calculator</h1>
+              <p className="hero-copy">
+                Calculate glass Pricing instantly with precision
+
+                <button className="new-calculation-btn" onClick={handleNewCalculation}>
+                  <i className="fa fa-refresh"></i> NEW CALCULATION
+                </button>
+              </p>
+            </div>
+            
+            <div className="hero-mark" aria-hidden="true">
+              <i className="fa fa-cubes" />
             </div>
           </div>
         </section>
 
         <section className="main-content">
           <div className="container">
-            <div className="content-grid">
-              <div className="glass-details">
-                <div className="section-header">
-                  <h2>Glass Details</h2>
-                </div>
-                <GlassDetailsForm
-                  values={values}
-                  onChange={handleValues}
-                  buttonDuty={getFeedback}
-                />
+            <div className="glass-details">
+              <div className="card-heading">
+                <div className="card-icon"><span aria-hidden="true">1</span></div>
+                <div><p className="eyebrow">Dimensions &amp; type</p><h2>Glass Details</h2></div>
               </div>
 
-              <div className="price-summary">
-                <div className="section-header">
-                  <h2>Price Summary</h2>
-                </div>
-                <PriceSummaryCard feedback={feedback} buttonDuty={addEntry}/>
+              <GlassDetailsForm
+                values={values}
+                onChange={handleValues}
+                buttonDuty={getFeedback}
+              />
+            </div>
+
+            <div className="price-summary">
+              <div className="card-heading">
+                <div className="card-icon"><span aria-hidden="true">2</span></div>
+                <div><p className="eyebrow">Review Price</p><h2>Price Summary</h2></div>
               </div>
+
+              <PriceSummaryCard feedback={feedback} buttonDuty={addEntry}/>
             </div>
           </div>
         </section>
 
         <section className="items-section">
           <div className="container">
-            <div className="section-header with-action">
-              <h2>Items List</h2>
+            <div className="card-heading section-header with-action">
+              <div className="card-icon">
+                <span aria-hidden="true">3</span></div>
+                <div><p className="eyebrow">Review your list</p><h2>Items List</h2>
+              </div>
               <button className="clear-all">
-                <i className="fa fa-trash"></i> CLEAR ALL
+                <i className="fa fa-trash"></i>CLEAR ALL
               </button>
             </div>
+            
             <ItemsListTable entries={entries} />
           </div>
         </section>
@@ -402,7 +419,7 @@ function PriceSummaryCard({
   if (isEmpty) {
     return (
       <div className="price-summary-empty">
-        <i className="fa fa-naira">₦</i>
+        <i className="fa fa-dollar"></i>
         <p className="empty-title">No calculation yet</p>
         <p className="empty-text">
           Enter glass details and click "Calculate Price" to see the summary.

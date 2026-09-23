@@ -60,72 +60,7 @@
   }
 
   .section {
-    padding: 0 0 14px;
-    &:not(:last-of-type) {
-      border-bottom: 1px solid $green-bg;
-      margin-bottom: 14px;
-    }
-    .details {
-      @include df(normal, normal, column, 10px);
-      &_summary {
-        width: 100%;
-        padding: 4px 0;
-        cursor: pointer;
-        outline: transparent;
-        font-weight: bold;
-        color: inherit;
-        background: inherit;
-        border: none;
-        font: inherit;
-        @include df(space-between, center, row, 10px);
-        .right {
-          font-weight: bold;
-          @include df(right, center, row, 20px);
-          i {
-            width: 20px;
-            text-align: center;
-            color: var(--green);
-          }
-        }
-      }
-      &_content {
-        padding: 4px 20px 0;
-        color: var(--medium);
-        font-size: .9rem;
-        transition: all .3s;
-        height: auto;
-        @include df(normal, normal, column, 10px);
-      }
-      &_item {
-        @include df(space-between, center, row, 10px);
-        .item_name {
-          color: var(--text);
-        }
-        .item_qty {
-          text-align: right;
-          white-space: nowrap;
-          font-family: 'cascadia-code';
-        }
-      }
-      .price {
-        font-family: 'cascadia-code';
-      }
-
-      //Open and close animation
-      &.closed {
-        .details_summary {
-          i {
-            transform: rotate(-180deg);
-          }
-        }
-        .details_content {
-          height: 0;
-          overflow: hidden;
-          transition: all .3s;
-          transition-behavior: allow-discrete;
-        }
-      }
-    }
+    @include dropdown_quotation_list;
   }
 }
 
@@ -187,7 +122,7 @@
     border: 2px solid var(--tl);
     width: 30px;
     height: 30px;
-    border-radius: 50%;
+    // border-radius: 50%;
     @include df(center, center);
   }
 }
@@ -251,155 +186,28 @@
     @include df(normal, normal, column, 30px);
     
     .preview {
-      border: 1px solid var(--green-500);
-      &_header {
-        background: var(--green-100);
-        padding: 10px 20px;
-        color: var(--green);
-        border-bottom: 1px solid var(--green);
-        h2 {
-          font-family: 'cascadia-code';
-          font-variant: small-caps;
-          letter-spacing: 3px;
-        }
+      @include card-shadow;
+      @include df(normal, normal, column, 26px);
+      & {
+        padding: 0;
+      }
+      .section-header {
+        margin-bottom: 0;
       }
       &_content {
-        padding: 20px;
-        table.breakdown {
-          width: 100%;
-          border-collapse: collapse;
-          display: grid;
-          grid-template-columns: 100px auto 100px 100px;
-
-          th,td {
-            &:first-of-type {
-              text-align: left;
-            }
-            &:last-of-type {
-              text-align: right;
-            }
-          }
-          thead {
-            border-bottom: 1px solid $green;
-            padding: 5px 0;
-            display: grid;
-            grid-template-columns: subgrid;
-            grid-column: 1/-1;
-            
-            tr {
-              display: grid;
-              grid-template-columns: subgrid;
-              grid-column: 1/-1;
-              
-              :nth-child(2) {
-                text-align: left;
-              }
-              :nth-child(3) {
-                text-align: center;
-              }
-            }
-
-            
-          }
-          tbody {
-            padding: 15px 0;
-            display: grid;
-            grid-template-columns: subgrid;
-            gap: 10px;
-            grid-column: 1/-1;
-            >* {
-              grid-column: 1/-1;
-            }
-            .preview_content_group_header {
-              text-transform: uppercase;
-              color: $green;
-              font-family: 'cascadia-code';
-              @include df(space-between, center, row, 10px);
-              &:not(:first-of-type) {
-                border-top: 1px solid var(--green-500);
-                padding: 10px 0;
-              }
-            }
-            .preview_content_group {
-              display: grid;
-              grid-template-columns: subgrid;
-              :nth-child(3) {
-                text-align: center;
-              }
-              :nth-child(4) {
-                text-align: right;
-                font-family: 'cascadia-code';
-              }
-            }
-          }
+        @include df(normal, normal, column, 16pxpx);
+        .quotation_breakdown {
+          padding: 0px 26px;
+          border: none;
+          background: transparent;
         }
-
-        table.totals {
-          width: 100%;
-          background: var(--green-100);
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          tbody {
-            padding: 10px;
-            border: 1px solid var(--green-700);
-            display: grid;
-            grid-template-columns: subgrid;
-            grid-column: 1/-1;
-            gap: 15px;
-            tr {
-              display: grid;
-              grid-template-columns: subgrid;
-              grid-column: 1/-1;
-              font-family: 'cascadia-code';
-              align-items: center;
-
-              td:last-of-type {
-                font-weight: bold;
-                font-size: 1.2rem;
-                text-align: right;
-                input {
-                  appearance: none;
-                  text-align: right;
-                  padding: 0;
-                  font: inherit;
-                  width: 100px;
-                  justify-self: right;
-                  background: var(--cream);
-                  border: 1px solid var(--green-500);
-                  outline: none;
-                  padding: 5px;
-                  color: inherit;
-                  @include df(right, center, row);
-                  &:focus {
-                    border-color: var(--green);
-                  }
-                  &::-webkit-inner-spin-button {
-                    display: none;
-                  }
-                }
-              }
-            }
-          }
-          tfoot {
-            background: $green;
-            padding: 10px;
-            font-weight: 700;
-            color: var(--text);
-            display: grid;
-            grid-template-columns: subgrid;
-            grid-column: 1/-1;
-            tr {
-              grid-column: 1/-1;
-              display: grid;
-              grid-template-columns: subgrid;
-              font-size: 1.5rem;
-              text-transform: uppercase;
-              color: var(--inv-text);
-              :last-child {
-                text-align: right;
-                font-family: 'cascadia-code';
-              }
-            }
+        .quotation_warning {
+          background: transparent;
+          border: none;
+          padding: 16px 26px;
+          color: var(--green);
+          i {
+            border-color: var(--green);
           }
         }
       }

@@ -689,7 +689,7 @@ function QuoteBuilder() {
               <span className="special">Quote</span> Builder
             </h1>
             <p>Create complete window quotations in minutes.</p>
-            <ul className={theme}>
+            <ul>
               <li>Window Details</li>
               <li>Dimensions &amp; Opening</li>
               <li>Glass Details</li>

@@ -113,13 +113,13 @@ export default function Header() {
           </li>
           <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/quotes">
-              <i className="fa fa-circle-o"></i>
+              <i className="fa fa-file-text-o"></i>
               Quotes
             </NavLink>
           </li>
           <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/clients">
-              <i className="fa fa-btc"></i>
+              <i className="fa fa-users"></i>
               Clients
             </NavLink>
           </li>

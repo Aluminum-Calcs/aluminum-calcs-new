@@ -9,8 +9,9 @@ footer {
     max-width: 1200px;
     border-radius: 0px;
     background: var(--cream);
-    border: 1px solid $green;
+    @include card-shadow;
     padding: 20px;
+    // border: 1px solid var(--green);
     @include df(normal, center, row wrap, 20px);
     @media(min-width: $tab) {
       @include df(space-between, center, row wrap, 20px);
@@ -21,9 +22,9 @@ footer {
       img {
         width: 70px;
         height: auto;
-        border-radius: 50%;
+        // border-radius: 50%;
         position: relative;
-        border: 2px solid var(--green);
+        border: 1px solid var(--green);
         &::before {
           content: "";
           position: absolute;
@@ -50,10 +51,12 @@ footer {
         grid-template-columns: repeat(3, 1fr);
       }
       a {
-        @include btn(var(--text), var(--bg));
+        @include btn(var(--medium), var(--bg));
         & {
           font-size: 1.5rem;
-          border-radius: 10px;
+        }
+        &:hover {
+          transform: translateY(-5px);
         }
       }
     }

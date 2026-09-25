@@ -153,3 +153,95 @@
     margin-left: auto;
   }
 }
+
+@mixin mobile-intro {
+  padding: 40px var(--sp);
+  background: transparent;
+
+  .container {
+    @include m.df(space-between, center, row wrap, 20px);
+
+    .left {
+      text-align: left;
+      @include m.df(normal, normal, column, 16px);
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+
+        .special {
+          color: var(--green);
+        }
+      }
+
+      p {
+        font-size: 1rem;
+        color: var(--medium);
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      ul {
+        counter-reset: num;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        @include m.df(normal, normal, column, 0px);
+
+        li {
+          font-weight: 600;
+          position: relative;
+          padding: 15px 0;
+          counter-increment: num;
+          @include m.df(normal, center, row, 20px);
+
+          &::before {
+            content: counter(num);
+            color: var(--green);
+            font-weight: 600;
+            font-family: 'cascadia-code';
+            background: var(--cream);
+            border: 1px solid var(--green);
+            width: 26px;
+            height: 26px;
+            z-index: 2;
+            border-radius: 0;
+            flex-shrink: 0;
+            @include m.df(center, center);
+          }
+
+          &:not(:last-of-type)::after {
+            content: '';
+            z-index: 1;
+            width: 1px;
+            height: 100%;
+            position: absolute;
+            transform: translate(15px, 15px);
+            background: var(--green) !important;
+          }
+        }
+      }
+    }
+
+    .right {
+      @include m.df;
+      text-align: center;
+
+      .illustration-placeholder {
+        width: 200px;
+        height: 200px;
+        @include m.df(center, center);
+        font-size: 4rem;
+        color: var(--green-200);
+      }
+    }
+
+    @media (min-width: $tab) {
+      > * {
+        flex: 1;
+      }
+    }
+  }
+}

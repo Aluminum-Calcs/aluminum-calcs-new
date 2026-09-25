@@ -7,68 +7,7 @@ main.quote-builder-page {
 }
 
 .intro {
-  padding: 20px var(--sp);
-  background: transparent;
-  .container {
-    @include df(space-between, center, row wrap, 20px);
-    .left {
-      text-align: left;
-      @include df(normal, normal, column, 5px);
-      @include eyebrow;
-  
-      ul {
-        counter-reset: num;
-        li {
-          font-weight: 600;
-          position: relative;
-          padding: 15px 0;
-          list-style: none;
-          counter-increment: num;
-          @include df(normal, center, row, 20px);
-          &::before {
-            content: counter(num);
-            color: $green;
-            font-weight: 600;
-            background: var(--cream);
-            border: 1px solid;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            z-index: 2;
-            @include df(center, center);
-          }
-          &:not(:last-of-type)::after {
-            content: '';
-            width: 1px;
-            height: 100%;
-            position: absolute;
-            transform: translate(15px, 15px);
-            background: var(--text);
-            z-index: 1;
-          }
-        }
-        &.dark-mode {
-          li::before {
-            color: green;
-          }
-          li::after {
-            background: green;
-          }
-        }
-      }
-    }
-    .right {
-      @include df;
-      img {
-        width: 100%;
-      }
-    }
-    @media (min-width: $tab) {
-      >* {
-        flex: 1;
-      }
-    }
-  }
+  @include mobile-intro;
 }
 
 

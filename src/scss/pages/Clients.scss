@@ -2,7 +2,9 @@
 
 .clients-page,
 .quotes-page,
-.support-page {
+.support-page,
+.materials-page,
+.sales-page {
   min-height: 100dvh;
   padding: 86px var(--sp) 70px;
   background: linear-gradient(135deg, var(--green-100), transparent 38%), var(--bg);

@@ -89,26 +89,33 @@ export default function Header() {
           </li>
           <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/glass-price-calculator">
-              <img src={glassSvg} alt="glassSvg"/>
-              Glass Calculator
+              {/* <img src={glassSvg} alt="glassSvg"/> */}
+              <i className="icon-square"></i>
+              Glass Price Calculator
             </NavLink>
           </li>
           <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/stile-calculator">
-              <i className="fa fa-slack"></i>
+              <i className="fa fa-columns"></i>
               Profile / Stile Calc
             </NavLink>
           </li>
           <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/channels">
-              <i className="fa fa-columns"></i>
-              Channels
+              <i className="fa fa-bars"></i>
+              Channels and Uses
             </NavLink>
           </li>
           <li>
-            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/cart">
-              <i className="fa fa-shopping-cart"></i>
-              Cart
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/sales">
+              <i className="fa fa-money"></i>
+              Sales
+            </NavLink>
+          </li>
+          <li>
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/materials">
+              <i className="fa fa-tags"></i>
+              Materials / Inventory
             </NavLink>
           </li>
           <li>
@@ -131,7 +138,7 @@ export default function Header() {
           </li>
           <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/help-support">
-              <i className="fa fa-frown-o"></i>
+              <i className="fa fa-question-circle"></i>
               Help and support
             </NavLink>
           </li>

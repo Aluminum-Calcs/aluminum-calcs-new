@@ -9,7 +9,8 @@ import CalculatorModal from './components/CalculatorModal.jsx';
 import Home from './pages/Home.jsx'
 import Channels from './pages/Channels.jsx';
 import StileCalc from './pages/StileCalc.jsx';
-import Cart from './pages/Cart.jsx';
+import Materials from './pages/Materials.jsx';
+import Sales from './pages/Sales.jsx';
 import GlassPrice from './pages/GlassPrice.jsx';
 import QuoteBuilder from './pages/Quote.jsx';
 import QuoteSuccess from './pages/QuoteSuccess.jsx';
@@ -18,7 +19,10 @@ import Quotes from './pages/Quotes.jsx';
 import HelpSupport from './pages/HelpSupport.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
+// Font awesome Icons
 import "./assets/fontawesome/css/font-awesome.min.css";
+// Ico-Moon Icons
+import "./assets/icomoon/style.css";
 import { HelmetProvider } from 'react-helmet-async';
 import StileContextProvider from './context/StileContext.jsx';
 import { QuoteContextProvider } from './context/QuoteContext.jsx';
@@ -90,8 +94,12 @@ function App() {
               }
             />
             <Route
-              path="/aluminum-calcs-new/cart"
-              element={<Cart />}
+              path="/aluminum-calcs-new/materials"
+              element={<Materials />}
+            />
+            <Route
+              path="/aluminum-calcs-new/sales"
+              element={<Sales />}
             />
             <Route
               path="/aluminum-calcs-new/clients"

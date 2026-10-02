@@ -1,0 +1,57 @@
+@use '../util/' as *;
+
+// Check Clients.scss for main.materials-page styling
+
+.material-controls {
+  // border: 1px solid;
+  .container {
+    @include df(normal, normal, column, 8px);
+  }
+  .add-material-btn {
+    @include btn(var(--bg), var(--green));
+  }
+
+  .material-filters {
+    padding: 0 !important;
+    @include df(normal, normal, column, 8px);
+
+    .material-search-box {
+      // border: 1px solid;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 60px;
+      gap: 4px;
+      input {
+        @include input;
+        & {
+          grid-column: 1/2;
+          // font: 600 1rem 'space-grotesk';
+          padding: 8px 16px;
+        }
+        &::placeholder {
+          color: var(--green-800);
+        }
+        &::-webkit-search-cancel-button {
+          accent-color: var(--green);
+        }
+      }
+      .search-button {
+        grid-column: 2/-1;
+        @include btn(var(--bg), var(--green));
+        & {
+          border-color: var(--green);
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+      }
+    }
+    .dropdowns {
+      @include df(normal, normal, row wrap, 8px);
+      .dropdown-field {
+        flex: 1;
+        min-width: 100px;
+      }
+    }
+  }
+}
+

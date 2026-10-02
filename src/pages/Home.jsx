@@ -43,13 +43,13 @@ const tools = [
     accent: "stile",
   },
   {
-    title: "Cart",
-    description: "Review customer items, totals, and saved orders all in one place.",
+    title: "Sales",
+    description: "Record and total instant sales in seconds.",
     image: null,
-    icon: "fa fa-shopping-cart",
-    link: "/aluminum-calcs-new/cart",
-    cta: "View Carts",
-    accent: "cart",
+    icon: "fa fa-money",
+    link: "/aluminum-calcs-new/sales",
+    cta: "Make a sale",
+    accent: "sales",
   },
 ];
 

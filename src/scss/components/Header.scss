@@ -142,6 +142,7 @@ aside {
           padding: 10px 14px;
           border: 1px solid transparent;
           text-decoration: none;
+          outline: none;
           color: inherit;
           transition: all .3s;
           @include df(normal, center, row, 20px);

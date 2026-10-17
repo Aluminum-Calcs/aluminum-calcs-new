@@ -1,6 +1,7 @@
 @use './vars' as *;
 @use './mixins/' as m;
 
+
 @mixin desktop-hero {
   padding: 24px var(--sp);
   
@@ -41,6 +42,9 @@
     font-size: 1.8rem;
     transform: rotate(4deg);
     @include m.df(center, center);
+    @media (max-width: $mini-tab) {
+      display: none;
+    }
   }
 }
 

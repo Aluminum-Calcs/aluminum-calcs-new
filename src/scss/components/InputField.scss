@@ -222,6 +222,7 @@
       @include label-styling;
     }
     select {
+      appearance: none;
       @include input;
       & {
         appearance: base-select !important;

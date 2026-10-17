@@ -353,7 +353,7 @@ function StileCalc() {
               <div className="step-fields">
                 <InputField
                   inputType="number"
-                  id="width"
+                  name="width"
                   label="Overall width"
                   value={values.width}
                   onChange={handleValues}
@@ -361,7 +361,7 @@ function StileCalc() {
                 />
                 <InputField
                   inputType="number"
-                  id="height"
+                  name="height"
                   label="Overall height"
                   value={values.height}
                   onChange={handleValues}
@@ -369,7 +369,7 @@ function StileCalc() {
                 />
                 <InputField
                   inputType="number"
-                  id="quantity"
+                  name="quantity"
                   label="Quantity"
                   value={values.quantity}
                   onChange={handleValues}

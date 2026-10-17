@@ -1,0 +1,95 @@
+
+
+@use '../util/' as *;
+
+
+.Navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  anchor-name: --navbar;
+  background: var(--bg);
+  padding: 8px var(--sp);
+  border-bottom: 1px solid var(--yellow);
+  @include df(normal, normal, row, 8px);
+  .container {
+    width: 100%;
+    @include df(space-between, center, row, 8px);
+  }
+  .logo {
+    font:550 1.7rem 'bilbo-swash-caps';
+  }
+  .Searchbar {
+    margin: 0 0 0 auto;
+    height: 100%;
+  }
+  nav {
+    margin-left: auto;
+    ul {
+      list-style: none;
+      @include df(normal, normal, row, 8px);
+      li {
+        a {
+          text-decoration: none;
+          color: var(--text);
+          &.active {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    @media (max-width: $mini-tab) {
+      position: fixed;
+      z-index: -1;
+      position-anchor: --navbar;
+      top: anchor(bottom);
+      bottom: 0;
+      right: 0;
+      left: 0;
+      transform: translateY(100%);
+      background: goldenrod;
+      transition: all .7s;
+      @include df(center, center, column, 18px);
+      ul {
+        opacity: 0;
+        padding: 20px var(--sp);
+        transition: all .7s;
+        @include df(center, center, column, 26px);
+        a {
+          text-transform: uppercase;
+          font-size: 2rem;
+          &.active {
+            @include dash;
+          }
+        }
+      }
+      &.open {
+        transform: translate(0,0);
+        ul {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  .others {
+    @include df(normal, normal, row, 8px);
+    button {
+      @include btn;
+      & {
+        width: 30px;
+        max-height: 40px;
+        font-size: 1.5rem;
+        padding: 0;
+        background: none;
+        border: none;
+      }
+      &.menu-btn {
+        @media (min-width: $mini-tab) {
+          display: none;
+        }
+      }
+    }
+  }
+}

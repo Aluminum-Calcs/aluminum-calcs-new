@@ -1,0 +1,20 @@
+@use '../util/' as *;
+
+.faq-dropdown {
+  @include card-shadow;
+  & {
+    padding: 0;
+  }
+  summary {
+    list-style: none;
+    outline: none;
+    padding: 12px;
+    @include df(space-between, center, row, 18px);
+  }
+  .answer {
+    border-top: var(--green-300);
+    padding: 12px;
+    background: var(--green-100);
+  }
+
+}

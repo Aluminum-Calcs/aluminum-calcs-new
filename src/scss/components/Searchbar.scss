@@ -1,0 +1,30 @@
+
+@use '../util/' as *;
+
+.Searchbar {
+  @include df(normal, normal, row);
+  input {
+    @include input;
+    & {
+      padding: 8px;
+      font: 400 1rem 'outfit';
+      border: none;
+    }
+    @media (max-width: $mini-tab) {
+      display: none;
+    }
+  }
+  .search-btn {
+    @include btn;
+    @include input-unit;
+    & {
+      font-size: 1.5rem;
+      font-weight: normal;
+      color: inherit;
+      width: 40px;
+      padding: 0;
+      background: none;
+      border: none;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 @use './vars' as *;
 
+
 @mixin df($j:normal,$a:normal, $fl:row, $g:0){
   display: flex;
   justify-content: $j;
@@ -160,15 +161,15 @@
   }
 }
 @mixin card-shadow {
-  border: 1px solid var(--green-300);
-  background: color-mix(in srgb, var(--bg) 92%, var(--green-100));
+  border: 1px solid var(--green);
+  background: color-mix(in srgb, var(--bg) 92%, var(--green-200));
   padding: 26px;
   min-width: 0;
-  box-shadow: 7px 7px 0 var(--green-100);
+  box-shadow: 7px 7px 0 var(--green-300);
 }
 @mixin focus-shadow {
   border-color: var(--green);
-  box-shadow: 0 0 0 3px var(--green-100);
+  box-shadow: 0 0 0 3px var(--green-300);
 }
 @mixin label-styling {
   background-color: transparent;
@@ -290,4 +291,9 @@
       font-weight: 700;
     }
   }
+}
+
+@mixin h2($c: var(--text), $bg:transparent, $shadow: var(--green-300)) {
+  font-size: 2rem;
+  text-transform: uppercase;
 }

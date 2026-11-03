@@ -1,13 +1,13 @@
 import { useState, useContext, useEffect, Fragment } from "react";
 import { pdf } from "@react-pdf/renderer";
 import { PageContext } from "../context/PageContext";
-import { calculateGlassPrice } from '../js/glass-price/calculation.js';
+import { calculateGlassPrice } from "../js/glass-price/calculation.js";
 import GlassQuotePdf from "../components/GlassQuotePdf.jsx";
 import CurrentStepHeader from "../components/CurrentStepHeader.jsx";
 
 import "../scss/pages/GlassPrice.scss";
 import "../scss/components/FormNavi.scss";
-import glassPriceIllustration from '../assets/images/glass-price-illustration.png';
+import glassPriceIllustration from "../assets/images/glass-price-illustration.png";
 
 import InputField, { DropdownField } from "../components/InputField.jsx";
 import { CheckGlassSheetPrice } from "../js/global.js";
@@ -15,16 +15,16 @@ import { useLocation } from "react-router";
 
 let options = {
   glassColor: [
-    {value: "transparent", label: "Transparent"},
-    {value: "blue", label: "Blue"},
-    {value: "black", label: "Black"},
+    { value: "transparent", label: "Transparent" },
+    { value: "blue", label: "Blue" },
+    { value: "black", label: "Black" },
   ],
   glassThickness: [
-    {value: "4mm", label: "4mm"},
-    {value: "5mm", label: "5mm"},
-    {value: "6mm", label: "6mm"},
+    { value: "4mm", label: "4mm" },
+    { value: "5mm", label: "5mm" },
+    { value: "6mm", label: "6mm" },
   ],
-}
+};
 
 export default function GlassPrice() {
   const { setCurrentPage } = useContext(PageContext);
@@ -43,7 +43,6 @@ export default function GlassPrice() {
   const { pathname } = useLocation();
   const { setFormSteps } = useContext(PageContext);
 
-
   useEffect(() => {
     setCurrentPage("Glass Price Calc");
     setFormSteps([1, 2, 3, 4]);
@@ -58,19 +57,25 @@ export default function GlassPrice() {
   // Feedback request from calculation.js
   function getFeedback() {
     setFeedback(
-      calculateGlassPrice({ ...values, fullSheetPrice: CheckGlassSheetPrice(values.glassThickness, values.glassColor) })
-    )
+      calculateGlassPrice({
+        ...values,
+        fullSheetPrice: CheckGlassSheetPrice(
+          values.glassThickness,
+          values.glassColor
+        ),
+      })
+    );
   }
 
   // Adding quote to entries
   function addEntry(entry) {
     if (entry == {}) return;
-    setEntries(prev=> [...prev, entry])
+    setEntries((prev) => [...prev, entry]);
   }
 
   // State update.
   const handleValues = (property, value) => {
-    console.log(property, value)
+    console.log(property, value);
     setValues((prev) => ({ ...prev, [property]: value }));
   };
 
@@ -130,16 +135,20 @@ export default function GlassPrice() {
           <div className="desktop-hero__inner">
             <div>
               <p className="eyebrow">Calculator</p>
-              <h1><span className="special">Glass Price</span> Calculator</h1>
+              <h1>
+                <span className="special">Glass Price</span> Calculator
+              </h1>
               <p className="hero-copy">
                 Calculate glass Pricing instantly with precision
-
-                <button className="new-calculation-btn" onClick={handleNewCalculation}>
+                <button
+                  className="new-calculation-btn"
+                  onClick={handleNewCalculation}
+                >
                   <i className="fa fa-refresh"></i> NEW CALCULATION
                 </button>
               </p>
             </div>
-            
+
             <div className="hero-mark" aria-hidden="true">
               <i className="fa fa-cubes" />
             </div>
@@ -150,8 +159,13 @@ export default function GlassPrice() {
           <div className="container">
             <div className="glass-details">
               <div className="card-heading">
-                <div className="card-icon"><span aria-hidden="true">1</span></div>
-                <div><p className="eyebrow">Dimensions &amp; type</p><h2>Glass Details</h2></div>
+                <div className="card-icon">
+                  <span aria-hidden="true">1</span>
+                </div>
+                <div>
+                  <p className="eyebrow">Dimensions &amp; type</p>
+                  <h2>Glass Details</h2>
+                </div>
               </div>
 
               <GlassDetailsForm
@@ -163,11 +177,16 @@ export default function GlassPrice() {
 
             <div className="price-summary">
               <div className="card-heading">
-                <div className="card-icon"><span aria-hidden="true">2</span></div>
-                <div><p className="eyebrow">Review Price</p><h2>Price Summary</h2></div>
+                <div className="card-icon">
+                  <span aria-hidden="true">2</span>
+                </div>
+                <div>
+                  <p className="eyebrow">Review Price</p>
+                  <h2>Price Summary</h2>
+                </div>
               </div>
 
-              <PriceSummaryCard feedback={feedback} buttonDuty={addEntry}/>
+              <PriceSummaryCard feedback={feedback} buttonDuty={addEntry} />
             </div>
           </div>
         </section>
@@ -176,17 +195,22 @@ export default function GlassPrice() {
           <div className="container">
             <div className="card-heading section-header with-action">
               <div className="card-icon">
-                <span aria-hidden="true">3</span></div>
-                <div><p className="eyebrow">Review your list</p><h2>Items List</h2>
+                <span aria-hidden="true">3</span>
+              </div>
+              <div>
+                <p className="eyebrow">Review your list</p>
+                <h2>Items List</h2>
               </div>
               <button className="clear-all">
                 <i className="fa fa-trash"></i>CLEAR ALL
               </button>
             </div>
-            
+
             <ItemsListTable entries={entries} />
           </div>
         </section>
+
+        <section className=""></section>
 
         <NoteSection />
       </main>
@@ -196,7 +220,6 @@ export default function GlassPrice() {
   // Mobile multi-step view
   return (
     <main className="glass-price-page">
-
       {currentStep === 0 && (
         <>
           <section className="intro">
@@ -215,7 +238,10 @@ export default function GlassPrice() {
                 </ul>
               </div>
               <div className="right">
-                <img src={glassPriceIllustration} alt="Glass Price Calculator" />
+                <img
+                  src={glassPriceIllustration}
+                  alt="Glass Price Calculator"
+                />
               </div>
             </div>
           </section>
@@ -228,14 +254,15 @@ export default function GlassPrice() {
         </>
       )}
 
-      {currentStep !== 0 && <CurrentStepHeader
-        currentStep={currentStep}
-        handleStepSetting={handleStepSetting}
-      />}
+      {currentStep !== 0 && (
+        <CurrentStepHeader
+          currentStep={currentStep}
+          handleStepSetting={handleStepSetting}
+        />
+      )}
 
       {currentStep === 1 && (
         <>
-          
           <form className="quote-form">
             <div className="container">
               <div>
@@ -253,37 +280,37 @@ export default function GlassPrice() {
               getFeedback();
               handleStepSetting("forward");
             }}
-            forwardText={<>
-              Calculate <i className="fa fa-chevron-right"></i>
-            </>}
+            forwardText={
+              <>
+                Calculate <i className="fa fa-chevron-right"></i>
+              </>
+            }
           />
         </>
       )}
 
       {currentStep === 2 && (
         <>
-          
           <section className="mobile-price-summary">
             <div className="container">
               <div>
                 <h2>Price Summary</h2>
                 <p>Review your calculated price and details.</p>
               </div>
-              <PriceSummaryCard feedback={feedback} buttonDuty={addEntry}/>
+              <PriceSummaryCard feedback={feedback} buttonDuty={addEntry} />
             </div>
           </section>
           <FormNavi
-              currentStep={currentStep}
-              maxSteps={4}
-              onBack={() => handleStepSetting("backward")}
-              onNext={() => handleStepSetting("forward")}
+            currentStep={currentStep}
+            maxSteps={4}
+            onBack={() => handleStepSetting("backward")}
+            onNext={() => handleStepSetting("forward")}
           />
         </>
       )}
 
       {currentStep === 3 && (
         <>
-          
           <section className="mobile-items-list">
             <div className="container">
               <div>
@@ -304,14 +331,17 @@ export default function GlassPrice() {
 
       {currentStep === 4 && (
         <>
-          
           <section className="mobile-review">
             <div className="container">
               <div>
                 <h2>Review & Generate</h2>
                 <p>Complete your quote and generate a summary.</p>
               </div>
-              <ReviewSummary entries={entries} feedback={feedback} onGenerate={handleGenerateQuote} />
+              <ReviewSummary
+                entries={entries}
+                feedback={feedback}
+                onGenerate={handleGenerateQuote}
+              />
             </div>
           </section>
           <FormNavi
@@ -329,13 +359,11 @@ export default function GlassPrice() {
   );
 }
 
-function GlassDetailsForm(
-  {
-    values,
-    onChange,
-    buttonDuty = () => console.log('button duty activated')
-  }
-) {
+function GlassDetailsForm({
+  values,
+  onChange,
+  buttonDuty = () => console.log("button duty activated"),
+}) {
   return (
     <div className="glass-details-form">
       <DropdownField
@@ -399,20 +427,18 @@ function GlassDetailsForm(
         placeholder="Enter allowance"
       />
 
-      {window.innerWidth >= 1100 && <button
-        type="button"
-        className="calculate-btn"
-        onClick={buttonDuty}
-      >
-        <i className="fa fa-calculator"></i> CALCULATE PRICE
-      </button>}
+      {window.innerWidth >= 1100 && (
+        <button type="button" className="calculate-btn" onClick={buttonDuty}>
+          <i className="fa fa-calculator"></i> CALCULATE PRICE
+        </button>
+      )}
     </div>
   );
 }
 
 function PriceSummaryCard({
   feedback = {},
-  buttonDuty = ()=>console.log('Supposed to add quote')
+  buttonDuty = () => console.log("Supposed to add quote"),
 }) {
   const isEmpty = !feedback || !feedback.price;
 
@@ -432,7 +458,9 @@ function PriceSummaryCard({
     <div className="price-summary-content">
       <div className="summary-item highlight">
         <span className="label">Total Price</span>
-        <span className="value">{`₦${feedback.price.toLocaleString()}` || "₦0.00"}</span>
+        <span className="value">
+          {`₦${feedback.price.toLocaleString()}` || "₦0.00"}
+        </span>
       </div>
       <div className="summary-item">
         <span className="label">Total Area</span>
@@ -440,7 +468,9 @@ function PriceSummaryCard({
       </div>
       <div className="summary-item">
         <span className="label">Unit Price</span>
-        <span className="value">{feedback.unitPrice.toLocaleString() || "₦0.00"}</span>
+        <span className="value">
+          {feedback.unitPrice.toLocaleString() || "₦0.00"}
+        </span>
       </div>
 
       <div className="breakdown">
@@ -462,10 +492,7 @@ function PriceSummaryCard({
         </div>
       </div>
 
-      <button
-        className="add-to-quote-btn"
-        onClick={()=> buttonDuty(feedback)}
-      >
+      <button className="add-to-quote-btn" onClick={() => buttonDuty(feedback)}>
         <i className="fa fa-cart-plus"></i> ADD TO QUOTE
       </button>
     </div>
@@ -478,7 +505,9 @@ function ItemsListTable({ entries = [] }) {
       <div className="items-empty">
         <i className="fa fa-briefcase"></i>
         <p className="empty-title">No items added yet</p>
-        <p className="empty-text">Add glass details above to build your list.</p>
+        <p className="empty-text">
+          Add glass details above to build your list.
+        </p>
       </div>
     );
   }
@@ -486,38 +515,38 @@ function ItemsListTable({ entries = [] }) {
   return (
     <div className="items-table-wrapper">
       <table className="items-table">
-      <thead>
-        <tr>
-          <th>S/N</th>
-          <th>Glass Color</th>
-          <th>Thickness(mm)</th>
-          <th>Size(mm)</th>
-          <th>Qty</th>
-          <th>Area(m²)</th>
-          <th>Unit Price(₦)</th>
-          <th>Total(₦)</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {entries.map((entry, idx) => (
-          <tr key={idx}>
-            <td>{idx + 1}</td>
-            <td>{entry.color || "-"}</td>
-            <td>{entry.thickness || "-"}</td>
-            <td>{entry.sizeLabel || "-"}</td>
-            <td>{entry.quantity || "0"}</td>
-            <td>{entry.area || "0.00"}</td>
-            <td>{`₦${entry.unitPrice.toLocaleString()}` || "₦0.00"}</td>
-            <td>{`₦${entry.price.toLocaleString()}` || "₦0.00"}</td>
-            <td>
-              <button className="delete-btn" title="Delete">
-                <i className="fa fa-trash"></i>
-              </button>
-            </td>
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Glass Color</th>
+            <th>Thickness(mm)</th>
+            <th>Size(mm)</th>
+            <th>Qty</th>
+            <th>Area(m²)</th>
+            <th>Unit Price(₦)</th>
+            <th>Total(₦)</th>
+            <th>Action</th>
           </tr>
-        ))}
-      </tbody>
+        </thead>
+        <tbody>
+          {entries.map((entry, idx) => (
+            <tr key={idx}>
+              <td>{idx + 1}</td>
+              <td>{entry.color || "-"}</td>
+              <td>{entry.thickness || "-"}</td>
+              <td>{entry.sizeLabel || "-"}</td>
+              <td>{entry.quantity || "0"}</td>
+              <td>{entry.area || "0.00"}</td>
+              <td>{`₦${entry.unitPrice.toLocaleString()}` || "₦0.00"}</td>
+              <td>{`₦${entry.price.toLocaleString()}` || "₦0.00"}</td>
+              <td>
+                <button className="delete-btn" title="Delete">
+                  <i className="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
@@ -534,9 +563,7 @@ function ReviewSummary({ entries = [], feedback = {}, onGenerate = () => {} }) {
     0
   );
   const [discount, setDiscount] = useState(0);
-  let total = discount >= subtotal
-    ? 0
-    : subtotal - discount;
+  let total = discount >= subtotal ? 0 : subtotal - discount;
 
   return (
     <div className="review-summary">
@@ -558,19 +585,29 @@ function ReviewSummary({ entries = [], feedback = {}, onGenerate = () => {} }) {
             <span>Discount</span>
             <input
               type="text"
-              id='discountInput'
-              value={`₦ ${discount.toLocaleString()}`} onChange={(e) => {
+              id="discountInput"
+              value={`₦ ${discount.toLocaleString()}`}
+              onChange={(e) => {
                 setDiscount(
-                  parseFloat(e.target.value.replace('₦', '').replace(',', '').replace(' ', 0))
-                )
+                  parseFloat(
+                    e.target.value
+                      .replace("₦", "")
+                      .replace(",", "")
+                      .replace(" ", 0)
+                  )
+                );
               }}
             />
           </div>
           <div className="review-item highlight">
             <span>Total Price</span>
-            <span className="value">₦ {total.toLocaleString() || '₦0.00'}</span>
+            <span className="value">₦ {total.toLocaleString() || "₦0.00"}</span>
           </div>
-          <button className="generate-quote-btn" type="button" onClick={() => onGenerate(discount)}>
+          <button
+            className="generate-quote-btn"
+            type="button"
+            onClick={() => onGenerate(discount)}
+          >
             <i className="fa fa-download"></i> GENERATE QUOTE
           </button>
         </div>
@@ -608,17 +645,22 @@ function NoteSection() {
   );
 }
 
-
-function FormNavi({
+export function FormNavi({
   currentStep,
   maxSteps,
   onBack,
   onNext,
   onGenerate,
-  backwardText = <>
-    <i className="fa fa-chevron-left"></i>Back</>,
-  forwardText = <>
-    Next<i className="fa fa-chevron-right"></i></>,
+  backwardText = (
+    <>
+      <i className="fa fa-chevron-left"></i>Back
+    </>
+  ),
+  forwardText = (
+    <>
+      Next<i className="fa fa-chevron-right"></i>
+    </>
+  ),
 }) {
   return (
     <section className="form-navigation">
@@ -629,7 +671,11 @@ function FormNavi({
           </button>
         )}
         {currentStep === maxSteps ? (
-          <button className="forward generate" type="button" onClick={onGenerate}>
+          <button
+            className="forward generate"
+            type="button"
+            onClick={onGenerate}
+          >
             <i className="fa fa-download"></i>
             GENERATE QUOTE
           </button>

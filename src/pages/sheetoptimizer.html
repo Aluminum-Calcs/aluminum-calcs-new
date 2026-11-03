@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/src/scss/main.scss" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>glass-packer</title>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="header_content">
+
+      <div class="logo">
+        <span>Aluminum Calcs</span>
+        <span>Rectangle Packer</span>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>Sheet Optimizer</h1>
+
+      <p>
+        Optimize aluminum, glass, plywood and ACP sheet cutting layouts.
+      </p>
+    </section>
+
+    <section class="controls">
+
+      <div class="sheet-inputs">
+
+        <h2>Sheet Size</h2>
+
+        <input
+          type="number"
+          id="sheet-width"
+          placeholder="Width (mm)"
+          value="3300"
+        >
+
+        <input
+          type="number"
+          id="sheet-height"
+          placeholder="Height (mm)"
+          value="2140"
+        >
+
+      </div>
+
+      <div class="piece-inputs">
+
+        <h2>Add Piece</h2>
+
+        <input
+          type="number"
+          id="piece-width"
+          placeholder="Width"
+        >
+
+        <input
+          type="number"
+          id="piece-height"
+          placeholder="Height"
+        >
+
+        <input
+          type="number"
+          id="piece-qty"
+          placeholder="Quantity"
+          value="1"
+        >
+
+        <button id="add-piece">
+          Add Piece
+        </button>
+
+      </div>
+
+      <ul id="piece-list"></ul>
+
+      <div class="options">
+
+        <label>
+          <input type="checkbox" id="rotation" checked>
+          Allow Rotation
+        </label>
+
+        <label>
+          Kerf / Spacing
+          <input
+            type="number"
+            id="spacing"
+            value="5"
+          >
+        </label>
+
+        <label>
+          Edge trim (mm)
+          <input type="number" id="trim" value="10">
+        </label>
+
+        <label>
+          <input type="checkbox" id="piece-lock">
+          Don't rotate (grain direction)
+        </label>
+
+      </div>
+
+      <button id="pack-btn">
+        Generate Layout
+      </button>
+
+    </section>
+
+    <section class="stats">
+
+      <div>
+        <span>Sheets Used:</span>
+        <strong id="sheet-count">0</strong>
+      </div>
+
+      <div>
+        <span>Efficiency:</span>
+        <strong id="efficiency">0%</strong>
+      </div>
+
+      <div>
+        <span>Waste:</span>
+        <strong id="waste">0%</strong>
+      </div>
+
+    </section>
+
+    <section class="canvas-wrapper">
+
+      <canvas id="packer-canvas"></canvas>
+
+    </section>
+
+  </main>
+</div>
+<script type="module" src="/src/js/sheet-optimizer/guillotine.js"></script>
+<script type="module" src="/src/js/sheet-optimizer/logic.js"></script>
+</body>
+</html>
+
+
+<!--  <main className="sheet-optimizer-page">
+      <section className="sheet-optimizer-hero">
+        <div className="sheet-optimizer-container sheet-optimizer-hero__inner">
+          <div>
+            <p className="eyebrow">Cutting calculator</p>
+            <h1><span className="special">Sheet</span> Optimizer</h1>
+            <p className="hero-copy">
+              Plan guillotine cuts for glass, aluminum, plywood, and ACP sheets.
+            </p>
+          </div>
+          <div className="sheet-optimizer-hero__mark" aria-hidden="true">
+            <i className="fa fa-object-group" />
+          </div>
+          <button className="sheet-optimizer-reset" type="button" onClick={reset}>
+            <i className="fa fa-refresh" aria-hidden="true" /> New layout
+          </button>
+        </div>
+      </section>
+
+      <section className="sheet-optimizer-workspace">
+        <div className="sheet-optimizer-container">
+          <div className="sheet-optimizer-controls">
+            <form className="optimizer-card" onSubmit={generateLayout}>
+              <div className="optimizer-card__heading">
+                <span className="optimizer-step">1</span>
+                <div>
+                  <p className="eyebrow">Stock material</p>
+                  <h2>Sheet size</h2>
+                </div>
+              </div>
+              <div className="optimizer-field-grid">
+                <label className="optimizer-field">
+                  Width <span>(mm)</span>
+                  <input
+                    type="number"
+                    min="1"
+                    step="any"
+                    value={sheetWidth}
+                    onChange={(event) => {
+                      setSheetWidth(event.target.value);
+                      setLayout(null);
+                    }}
+                    required
+                  />
+                </label>
+                <label className="optimizer-field">
+                  Height <span>(mm)</span>
+                  <input
+                    type="number"
+                    min="1"
+                    step="any"
+                    value={sheetHeight}
+                    onChange={(event) => {
+                      setSheetHeight(event.target.value);
+                      setLayout(null);
+                    }}
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="optimizer-card__heading piece-heading">
+                <span className="optimizer-step">2</span>
+                <div>
+                  <p className="eyebrow">Parts to cut</p>
+                  <h2>Add pieces</h2>
+                </div>
+              </div>
+              <div className="optimizer-field-grid optimizer-field-grid--pieces">
+                <label className="optimizer-field">
+                  Width <span>(mm)</span>
+                  <input
+                    type="number"
+                    min="1"
+                    step="any"
+                    value={draft.width}
+                    onChange={(event) => updateDraft("width", event.target.value)}
+                    placeholder="e.g. 800"
+                  />
+                </label>
+                <label className="optimizer-field">
+                  Height <span>(mm)</span>
+                  <input
+                    type="number"
+                    min="1"
+                    step="any"
+                    value={draft.height}
+                    onChange={(event) => updateDraft("height", event.target.value)}
+                    placeholder="e.g. 600"
+                  />
+                </label>
+                <label className="optimizer-field">
+                  Quantity
+                  <input
+                    type="number"
+                    min="1"
+                    step="1"
+                    value={draft.qty}
+                    onChange={(event) => updateDraft("qty", event.target.value)}
+                  />
+                </label>
+              </div>
+              <div className="optimizer-add-row">
+                <label className="optimizer-check">
+                  <input
+                    type="checkbox"
+                    checked={draft.lockRotation}
+                    onChange={(event) => updateDraft("lockRotation", event.target.checked)}
+                  />
+                  Don't rotate (grain direction)
+                </label>
+                <button className="optimizer-secondary-btn" type="button" onClick={addPiece}>
+                  <i className="fa fa-plus" aria-hidden="true" /> Add piece
+                </button>
+              </div>
+
+              <ul className="optimizer-piece-list" aria-label="Pieces to cut">
+                {pieces.length ? pieces.map((piece) => (
+                  <li key={piece.id}>
+                    <span>
+                      <strong>{piece.width} × {piece.height} mm</strong>
+                      <small>Quantity {piece.qty}{piece.lockRotation ? " · Rotation locked" : ""}</small>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removePiece(piece.id)}
+                      aria-label={`Remove ${piece.width} by ${piece.height} mm piece`}
+                    >
+                      <i className="fa fa-trash" aria-hidden="true" />
+                    </button>
+                  </li>
+                )) : (
+                  <li className="optimizer-piece-list__empty">No pieces added yet.</li>
+                )}
+              </ul>
+
+              <div className="optimizer-options">
+                <label className="optimizer-check">
+                  <input
+                    type="checkbox"
+                    checked={allowRotation}
+                    onChange={(event) => {
+                      setAllowRotation(event.target.checked);
+                      setLayout(null);
+                    }}
+                  />
+                  Allow rotation
+                </label>
+                <label className="optimizer-field">
+                  Kerf / spacing <span>(mm)</span>
+                  <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    value={kerf}
+                    onChange={(event) => {
+                      setKerf(event.target.value);
+                      setLayout(null);
+                    }}
+                  />
+                </label>
+                <label className="optimizer-field">
+                  Edge trim <span>(mm)</span>
+                  <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    value={trim}
+                    onChange={(event) => {
+                      setTrim(event.target.value);
+                      setLayout(null);
+                    }}
+                  />
+                </label>
+              </div>
+
+              {error && <p className="optimizer-error" role="alert">{error}</p>}
+              <button className="optimizer-primary-btn" type="submit">
+                <i className="fa fa-magic" aria-hidden="true" /> Generate layout
+              </button>
+            </form>
+
+            <div className="optimizer-tip">
+              <i className="fa fa-info-circle" aria-hidden="true" />
+              <p>Layouts use edge-to-edge guillotine cuts. A piece that cannot fit on a usable sheet will be reported.</p>
+            </div>
+          </div>
+
+          <div className="optimizer-results">
+            <div className="optimizer-card optimizer-results__card">
+              <div className="optimizer-card__heading">
+                <span className="optimizer-step">3</span>
+                <div>
+                  <p className="eyebrow">Cut plan</p>
+                  <h2>Layout results</h2>
+                </div>
+              </div>
+
+              {stats ? (
+                <>
+                  <div className="optimizer-stats" aria-live="polite">
+                    <div><span>Sheets used</span><strong>{stats.sheetCount}</strong></div>
+                    <div><span>Efficiency</span><strong>{stats.efficiency.toFixed(1)}%</strong></div>
+                    <div><span>Waste</span><strong>{stats.waste.toFixed(1)}%</strong></div>
+                  </div>
+                  {layout.unplaceable.length > 0 && (
+                    <div className="optimizer-warning" role="status">
+                      <strong>{layout.unplaceable.length} piece{layout.unplaceable.length === 1 ? "" : "s"} could not be placed.</strong>
+                      <span>
+                        {layout.unplaceable.map((piece) => `${piece.width} × ${piece.height} mm`).join(", ")}
+                      </span>
+                    </div>
+                  )}
+                  {layout.sheets.length ? (
+                    <div className="optimizer-canvas-wrapper">
+                      <canvas ref={canvasRef} aria-label="Generated sheet cutting layout">
+                        Your browser does not support canvas rendering.
+                      </canvas>
+                    </div>
+                  ) : (
+                    <div className="optimizer-empty">
+                      No pieces fit within the usable sheet area. Adjust the sheet or piece dimensions.
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="optimizer-empty">
+                  <i className="fa fa-th-large" aria-hidden="true" />
+                  <strong>Your layout will appear here</strong>
+                  <span>Add the pieces you need, then generate a cutting plan.</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main> -->

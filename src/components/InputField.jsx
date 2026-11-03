@@ -239,6 +239,7 @@ export function ImageCheckboxField({
   info = 'Lorem ipsium donor sit amet',
   classNames = [],
   image,
+  icon,
   selected,
   
   onChange,
@@ -253,6 +254,7 @@ export function ImageCheckboxField({
   
   return <div className={`image-checkbox-field  ${classNames.join(' ')}`} id={`parent-of-${name}`}>
     {image && <img src={image} alt={image} />}
+    {!image && icon && icon}
     <div className="info">
       <label htmlFor={name}><h4>{label.replace('-', ' ')}</h4></label>
       {info && <p>{info}</p>}

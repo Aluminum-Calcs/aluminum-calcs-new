@@ -95,6 +95,12 @@ export default function Header() {
             </NavLink>
           </li>
           <li>
+            <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/sheet-optimizer">
+              <i className="fa fa-object-group"></i>
+              Sheet Optimizer
+            </NavLink>
+          </li>
+          <li>
             <NavLink onClick={()=>setNavState('closed')} to="/aluminum-calcs-new/stile-calculator">
               <i className="fa fa-columns"></i>
               Profile / Stile Calc
@@ -171,4 +177,3 @@ export default function Header() {
     
   </>)
 }
-

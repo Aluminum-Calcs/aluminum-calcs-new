@@ -201,9 +201,7 @@ function Material({ data }) {
     <p className="material-usage">
       <span>Usage:</span>
       <div>
-        {data.usage && data.usage.map((each, i) => <span className="use" key={i}>
-          {each}
-        </span>)}
+        {data.usage && data.usage.map((each,i)=> <span className="use" key={i}></span>)}
       </div>
     </p>
   </div>

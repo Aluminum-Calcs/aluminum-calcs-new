@@ -28,6 +28,7 @@ import StileContextProvider from './context/StileContext.jsx';
 import { QuoteContextProvider } from './context/QuoteContext.jsx';
 import SignIn from './pages/SignIn.jsx';
 import Settings from './pages/Settings.jsx';
+import SheetOptimizer from './pages/SheetOptimizer.jsx';
 
 
 function App() {
@@ -80,6 +81,10 @@ function App() {
             <Route
               path="/aluminum-calcs-new/glass-price-calculator"
               element={<GlassPrice />}
+            />
+            <Route
+              path="/aluminum-calcs-new/sheet-optimizer"
+              element={<SheetOptimizer />}
             />
             <Route
               path="/aluminum-calcs-new/channels"

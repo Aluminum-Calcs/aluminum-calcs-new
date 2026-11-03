@@ -9,7 +9,7 @@ export default function CurrentStepHeader({
   otherButtons = [
     {
       text: <i className="fa fa-refresh">Refresh</i>,
-      callbacks: [console.log("1"), console.log("2"), console.log("3")],
+      callbacks: [],//console.log("1"), console.log("2"), console.log("3")
     },
   ],
 }) {
@@ -19,7 +19,6 @@ export default function CurrentStepHeader({
 
   function handleButtons(e) {
     e.preventDefault();
-    console.log()
   }
 
   return (
@@ -32,7 +31,6 @@ export default function CurrentStepHeader({
           {otherButtons != [] && (
             <>
               {otherButtons.forEach((btn, i) => {
-                console.log(btn.text);
                 return <button id={`other-btn-${i}`}>{btn.text}</button>;
               })}
             </>

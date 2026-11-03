@@ -249,3 +249,20 @@
     }
   }
 }
+
+@mixin mobile-step-section {
+  padding: 12px var(--sp);
+  @include m.df(normal, normal, column);
+  >.container {
+    width: 100% !important;
+    @include m.df(normal, normal, column, 18px);
+
+    >.heading {
+      @include m.df(normal, normal, column, 4px);
+    }
+  }
+
+  form {
+    padding: 0 !important;
+  }
+}

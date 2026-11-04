@@ -1,3 +1,4 @@
+
 import { Fragment, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
@@ -63,21 +64,16 @@ const initialValues = {
 
 const options = {
   windowType: [
-    {
-      value: "sliding-window",
-      image: slidingSvg,
-    },
-    {
-      value: "casement-window",
-      image: casementSvg,
-    },
-    {
-      value: "frameless-window",
-      image: framelessSvg,
-    },
+    { value: "sliding-window", image: slidingSvg },
+    { value: "casement-window", image: casementSvg },
+    { value: "frameless-window", image: framelessSvg },
   ],
 
-  sashCount: [{ value: 1 }, { value: 2, default: true }, { value: 3 }],
+  sashCount: [
+    { value: 1 },
+    { value: 2, default: true },
+    { value: 3 },
+  ],
 
   matterTransom: [{ value: "yes" }, { value: "no" }],
 
@@ -87,11 +83,20 @@ const options = {
     { value: "both" },
   ],
 
-  orientation: [{ value: "vertical" }, { value: "horizontal" }],
+  orientation: [
+    { value: "vertical" },
+    { value: "horizontal" },
+  ],
 
-  glassThickness: [{ value: "4mm", default: true }, { value: "5mm" }],
+  glassThickness: [
+    { value: "4mm", default: true },
+    { value: "5mm" },
+  ],
 
-  glassColor: [{ value: "Blue", default: true }, { value: "Black" }],
+  glassColor: [
+    { value: "Blue", default: true },
+    { value: "Black" },
+  ],
 
   glassType: [
     { value: "Partial reflective", default: true },
@@ -106,11 +111,13 @@ function QuoteBuilder() {
   const { pathname } = useLocation();
 
   const { setCurrentPage, setFormSteps } = useContext(PageContext);
-
   const { setSaveDraftVisibility } = useContext(QuoteContext);
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState(() => ({
+    ...initialValues,
+    accessories: [...initialValues.accessories],
+  }));
 
   const [isDesktop, setIsDesktop] = useState(
     typeof window !== "undefined" && window.innerWidth >= 1100
@@ -129,7 +136,7 @@ function QuoteBuilder() {
     };
   }, []);
 
-  // Update the application page context
+  // Update application page context
   useEffect(() => {
     setCurrentPage?.("Quote Builder");
     setFormSteps?.(steps);
@@ -181,9 +188,13 @@ function QuoteBuilder() {
     });
   }
 
-  // Reset the quotation
+  // Reset quotation
   function clearAll() {
-    setValues({ ...initialValues });
+    setValues({
+      ...initialValues,
+      accessories: [...initialValues.accessories],
+    });
+
     setCurrentStep(0);
   }
 
@@ -197,11 +208,17 @@ function QuoteBuilder() {
     const discount = quoteData?.discount ?? 0;
     const total = quoteData?.total ?? subtotal - discount;
 
-    addQuoteToCart(quotationValues, total, subtotal, discount);
+    addQuoteToCart(
+      quotationValues,
+      total,
+      subtotal,
+      discount
+    );
 
     navigate("/aluminum-calcs-new/quote-success");
   }
 
+  // Open save draft modal
   function openSaveDraft() {
     setSaveDraftVisibility?.(true);
   }
@@ -210,22 +227,20 @@ function QuoteBuilder() {
   const hasAccessory = (accessory) =>
     (values.accessories || []).includes(accessory);
 
-  const hasPipeConflict =
-    hasAccessory("25mm stainless pipe") ||
+  const disableStainless =
     hasAccessory("ify pipe") ||
     hasAccessory("25mm galvanized pipe");
 
-  const disableStainless =
-    hasAccessory("ify pipe") || hasAccessory("25mm galvanized pipe");
-
   const disableIfy =
-    hasAccessory("25mm stainless pipe") || hasAccessory("25mm galvanized pipe");
+    hasAccessory("25mm stainless pipe") ||
+    hasAccessory("25mm galvanized pipe");
 
   const disableGalvanized =
-    hasAccessory("ify pipe") || hasAccessory("25mm stainless pipe");
+    hasAccessory("ify pipe") ||
+    hasAccessory("25mm stainless pipe");
 
-  // Reusable accessory fields
-  function AccessoryFields() {
+  // Render accessory fields
+  function renderAccessoryFields() {
     return (
       <>
         <ImageCheckboxField
@@ -316,8 +331,8 @@ function QuoteBuilder() {
     );
   }
 
-  // Reusable window details
-  function WindowDetailsFields() {
+  // Render window details
+  function renderWindowDetailsFields() {
     return (
       <>
         <ImageRadioField
@@ -392,8 +407,8 @@ function QuoteBuilder() {
     );
   }
 
-  // Reusable glass fields
-  function GlassFields() {
+  // Render glass fields
+  function renderGlassFields() {
     return (
       <>
         <DropdownField
@@ -423,8 +438,8 @@ function QuoteBuilder() {
     );
   }
 
-  // Introduction section
-  function CreateQuoteIntro() {
+  // Render introduction section
+  function renderCreateQuoteIntro() {
     return (
       <section className="intro">
         <div className="container">
@@ -460,7 +475,8 @@ function QuoteBuilder() {
     );
   }
 
-  function FormNavi({
+  // Render form navigation
+  function renderFormNavi({
     backTo = () => handleStepSetting("backward"),
     nextTo = () => handleStepSetting("forward"),
     backwardText = (
@@ -475,39 +491,56 @@ function QuoteBuilder() {
         <i className="fa fa-chevron-right" />
       </>
     ),
-  }) {
+  } = {}) {
     return (
       <section className="form-navigation">
         <div className="container">
           {currentStep > 0 && (
-            <button type="button" className="backward" onClick={backTo}>
+            <button
+              type="button"
+              className="backward"
+              onClick={backTo}
+            >
               {backwardText}
             </button>
           )}
 
-          <button type="button" className="forward" onClick={nextTo}>
+          <button
+            type="button"
+            className="forward"
+            onClick={nextTo}
+          >
             {currentStep === 0 ? "Create a Quote" : forwardText}
 
-            {currentStep === 0 && <i className="fa fa-chevron-right" />}
+            {currentStep === 0 && (
+              <i className="fa fa-chevron-right" />
+            )}
           </button>
         </div>
       </section>
     );
   }
 
-  // Mobile step header
-  function StepHeader({ headerText = "New Quote" }) {
+  // Render mobile step header
+  function renderStepHeader({ headerText = "New Quote" } = {}) {
     return (
       <section className="Step-header">
         <div className="container">
           <div className="nav">
-            <button type="button" onClick={() => handleStepSetting("backward")}>
+            <button
+              type="button"
+              onClick={() => handleStepSetting("backward")}
+            >
               <i className="fa fa-angle-left" />
             </button>
 
             <h3>{headerText}</h3>
 
-            <button type="button" id="save" onClick={openSaveDraft}>
+            <button
+              type="button"
+              id="save"
+              onClick={openSaveDraft}
+            >
               <i className="fa fa-save" />
             </button>
           </div>
@@ -529,7 +562,11 @@ function QuoteBuilder() {
 
                 {index < steps.length - 1 && (
                   <div
-                    className={step < currentStep ? "line completed" : "line"}
+                    className={
+                      step < currentStep
+                        ? "line completed"
+                        : "line"
+                    }
                   />
                 )}
               </Fragment>
@@ -540,9 +577,14 @@ function QuoteBuilder() {
     );
   }
 
-  // Shared draft modal
-  function DraftModal() {
-    return <SaveDraftModal values={values} storageKey={draft_storage_key} />;
+  // Render draft modal
+  function renderDraftModal() {
+    return (
+      <SaveDraftModal
+        values={values}
+        storageKey={draft_storage_key}
+      />
+    );
   }
 
   // Desktop layout
@@ -579,7 +621,11 @@ function QuoteBuilder() {
             Save Draft
           </button>
 
-          <button type="button" className="clear-all" onClick={clearAll}>
+          <button
+            type="button"
+            className="clear-all"
+            onClick={clearAll}
+          >
             <i className="fa fa-refresh" />
             Clear All
           </button>
@@ -594,7 +640,10 @@ function QuoteBuilder() {
           </button>
         </section>
 
-        <form className="form" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="form"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <section className="form_section 1">
             <div className="card-heading">
               <div className="card-icon">
@@ -608,7 +657,7 @@ function QuoteBuilder() {
             </div>
 
             <div className="form_section_fields">
-              <WindowDetailsFields />
+              {renderWindowDetailsFields()}
             </div>
           </section>
 
@@ -625,7 +674,7 @@ function QuoteBuilder() {
             </div>
 
             <div className="form_section_fields">
-              <GlassFields />
+              {renderGlassFields()}
 
               <GlassSizeTip
                 windowType={values.windowType}
@@ -649,7 +698,7 @@ function QuoteBuilder() {
             </div>
 
             <div className="form_section_fields">
-              <AccessoryFields />
+              {renderAccessoryFields()}
             </div>
           </section>
         </form>
@@ -660,7 +709,7 @@ function QuoteBuilder() {
           onSaveDraft={openSaveDraft}
         />
 
-        <DraftModal />
+        {renderDraftModal()}
       </main>
     );
   }
@@ -669,11 +718,11 @@ function QuoteBuilder() {
   if (currentStep === 0) {
     return (
       <main className="quote-builder-page">
-        <CreateQuoteIntro />
+        {renderCreateQuoteIntro()}
 
-        <FormNavi />
+        {renderFormNavi()}
 
-        <DraftModal />
+        {renderDraftModal()}
       </main>
     );
   }
@@ -682,7 +731,7 @@ function QuoteBuilder() {
   if (currentStep === 1) {
     return (
       <main className="quote-builder-page">
-        <StepHeader />
+        {renderStepHeader()}
 
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="container">
@@ -709,9 +758,9 @@ function QuoteBuilder() {
           </div>
         </form>
 
-        <FormNavi />
+        {renderFormNavi()}
 
-        <DraftModal />
+        {renderDraftModal()}
       </main>
     );
   }
@@ -720,9 +769,12 @@ function QuoteBuilder() {
   if (currentStep === 2) {
     return (
       <main className="quote-builder-page">
-        <StepHeader />
+        {renderStepHeader()}
 
-        <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="quote-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <div className="container">
             <div>
               <h2>Dimensions & Opening</h2>
@@ -784,9 +836,9 @@ function QuoteBuilder() {
           </div>
         </form>
 
-        <FormNavi />
+        {renderFormNavi()}
 
-        <DraftModal />
+        {renderDraftModal()}
       </main>
     );
   }
@@ -795,16 +847,19 @@ function QuoteBuilder() {
   if (currentStep === 3) {
     return (
       <main className="quote-builder-page">
-        <StepHeader />
+        {renderStepHeader()}
 
-        <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="quote-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <div className="container">
             <div>
               <h2>Glass Details</h2>
               <p>Choose your glass specifications.</p>
             </div>
 
-            <GlassFields />
+            {renderGlassFields()}
           </div>
         </form>
 
@@ -815,9 +870,9 @@ function QuoteBuilder() {
           height={values.height}
         />
 
-        <FormNavi />
+        {renderFormNavi()}
 
-        <DraftModal />
+        {renderDraftModal()}
       </main>
     );
   }
@@ -826,22 +881,25 @@ function QuoteBuilder() {
   if (currentStep === 4) {
     return (
       <main className="quote-builder-page">
-        <StepHeader />
+        {renderStepHeader()}
 
-        <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="quote-form"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <div className="container">
             <div>
               <h2>Accessories & Add-ons</h2>
               <p>Select additional items.</p>
             </div>
 
-            <AccessoryFields />
+            {renderAccessoryFields()}
           </div>
         </form>
 
-        <FormNavi />
+        {renderFormNavi()}
 
-        <DraftModal />
+        {renderDraftModal()}
       </main>
     );
   }
@@ -849,9 +907,12 @@ function QuoteBuilder() {
   // Mobile step 5: Review and quotation
   return (
     <main className="quote-builder-page">
-      <StepHeader />
+      {renderStepHeader()}
 
-      <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+      <form
+        className="quote-form"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <div className="container">
           <div>
             <h2>Review & Quotation</h2>
@@ -866,24 +927,24 @@ function QuoteBuilder() {
         onSaveDraft={openSaveDraft}
       />
 
-      <FormNavi
-        backTo={openSaveDraft}
-        nextTo={() => handleAddToCart()}
-        backwardText={
+      {renderFormNavi({
+        backTo: openSaveDraft,
+        nextTo: () => handleAddToCart(),
+        backwardText: (
           <>
             <i className="fa fa-save" />
             Save Draft
           </>
-        }
-        forwardText={
+        ),
+        forwardText: (
           <>
             <i className="fa fa-cart-plus" />
             Add to Cart
           </>
-        }
-      />
+        ),
+      })}
 
-      <DraftModal />
+      {renderDraftModal()}
     </main>
   );
 }

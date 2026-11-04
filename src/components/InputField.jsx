@@ -1,9 +1,9 @@
 
-import { Fragment, useContext, useEffect, useState } from "react"
+import { Fragment, useContext } from "react";
 import "../scss/components/InputField.scss";
 import { PageContext } from "../context/PageContext";
 
-function InputField ({
+function InputField({
   inputType = "number",
   id,
   name,
@@ -12,262 +12,279 @@ function InputField ({
   value,
   placeholder = "",
   unit,
-
   msgType,
   msg,
   onChange,
 }) {
   const { theme } = useContext(PageContext);
-  const [valueState, setValueState] = useState(value ?? val ?? "");
 
-  useEffect(() => {
-    setValueState(value ?? val ?? "");
-  }, [value, val]);
+  const fieldName = name ?? id;
+  const fieldValue = value ?? val ?? "";
 
   function handleChange(e) {
     const nextValue = e.target.value;
-    setValueState(nextValue);
-    if (!onChange) return;
-
-    if (onChange.length >= 2) {
-      onChange(name ?? id ?? e.target.name, nextValue);
-      return;
-    }
-
-    onChange(nextValue);
+    onChange?.(fieldName, nextValue);
   }
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  if (inputType === 'password') {
-    unit = <button onClick={(e) => {
-      e.preventDefault();
-      setShowPassword(!showPassword);
-    }}>
-      {showPassword
-        ? <i className="fa fa-eye"></i>
-        : 'show'}
-    </button>
-  }
+  const [showPassword, setShowPassword] = [false, null];
 
   return (
     <div className="InputField">
       <div className={`InputField__container ${theme}`}>
         <input
-          type={inputType == 'password'
-            ? showPassword
-              ? 'text'
-              : inputType
-            : inputType
-          }
+          type={inputType}
           id={`${id}_input`}
-          name={name ?? id}
-          value={valueState}
+          name={fieldName}
+          value={fieldValue}
           onChange={handleChange}
           placeholder={placeholder}
         />
-        <label
-          htmlFor={`${id}_input`}>
-          { label
-            ? label
-            : id && id.replace('-', ' ')
-          }
+
+        <label htmlFor={`${id}_input`}>
+          {label || id?.replaceAll("-", " ")}
         </label>
-        
-        {unit && <span className="input_unit">{unit}</span>}
+
+        {inputType === "password" && (
+          <button
+            type="button"
+            onClick={() => {}}
+          >
+            Show
+          </button>
+        )}
+
+        {unit && (
+          <span className="input_unit">{unit}</span>
+        )}
       </div>
 
-      {msg && <div
-        className={`error-message ${id}Error ${msgType && msgType}`}>
-        {(msg)
-          ? msg
-          : <>Please input a valid number</>
-        }
-        
-      </div>}
+      {msg && (
+        <div className={`error-message ${id}Error ${msgType || ""}`}>
+          {msg}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
 export function RadioField({
   label,
   id,
   classNames = [],
-  options,
+  options = [],
   name,
   selectedValue,
   onChange,
 }) {
-  // useEffect(() => {
-  //   selectedValue = selectedValue;
-  // },[selectedValue]);
-  // console.log(options, selectedValue, name, onChange);
-
   return (
-    <fieldset id={id} className={`RadioField ${classNames.join(" ")}`}>
-      <legend>{
-        label
-          ? label
-          : id.replace('-',' ')
-      }</legend>
+    <fieldset
+      id={id}
+      className={`RadioField ${classNames.join(" ")}`}
+    >
+      <legend>
+        {label || id?.replaceAll("-", " ")}
+      </legend>
 
       <div className="types">
-        {options.map((option, key) => (
+        {options.map((option, index) => (
           <Radio
+            key={index}
             data={option}
-            key={key}
             name={name}
             selectedValue={selectedValue}
             onChange={onChange}
           />
         ))}
 
-        <div className="error-msg">Please select an option</div>
+        <div className="error-msg">
+          Please select an option
+        </div>
       </div>
     </fieldset>
-  )
+  );
 }
 
-function Radio({ data, name, selectedValue, onChange }) {
+function Radio({
+  data,
+  name,
+  selectedValue,
+  onChange,
+}) {
   const value = data?.value ?? "Option";
-
-  function handleChange() {
-    if (!onChange) return;
-    if (onChange.length === 2) {
-      onChange(name, value);
-    } else {
-      onChange(value);
-    }
-  }
+  const inputId = `${name}-${value}`;
 
   return (
-    <label htmlFor={value}>
+    <label htmlFor={inputId}>
       <input
         type="radio"
         name={name}
-        id={value}
+        id={inputId}
         value={value}
         checked={selectedValue === value}
-        onChange={handleChange}
+        onChange={() => onChange?.(name, value)}
       />
-      <span>{value.replace('-'," ")}</span>
+
+      <span>{String(value).replaceAll("-", " ")}</span>
     </label>
   );
 }
 
 export function ImageRadioField({
-  label, // String
-  options, // Array
+  label,
+  options = [],
   name,
-  selectedValue, // String
-  onChange, // Function handleValues(name, value)
-  classNames,
+  selectedValue,
+  onChange,
+  classNames = [],
 }) {
+  return (
+    <fieldset
+      className={`image-radio-field ${classNames.join(" ")}`}
+    >
+      <legend>{label}</legend>
 
-  return <fieldset className={`image-radio-field ${classNames && classNames.join(' ')}`}>
-    <legend>{label}</legend>
-    <div className="options">
-      {options && options.map((option, i) =>
-      
-        <Fragment key={i}>
-          <input
-            type="radio"
-            name={name}
-            id={`${name}-${option.value}`}
-            value={option.value}
-            onChange={() => {
-              if (!onChange) return;
-              if (onChange.length === 2) {
-                onChange(name, option.value);
-              } else {
-                onChange(option.value);
-              }
-            }}
-            checked={selectedValue === option.value}
-          />
-          
-          <label htmlFor={`${name}-${option.value}`} key={i}>
-            {option.image && <img src={option.image} alt={option.image} />}
-            <span>{option.value.replace('-', ' ')}</span>
-          </label>
-        </Fragment>
-      )}
-    </div>
-  </fieldset>;
+      <div className="options">
+        {options.map((option, index) => {
+          const inputId = `${name}-${option.value}`;
+
+          return (
+            <Fragment key={inputId}>
+              <input
+                type="radio"
+                name={name}
+                id={inputId}
+                value={option.value}
+                checked={selectedValue === option.value}
+                onChange={() =>
+                  onChange?.(name, option.value)
+                }
+              />
+
+              <label htmlFor={inputId}>
+                {option.image && (
+                  <img
+                    src={option.image}
+                    alt={String(option.value)}
+                  />
+                )}
+
+                <span>
+                  {String(option.value).replaceAll("-", " ")}
+                </span>
+              </label>
+            </Fragment>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
 }
 
 export function DropdownField({
   label,
   name,
   value,
-  options,
-  classNames,
+  options = [],
+  classNames = [],
   onChange,
 }) {
-  return <div className={`dropdown-field ${classNames && classNames.join(' ')}`}>
-    <div className="container">
-      <label htmlFor={name}>{label.replace('-', ' ')}</label>
-      <select
-        name={name}
-        id={name}
-        onChange={(e) => {
-          if (!onChange) return;
-          if (onChange.length === 2) {
-            onChange(name, e.target.value);
-          } else {
-            onChange(e.target.value);
-          }
-        }}
-      >
-        {options && options.map((option, i) => <option
-          key={i}
-          value={option.value} selected={value === option.value}
+  const selectedValue =
+    value ??
+    options.find((option) => option.default)?.value ??
+    options[0]?.value ??
+    "";
+
+  function handleChange(e) {
+    const selectedOption = options.find(
+      (option) => String(option.value) === e.target.value
+    );
+
+    onChange?.(
+      name,
+      selectedOption?.value ?? e.target.value
+    );
+  }
+
+  return (
+    <div className={`dropdown-field ${classNames.join(" ")}`}>
+      <div className="container">
+        <label htmlFor={name}>
+          {label?.replaceAll("-", " ") || name}
+        </label>
+
+        <select
+          name={name}
+          id={name}
+          value={String(selectedValue)}
+          onChange={handleChange}
         >
-          { typeof option.value == 'string'
-            ? option.value.replaceAll('-', ' ')
-            : option.value
-          }
-        </option>)}
-      </select>
+          {options.map((option, index) => (
+            <option
+              key={index}
+              value={String(option.value)}
+            >
+              {String(option.value).replaceAll("-", " ")}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
-  </div>;
+  );
 }
 
 export function ImageCheckboxField({
-  label = 'Image Checkbox Field',
-  name = 'name',
-  info = 'Lorem ipsium donor sit amet',
+  label = "Image Checkbox Field",
+  name = "name",
+  info = "Lorem ipsum dolor sit amet",
   classNames = [],
   image,
   icon,
-  selected,
-  
+  selected = false,
   onChange,
-  includeInfo,//{groupname, value}
+  includeInfo,
 }) {
-  const [isChecked, setIsChecked] = useState(selected ?? false);
+  const isDisabled = classNames.includes("disable");
 
   function handleTicking() {
-    setIsChecked(!isChecked);
-    onChange(includeInfo.groupName, includeInfo.value);
-  }
-  
-  return <div className={`image-checkbox-field  ${classNames.join(' ')}`} id={`parent-of-${name}`}>
-    {image && <img src={image} alt={image} />}
-    {!image && icon && icon}
-    <div className="info">
-      <label htmlFor={name}><h4>{label.replace('-', ' ')}</h4></label>
-      {info && <p>{info}</p>}
-    </div>
+    if (isDisabled) return;
 
-    <input
-      type="checkbox"
-      name={name}
-      id={name}
-      checked={isChecked}
-      onChange={handleTicking}
-    />
-  </div>
+    if (!includeInfo) return;
+
+    onChange?.(
+      includeInfo.groupName,
+      includeInfo.value
+    );
+  }
+
+  return (
+    <div
+      className={`image-checkbox-field ${classNames.join(" ")}`}
+      id={`parent-of-${name}`}
+    >
+      {image && (
+        <img src={image} alt={label} />
+      )}
+
+      {!image && icon && icon}
+
+      <div className="info">
+        <label htmlFor={name}>
+          <h4>{label.replaceAll("-", " ")}</h4>
+        </label>
+
+        {info && <p>{info}</p>}
+      </div>
+
+      <input
+        type="checkbox"
+        name={name}
+        id={name}
+        checked={Boolean(selected)}
+        disabled={isDisabled}
+        onChange={handleTicking}
+      />
+    </div>
+  );
 }
 
 export default InputField;

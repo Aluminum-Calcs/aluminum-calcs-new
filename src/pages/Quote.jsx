@@ -1,46 +1,67 @@
-import { PageContext } from "../context/PageContext";
 import { Fragment, useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
+
+import { PageContext } from "../context/PageContext";
+import { QuoteContext } from "../context/QuoteContext.jsx";
+
 import "../scss/pages/Quote.scss";
 import "../scss/components/FormNavi.scss";
-import { NavLink, useLocation, useNavigate } from "react-router";
+import "../scss/components/CurrentStepHeader.scss";
+
 import InputField, {
   RadioField,
   ImageRadioField,
   DropdownField,
   ImageCheckboxField,
 } from "../components/InputField.jsx";
+
 import Quotation from "../components/QuotationSummary.jsx";
 import SaveDraftModal from "../components/SaveDraftModal.jsx";
-import '../scss/components/CurrentStepHeader.scss';
+import GlassSizeTip from "../components/GlassSizeTip.jsx";
 
 import quoteIllustration from "../assets/images/quote-illustration.png";
-import lockStile from "../assets/images/svgs/lock-stile.svg";
-import glassSvg from "../assets/images/svgs/glass.svg";
+
 import insectNetSvg from "../assets/images/svgs/net.svg";
 import protectorSvg from "../assets/images/svgs/protector.svg";
-import transom from "../assets/images/svgs/transom.svg";
 import protectorRodSvg from "../assets/images/svgs/protector-rod.svg";
 import weatherStripSvg from "../assets/images/svgs/weather-strip.svg";
 
 import slidingSvg from "../assets/images/svgs/sliding.svg";
 import casementSvg from "../assets/images/svgs/casement.svg";
 import framelessSvg from "../assets/images/svgs/frameless.svg";
-import GlassSizeTip from "../components/GlassSizeTip.jsx";
-import { saveDraft_localStorage } from "../js/Quote/main.js";
-import { QuoteContext, QuoteContextProvider } from "../context/QuoteContext.jsx";
+
 import { getQuotationTotals } from "../js/Quote/quotationTotals.js";
 import { addQuoteToCart } from "../js/cart/quoteCart.js";
-import { readStorageItem } from "../js/glass-price/storage.js";
 
-let draft_storage_key = 'aluminum-calcs/quote-builder';
+const draft_storage_key = "aluminum-calcs/quote-builder";
 
-function addToCart(values) {
-  const { total } = getQuotationTotals(values);
-  addQuoteToCart(values, total);
-  navigate("/aluminum-calcs-new/quote-success");
-}
+const steps = [1, 2, 3, 4, 5];
 
-let options = {
+const initialValues = {
+  windowType: "casement-window",
+
+  width: 1200,
+  height: 1200,
+
+  innerWidth: 0,
+  innerHeight: 0,
+
+  sashCount: 3,
+
+  orientation: "horizontal",
+
+  matterTransom: "yes",
+  openingStyle: "both",
+
+  includeGlass: true,
+  glassThickness: "4mm",
+  glassColor: "Blue",
+  glassType: "Partial reflective",
+
+  accessories: ["30m net", "weather strip"],
+};
+
+const options = {
   windowType: [
     {
       value: "sliding-window",
@@ -55,32 +76,23 @@ let options = {
       image: framelessSvg,
     },
   ],
-  sashCount: [
-    { value: 1 },
-    { value: 2, default: true },
-    { value: 3 },
-  ],
-  matterTransom: [
-    { value: "yes" },
-    { value: "no" }
-  ],
+
+  sashCount: [{ value: 1 }, { value: 2, default: true }, { value: 3 }],
+
+  matterTransom: [{ value: "yes" }, { value: "no" }],
+
   openingStyle: [
     { value: "left-open" },
     { value: "right-open" },
     { value: "both" },
   ],
-  orientation: [
-    { value: 'vertical' },
-    { value: 'horizontal' },
-  ],
-  glassThickness: [
-    { value: "4mm", default: true },
-    { value: "5mm" },
-  ],
-  glassColor: [
-    { value: "Blue", default: true },
-    { value: "Black" },
-  ],
+
+  orientation: [{ value: "vertical" }, { value: "horizontal" }],
+
+  glassThickness: [{ value: "4mm", default: true }, { value: "5mm" }],
+
+  glassColor: [{ value: "Blue", default: true }, { value: "Black" }],
+
   glassType: [
     { value: "Partial reflective", default: true },
     { value: "Total-reflective" },
@@ -89,620 +101,359 @@ let options = {
   ],
 };
 
-
 function QuoteBuilder() {
-  const { theme, setCurrentPage } = useContext(PageContext);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const { setCurrentPage, setFormSteps } = useContext(PageContext);
 
   const { setSaveDraftVisibility } = useContext(QuoteContext);
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [values, setValues] = useState(initialValues);
 
-  const { setFormSteps } = useContext(PageContext);
-  let steps = [1, 2, 3, 4, 5];
-
-  const [values, setValues] = useState(
-    /*readStorageItem(draft_storage_key).data ?? */{
-      windowType: "casement-window",
-      width: 1200,
-      height: 1200,
-      innerWidth: 0,
-      innerHeight: 0,
-      sashCount: 3,
-      orientation: 'horizontal',
-      matterTransom: "yes",
-      openingStyle: "both",
-
-      includeGlass: true,
-      glassThickness: "4mm",
-      glassColor: "blue",
-
-      // Accessories
-      accessories: [
-        '30m net',
-        'weather strip',
-      ]
-    }
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== "undefined" && window.innerWidth >= 1100
   );
 
-  function handleValues(property, value) {
+  // Responsive layout
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1100);
+    };
 
-    // Special case for accessories, add or remove the value from the array
-    if (property == 'accessories') {
-      setValues((prev) => {
-        let newAccessories = [...prev.accessories];
-        if (newAccessories.includes(value)) {
-          newAccessories = newAccessories.filter((item) => item !== value);
-        } else {
-          newAccessories.push(value);
-        }
-        return { ...prev, accessories: newAccessories };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  // Update the application page context
+  useEffect(() => {
+    setCurrentPage?.("Quote Builder");
+    setFormSteps?.(steps);
+  }, [pathname, setCurrentPage, setFormSteps]);
+
+  // Update form values
+  function handleValues(property, value) {
+    if (!property) return;
+
+    if (property === "accessories") {
+      setValues((previous) => {
+        const currentAccessories = previous.accessories || [];
+
+        const updatedAccessories = currentAccessories.includes(value)
+          ? currentAccessories.filter((item) => item !== value)
+          : [...currentAccessories, value];
+
+        return {
+          ...previous,
+          accessories: updatedAccessories,
+        };
       });
+
       return;
     }
 
-    /*
-      // Special case for sashCount, remove the "-sash" or "-sashes" suffix from the value before setting it in state
-
-      property == "sashCount" && (value = Number(value.toString().replace(/-sash(es)?/i, "")));
-    */
-    setValues((prev) => ({ ...prev, [property]: value }));
-  }
-
-  const { pathname } = useLocation();
-  useEffect(() => {
-    setCurrentPage("Quote Builder");
-    setFormSteps(steps);
-  }, [pathname]);
-
-  function handleStepSetting(path) {
-    if (path == "backward") {
-      currentStep == 0 ? setCurrentStep(0) : setCurrentStep(currentStep - 1);
-    } else {
-      currentStep == 5 ? setCurrentStep(5) : setCurrentStep(currentStep + 1);
+    if (property === "sashCount") {
+      value = Number(value);
     }
+
+    if (property === "width" || property === "height") {
+      value = value === "" ? "" : Number(value);
+    }
+
+    setValues((previous) => ({
+      ...previous,
+      [property]: value,
+    }));
   }
 
-  if (window.innerWidth >= 1100) {
-    return <>
-      <main className="quote-builder-page desktop">
-        <section className="desktop-hero">
-          <div className="desktop-hero__inner">
-            <div>
-              <p className="eyebrow">Start planning</p>
-              <h1><span className="special">Quote</span> Builder</h1>
-              <p className="hero-copy">
-                Create complete window quotations in minutes
-              </p>
-            </div>
-            
-            <div className="hero-mark" aria-hidden="true">
-              <i className="fa fa-cubes" />
-            </div>
-          </div>
-        </section>
+  // Step navigation
+  function handleStepSetting(direction) {
+    setCurrentStep((previous) => {
+      if (direction === "backward") {
+        return Math.max(0, previous - 1);
+      }
 
-        <section className="form-actions">
-          <button className="saveDraftButton">
-            <i className="fa fa-save"></i>
-            Save Draft
-          </button>
-          <button className="clear-all">
-            <i className="fa fa-refresh"></i>
-            Clear All
-          </button>
-          <button className="cartButton">
-            <i className="fa fa-shopping-cart"></i>
-            Add to Cart
-          </button>
-        </section>
-
-        <form className="form">
-          <div className="form_section 1" onClick={() => setCurrentStep(1)}>
-            <div className="card-heading">
-              <div className="card-icon">
-                <span>1</span>
-              </div>
-              <div>
-                <p className="eyebrow">About the window</p>
-                <h2>Window Details</h2>
-              </div>
-            </div>
-            
-            <div className="form_section_fields">
-              <ImageRadioField
-                label="Window Type"
-                options={options.windowType}
-                name="windowType"
-                selectedValue={values.windowType}
-                onChange={handleValues}
-              />
-              <DropdownField
-                label="No of Sashes"
-                options={options.sashCount}
-                name="sashCount"
-                selectedValue={values.sashCount}
-                onChange={handleValues}
-              />
-              <InputField
-                inputType="number" id="overall-width"
-                value="1200"
-                onChange={handleValues}
-                unit ="mm"
-              />
-              <InputField
-                inputType="number" id="overall-height"
-                value="1200"
-                onChange={handleValues}
-                unit="mm"
-              />
-              <InputField
-                inputType="dropdown"
-                id="Window-orientation"
-                value="Horizontal"
-              />
-              <RadioField
-                id="matterTransom"
-                name="matterTransom"
-                classNames={["matterTransom"]}
-                options={options.matterTransom}
-                selectedValue={values.matterTransom}
-                onChange={handleValues}
-              />
-              <RadioField
-                id="openingStyle"
-                classNames={["opening-style"]}
-                options={options.openingStyle}
-                name="openingStyle"
-                selectedValue={values.openingStyle}
-                onChange={handleValues}
-              />
-            </div>
-          </div>
-          <div className="form_section 2" onClick={()=> setCurrentStep(2)}>
-            <div className="card-heading">
-              <div className="card-icon">
-                <span>2</span>
-              </div>
-              <div>
-                <p className="eyebrow">Which type of glass?</p>
-                <h2>Glass Details</h2>
-              </div>
-            </div>
-            <div className="form_section_fields">
-              <DropdownField
-                label="Glass thickness"
-                name="glassThickness"
-                options={options.glassThickness}
-                value={values.glassThickness}
-                onChange={handleValues}
-              />
-              <DropdownField
-                label="Glass Color"
-                name="glassColor"
-                options={options.glassColor}
-                value={values.glassColor}
-                onChange={handleValues}
-              />
-              <DropdownField
-                label="Glass Type"
-                name="glassType"
-                options={options.glassType}
-                value={values.glassType}
-                onChange={handleValues}
-              />
-              <GlassSizeTip
-                windowType={values.windowType}
-                sashes={values.sashCount}
-                width={values.width}
-                height={values.height}
-              />
-            </div>
-          </div>
-          <div className="form_section 3" onClick={()=> setCurrentStep(3)}>
-            <div className="card-heading">
-              <div className="card-icon">
-                <span>3</span>
-              </div>
-              <div>
-                <p className="eyebrow">Any additional items?</p>
-                <h2>Accesories and Add-ons</h2>
-              </div>
-            </div>
-            <div className="form_section_fields">
-              <ImageCheckboxField
-                label="Insect Net"
-                name="insect-net"
-                info="Net for ventilation and protection"
-                image={insectNetSvg}
-                selected={values.accessories.includes('30m net') ?? true}
-
-                onChange={handleValues}
-                includeInfo={{ groupName: 'accessories', value: '30m net' }}
-                />
-              <ImageCheckboxField
-                label="Stainless Steel Pipe"
-                name="steel-pipe"
-                info="Include stainless steel pipe"
-                classNames={
-                  (values.accessories.includes('ify pipe') || values.accessories.includes('25mm galvanized pipe'))
-                  ? ['disable']: []
-                }
-                image={protectorSvg}
-                selected = {values.accessories.includes('25mm stainless pipe')}
-                
-                onChange={handleValues}
-                includeInfo={{ groupName: 'accessories', value: '25mm stainless pipe' }}
-              />
-              <ImageCheckboxField
-                label="Ify pipe"
-                name="ify-pipe"
-                info="Use Ify-pipe as protector"
-                image={protectorSvg}
-                selected={values.accessories.includes('ify pipe')}
-                classNames={
-                  (values.accessories.includes('25mm stainless pipe') || values.accessories.includes('25mm galvanized pipe'))
-                  ? ['disable']: []
-                }
-                
-                onChange={handleValues}
-                includeInfo={{ groupName: 'accessories', value: 'ify pipe' }}
-              />
-              <ImageCheckboxField
-                label="Galvanized pipe"
-                name="galvanized-pipe"
-                info="Use galvanized pipe as protector"
-                image={protectorSvg}
-                selected={values.accessories.includes('25mm galvanized pipe')}
-                classNames={
-                  (values.accessories.includes('ify pipe') || values.accessories.includes('25mm stainless pipe'))
-                  ? ['disable']: []
-                }
-                
-                onChange={handleValues}
-                includeInfo={{ groupName: 'accessories', value: '25mm galvanized pipe' }}
-              />
-              <ImageCheckboxField
-                label="Protector Rod"
-                name="protector-red"
-                info=<>
-                  <b>16mm</b> rod for maximized protection</>
-                image={protectorRodSvg}
-                selected={values.accessories.includes('16mm rod')}
-
-                onChange={handleValues}
-                includeInfo={{ groupName: 'accessories', value: '16mm rod' }}
-              />
-              <ImageCheckboxField
-                label="Weather Strip / Brush"
-                name="weather-strip"
-                info="Reduce noise & dust"
-                selected={values.accessories.includes('weather strip') ?? true}
-                image={weatherStripSvg}
-
-                onChange={handleValues}
-                includeInfo={{ groupName: 'accessories', value: 'weather strip' }}
-              />
-            </div>
-          </div>
-        </form>
-        <Quotation values ={values}/>
-      </main>
-    </>;
+      return Math.min(5, previous + 1);
+    });
   }
 
+  // Reset the quotation
+  function clearAll() {
+    setValues({ ...initialValues });
+    setCurrentStep(0);
+  }
 
-  if (currentStep == 0) {
+  // Add quotation to cart
+  function handleAddToCart(quoteData) {
+    const quotationValues = quoteData?.values || values;
+
+    const totals = getQuotationTotals(quotationValues);
+
+    const subtotal = quoteData?.subtotal ?? totals.subTotal;
+    const discount = quoteData?.discount ?? 0;
+    const total = quoteData?.total ?? subtotal - discount;
+
+    addQuoteToCart(quotationValues, total, subtotal, discount);
+
+    navigate("/aluminum-calcs-new/quote-success");
+  }
+
+  function openSaveDraft() {
+    setSaveDraftVisibility?.(true);
+  }
+
+  // Accessory selection helpers
+  const hasAccessory = (accessory) =>
+    (values.accessories || []).includes(accessory);
+
+  const hasPipeConflict =
+    hasAccessory("25mm stainless pipe") ||
+    hasAccessory("ify pipe") ||
+    hasAccessory("25mm galvanized pipe");
+
+  const disableStainless =
+    hasAccessory("ify pipe") || hasAccessory("25mm galvanized pipe");
+
+  const disableIfy =
+    hasAccessory("25mm stainless pipe") || hasAccessory("25mm galvanized pipe");
+
+  const disableGalvanized =
+    hasAccessory("ify pipe") || hasAccessory("25mm stainless pipe");
+
+  // Reusable accessory fields
+  function AccessoryFields() {
     return (
-      <main className="quote-builder-page">
-        <CreateQuoteIntro />
-        <FormNavi />
-        
-        <SaveDraftModal
-          values={values}
-          storageKey={draft_storage_key}
-        />
-      </main>
-    );
-  } else if (currentStep == 1) {
-    return (
-      <main className="quote-builder-page">
-        <StepHeader />
-        <form>
-          <div className="container">
-            <div>
-              <h2>Window details</h2>
-              <p>Tell us about the window.</p>
-            </div>
-            <ImageRadioField
-              label="Window Type"
-              options={options.windowType}
-              name="windowType"
-              selectedValue={values.windowType}
-              onChange={handleValues}
-            />
-            <DropdownField
-              label="No of Sashes"
-              options={options.sashCount}
-              name="sashCount"
-              value={values.sashCount}
-              selectedValue={values.sashCount}
-              onChange={handleValues}
-            />
-          </div>
-        </form>
-        <FormNavi />
-
-        <SaveDraftModal
-          values={values}
-          storageKey={draft_storage_key}
-        />
-      </main>
-    );
-  } else if (currentStep == 2) {
-    return (
-      <main className="quote-builder-page">
-        <StepHeader />
-        <form className="quote-form">
-          <div className="container">
-            <div>
-              <h2>Dimensions &amp; Opening</h2>
-              <p>Enter the measurements.</p>
-            </div>
-            <InputField
-              inputType="number"
-              id="overall-width"
-              name='width'
-              value={values.width}
-              onChange={handleValues}
-              unit ="mm"
-            />
-            <InputField
-              inputType="number" id="overall-height"
-              name='height'
-              value={values.height}
-              onChange={handleValues}
-              unit="mm"
-            />
-            <DropdownField
-              label='Window Orientation'
-              name='orientation'
-              classNames={["window-orientation"]}
-              value="horizontal"
-              options={options.orientation}
-              onChange={handleValues}
-            />
-            {values.windowType == 'frameless-window' && <RadioField
-              label='Matter Transom'
-              id="matterTransom"
-              name="matterTransom"
-              classNames={["matterTransom"]}
-              options={options.matterTransom}
-              selectedValue={values.matterTransom}
-              onChange={handleValues}
-            />}
-            {values.windowType != 'sliding-window' && <RadioField
-              label="Opening Style"
-              id="openingStyle"
-              classNames={["opening-style"]}
-              options={options.openingStyle}
-              name="openingStyle"
-              selectedValue={values.openingStyle}
-              onChange={handleValues}
-            />}
-          </div>
-        </form>
-        <FormNavi />
-
-        <SaveDraftModal
-          values={values}
-          storageKey={draft_storage_key}
-        />
-      </main>
-    );
-  } else if (currentStep == 3) {
-    return (
-      <main className="quote-builder-page">
-        <StepHeader />
-        <form className="quote-form">
-          <div className="container">
-            <div>
-              <h2>Glass Details</h2>
-              <p>Choose your glass specifications.</p>
-            </div>
-            <DropdownField
-              label="Glass thickness"
-              name="glassThickness"
-              options={options.glassThickness}
-              value={values.glassThickness}
-              onChange={handleValues}
-            />
-            <DropdownField
-              label="Glass Color"
-              name="glassColor"
-              options={options.glassColor}
-              value={values.glassColor}
-              onChange={handleValues}
-            />
-            <DropdownField
-              label="Glass Type"
-              name="glassType"
-              options={options.glassType}
-              value={values.glassType}
-              onChange={handleValues}
-            />
-          </div>
-        </form>
-        <GlassSizeTip
-          windowType={values.windowType}
-          sashes={values.sashCount}
-          width={values.width}
-          height={values.height}
-        />
-        
-        <FormNavi />
-
-        <SaveDraftModal
-          values={values}
-          storageKey={draft_storage_key}
-        />
-      </main>
-    );
-  } else if (currentStep == 4) {
-    return (
-      <main className="quote-builder-page">
-        <StepHeader />
-        <form className="quote-form">
-          <div className="container">
-            <div>
-              <h2>Accesories &amp; Add-ons</h2>
-              <p>Select additional items.</p>
-            </div>
-            <ImageCheckboxField
-              label="Insect Net"
-              name="insect-net"
-              info="Net for ventilation and protection"
-              image={insectNetSvg}
-              selected={values.accessories.includes('30m net') ?? true}
-
-              onChange={handleValues}
-              includeInfo={{ groupName: 'accessories', value: '30m net' }}
-              />
-            <ImageCheckboxField
-              label="Stainless Steel Pipe"
-              name="steel-pipe"
-              info="Include stainless steel pipe"
-              classNames={
-                (values.accessories.includes('ify pipe') || values.accessories.includes('25mm galvanized pipe'))
-                ? ['disable']: []
-              }
-              image={protectorSvg}
-              selected = {values.accessories.includes('25mm stainless pipe')}
-              
-              onChange={handleValues}
-              includeInfo={{ groupName: 'accessories', value: '25mm stainless pipe' }}
-            />
-            <ImageCheckboxField
-              label="Ify pipe"
-              name="ify-pipe"
-              info="Use Ify-pipe as protector"
-              image={protectorSvg}
-              selected={values.accessories.includes('ify pipe')}
-              classNames={
-                (values.accessories.includes('25mm stainless pipe') || values.accessories.includes('25mm galvanized pipe'))
-                ? ['disable']: []
-              }
-              
-              onChange={handleValues}
-              includeInfo={{ groupName: 'accessories', value: 'ify pipe' }}
-            />
-            <ImageCheckboxField
-              label="Galvanized pipe"
-              name="galvanized-pipe"
-              info="Use galvanized pipe as protector"
-              image={protectorSvg}
-              selected={values.accessories.includes('25mm galvanized pipe')}
-              classNames={
-                (values.accessories.includes('ify pipe') || values.accessories.includes('25mm stainless pipe'))
-                ? ['disable']: []
-              }
-              
-              onChange={handleValues}
-              includeInfo={{ groupName: 'accessories', value: '25mm galvanized pipe' }}
-            />
-            <ImageCheckboxField
-              label="Protector Rod"
-              name="protector-red"
-              info=<>
-                <b>16mm</b> rod for maximized protection</>
-              image={protectorRodSvg}
-              selected={values.accessories.includes('16mm rod')}
-
-              onChange={handleValues}
-              includeInfo={{ groupName: 'accessories', value: '16mm rod' }}
-            />
-            <ImageCheckboxField
-              label="Weather Strip / Brush"
-              name="weather-strip"
-              info="Reduce noise & dust"
-              selected={values.accessories.includes('weather strip') ?? true}
-              image={weatherStripSvg}
-
-              onChange={handleValues}
-              includeInfo={{ groupName: 'accessories', value: 'weather strip' }}
-            />
-          </div>
-        </form>
-        <FormNavi />
-        <SaveDraftModal
-          values={values}
-          storageKey={draft_storage_key}
-        />
-      </main>
-    );
-  } else if (currentStep == 5) {
-    return (
-      <main className="quote-builder-page">
-        <StepHeader />
-        <form className="quote-form">
-          <div className="container">
-            <div>
-              <h2>
-                Review &amp; Quotation
-              </h2>
-              <p>Review your items and total.</p>
-            </div>
-          </div>
-        </form>
-        <Quotation values={values} />
-
-        <FormNavi
-          backTo={() => setSaveDraftVisibility(true)}
-          nextTo={() => addToCart(values,type="quote")}
-          backwardText={<>
-            <i className="fa fa-save"></i>
-            Save Draft
-          </>}
-          forwardText={<>
-            <NavLink to="/aluminum-calcs-new/quote-success" className="absolute">
-              <i className="fa fa-cart-plus"></i>
-              Add to cart
-            </NavLink>
-          </>}
+      <>
+        <ImageCheckboxField
+          label="Insect Net"
+          name="insect-net"
+          info="Net for ventilation and protection"
+          image={insectNetSvg}
+          selected={hasAccessory("30m net")}
+          onChange={handleValues}
+          includeInfo={{
+            groupName: "accessories",
+            value: "30m net",
+          }}
         />
 
-        <SaveDraftModal
-          values={values}
-          storageKey={draft_storage_key}
+        <ImageCheckboxField
+          label="Stainless Steel Pipe"
+          name="steel-pipe"
+          info="Include stainless steel pipe"
+          image={protectorSvg}
+          selected={hasAccessory("25mm stainless pipe")}
+          classNames={disableStainless ? ["disable"] : []}
+          onChange={handleValues}
+          includeInfo={{
+            groupName: "accessories",
+            value: "25mm stainless pipe",
+          }}
         />
-      </main>
+
+        <ImageCheckboxField
+          label="Ify pipe"
+          name="ify-pipe"
+          info="Use Ify-pipe as protector"
+          image={protectorSvg}
+          selected={hasAccessory("ify pipe")}
+          classNames={disableIfy ? ["disable"] : []}
+          onChange={handleValues}
+          includeInfo={{
+            groupName: "accessories",
+            value: "ify pipe",
+          }}
+        />
+
+        <ImageCheckboxField
+          label="Galvanized pipe"
+          name="galvanized-pipe"
+          info="Use galvanized pipe as protector"
+          image={protectorSvg}
+          selected={hasAccessory("25mm galvanized pipe")}
+          classNames={disableGalvanized ? ["disable"] : []}
+          onChange={handleValues}
+          includeInfo={{
+            groupName: "accessories",
+            value: "25mm galvanized pipe",
+          }}
+        />
+
+        <ImageCheckboxField
+          label="Protector Rod"
+          name="protector-rod"
+          info={
+            <>
+              <b>16mm</b> rod for maximized protection
+            </>
+          }
+          image={protectorRodSvg}
+          selected={hasAccessory("16mm rod")}
+          onChange={handleValues}
+          includeInfo={{
+            groupName: "accessories",
+            value: "16mm rod",
+          }}
+        />
+
+        <ImageCheckboxField
+          label="Weather Strip / Brush"
+          name="weather-strip"
+          info="Reduce noise & dust"
+          image={weatherStripSvg}
+          selected={hasAccessory("weather strip")}
+          onChange={handleValues}
+          includeInfo={{
+            groupName: "accessories",
+            value: "weather strip",
+          }}
+        />
+      </>
     );
   }
 
+  // Reusable window details
+  function WindowDetailsFields() {
+    return (
+      <>
+        <ImageRadioField
+          label="Window Type"
+          options={options.windowType}
+          name="windowType"
+          selectedValue={values.windowType}
+          onChange={handleValues}
+        />
 
+        <DropdownField
+          label="No of Sashes"
+          options={options.sashCount}
+          name="sashCount"
+          selectedValue={values.sashCount}
+          onChange={handleValues}
+        />
+
+        <InputField
+          label="Overall Width"
+          inputType="number"
+          id="overall-width"
+          name="width"
+          value={values.width}
+          onChange={handleValues}
+          unit="mm"
+        />
+
+        <InputField
+          label="Overall Height"
+          inputType="number"
+          id="overall-height"
+          name="height"
+          value={values.height}
+          onChange={handleValues}
+          unit="mm"
+        />
+
+        <DropdownField
+          label="Window Orientation"
+          name="orientation"
+          classNames={["window-orientation"]}
+          options={options.orientation}
+          selectedValue={values.orientation}
+          onChange={handleValues}
+        />
+
+        {values.windowType === "frameless-window" && (
+          <RadioField
+            label="Matter Transom"
+            id="matterTransom"
+            name="matterTransom"
+            classNames={["matterTransom"]}
+            options={options.matterTransom}
+            selectedValue={values.matterTransom}
+            onChange={handleValues}
+          />
+        )}
+
+        {values.windowType !== "sliding-window" && (
+          <RadioField
+            label="Opening Style"
+            id="openingStyle"
+            name="openingStyle"
+            classNames={["opening-style"]}
+            options={options.openingStyle}
+            selectedValue={values.openingStyle}
+            onChange={handleValues}
+          />
+        )}
+      </>
+    );
+  }
+
+  // Reusable glass fields
+  function GlassFields() {
+    return (
+      <>
+        <DropdownField
+          label="Glass thickness"
+          name="glassThickness"
+          options={options.glassThickness}
+          selectedValue={values.glassThickness}
+          onChange={handleValues}
+        />
+
+        <DropdownField
+          label="Glass Color"
+          name="glassColor"
+          options={options.glassColor}
+          selectedValue={values.glassColor}
+          onChange={handleValues}
+        />
+
+        <DropdownField
+          label="Glass Type"
+          name="glassType"
+          options={options.glassType}
+          selectedValue={values.glassType}
+          onChange={handleValues}
+        />
+      </>
+    );
+  }
+
+  // Introduction section
   function CreateQuoteIntro() {
     return (
       <section className="intro">
         <div className="container">
           <div className="left">
             <p className="eyebrow">Start planning</p>
+
             <h1>
               <span className="special">Quote</span> Builder
             </h1>
+
             <p>Create complete window quotations in minutes.</p>
+
             <ul>
               <li>Window Details</li>
-              <li>Dimensions &amp; Opening</li>
+              <li>Dimensions & Opening</li>
               <li>Glass Details</li>
-              <li>Accessories &amp; Add-ons</li>
+              <li>Accessories & Add-ons</li>
               <li>Review and Quotation</li>
             </ul>
           </div>
+
           <div className="right">
-            {quoteIllustration && <img
-              src={quoteIllustration}
-              alt="quote illustration"
-              className="quote_hero_img"
-            />}
+            {quoteIllustration && (
+              <img
+                src={quoteIllustration}
+                alt="Quote illustration"
+                className="quote_hero_img"
+              />
+            )}
           </div>
         </div>
       </section>
@@ -712,93 +463,429 @@ function QuoteBuilder() {
   function FormNavi({
     backTo = () => handleStepSetting("backward"),
     nextTo = () => handleStepSetting("forward"),
-    backwardText = <><i className="fa fa-chevron-left"></i>Back</>,
-    forwardText = <>Next<i className="fa fa-chevron-right"></i></>,
+    backwardText = (
+      <>
+        <i className="fa fa-chevron-left" />
+        Back
+      </>
+    ),
+    forwardText = (
+      <>
+        Next
+        <i className="fa fa-chevron-right" />
+      </>
+    ),
   }) {
     return (
       <section className="form-navigation">
         <div className="container">
           {currentStep > 0 && (
-            <button
-              className="backward"
-              onClick={backTo}
-            >
+            <button type="button" className="backward" onClick={backTo}>
               {backwardText}
             </button>
           )}
-          {currentStep == 0 ? (
-            <button
-              className="forward"
-              onClick={nextTo}
-            >
-              Create a Quote
-              <i className="fa fa-chevron-right"></i>
-            </button>
-          ) : (
-            <button
-              className="forward"
-              onClick={nextTo}
-            >
-              {forwardText}
-            </button>
-          )}
+
+          <button type="button" className="forward" onClick={nextTo}>
+            {currentStep === 0 ? "Create a Quote" : forwardText}
+
+            {currentStep === 0 && <i className="fa fa-chevron-right" />}
+          </button>
         </div>
       </section>
     );
   }
 
+  // Mobile step header
   function StepHeader({ headerText = "New Quote" }) {
     return (
       <section className="Step-header">
         <div className="container">
           <div className="nav">
-            <button onClick={() => handleStepSetting("backward")}>
-              <i className="fa fa-angle-left"></i>
+            <button type="button" onClick={() => handleStepSetting("backward")}>
+              <i className="fa fa-angle-left" />
             </button>
+
             <h3>{headerText}</h3>
-            <button id="save" onClick={() => setSaveDraftVisibility(true)}>
-              <i className="fa fa-save"></i>
+
+            <button type="button" id="save" onClick={openSaveDraft}>
+              <i className="fa fa-save" />
             </button>
           </div>
-          <div className={`counter step${currentStep}`}>
-            {steps.map((step, i) => {
-              return (
-                <Fragment key={step}>
-                  <span
-                    className={
-                      step == currentStep
-                        ? "active"
-                        : step < currentStep
-                        ? "completed"
-                        : ""
-                    }
-                  >
-                    {step}
-                  </span>
 
-                  {i < steps.length - 1 && (
-                    <div
-                      className={step < currentStep ? "line completed" : "line"}
-                    />
-                  )}
-                </Fragment>
-              );
-            })}
+          <div className={`counter step${currentStep}`}>
+            {steps.map((step, index) => (
+              <Fragment key={step}>
+                <span
+                  className={
+                    step === currentStep
+                      ? "active"
+                      : step < currentStep
+                      ? "completed"
+                      : ""
+                  }
+                >
+                  {step}
+                </span>
+
+                {index < steps.length - 1 && (
+                  <div
+                    className={step < currentStep ? "line completed" : "line"}
+                  />
+                )}
+              </Fragment>
+            ))}
           </div>
         </div>
       </section>
     );
   }
 
-  const StepMarker = ({ text = 'Step', }) => {
-    // returns a list marker for a step in the form.
-    return <span className="special">
-      {text && text}
-      {currentStep}
-      . 
-    </span>
-  };
-}
+  // Shared draft modal
+  function DraftModal() {
+    return <SaveDraftModal values={values} storageKey={draft_storage_key} />;
+  }
 
+  // Desktop layout
+  if (isDesktop) {
+    return (
+      <main className="quote-builder-page desktop">
+        <section className="desktop-hero">
+          <div className="desktop-hero__inner">
+            <div>
+              <p className="eyebrow">Start planning</p>
+
+              <h1>
+                <span className="special">Quote</span> Builder
+              </h1>
+
+              <p className="hero-copy">
+                Create complete window quotations in minutes
+              </p>
+            </div>
+
+            <div className="hero-mark" aria-hidden="true">
+              <i className="fa fa-cubes" />
+            </div>
+          </div>
+        </section>
+
+        <section className="form-actions">
+          <button
+            type="button"
+            className="saveDraftButton"
+            onClick={openSaveDraft}
+          >
+            <i className="fa fa-save" />
+            Save Draft
+          </button>
+
+          <button type="button" className="clear-all" onClick={clearAll}>
+            <i className="fa fa-refresh" />
+            Clear All
+          </button>
+
+          <button
+            type="button"
+            className="cartButton"
+            onClick={() => handleAddToCart()}
+          >
+            <i className="fa fa-shopping-cart" />
+            Add to Cart
+          </button>
+        </section>
+
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
+          <section className="form_section 1">
+            <div className="card-heading">
+              <div className="card-icon">
+                <span>1</span>
+              </div>
+
+              <div>
+                <p className="eyebrow">About the window</p>
+                <h2>Window Details</h2>
+              </div>
+            </div>
+
+            <div className="form_section_fields">
+              <WindowDetailsFields />
+            </div>
+          </section>
+
+          <section className="form_section 2">
+            <div className="card-heading">
+              <div className="card-icon">
+                <span>2</span>
+              </div>
+
+              <div>
+                <p className="eyebrow">Which type of glass?</p>
+                <h2>Glass Details</h2>
+              </div>
+            </div>
+
+            <div className="form_section_fields">
+              <GlassFields />
+
+              <GlassSizeTip
+                windowType={values.windowType}
+                sashes={values.sashCount}
+                width={values.width}
+                height={values.height}
+              />
+            </div>
+          </section>
+
+          <section className="form_section 3">
+            <div className="card-heading">
+              <div className="card-icon">
+                <span>3</span>
+              </div>
+
+              <div>
+                <p className="eyebrow">Any additional items?</p>
+                <h2>Accessories and Add-ons</h2>
+              </div>
+            </div>
+
+            <div className="form_section_fields">
+              <AccessoryFields />
+            </div>
+          </section>
+        </form>
+
+        <Quotation
+          values={values}
+          onAddToCart={handleAddToCart}
+          onSaveDraft={openSaveDraft}
+        />
+
+        <DraftModal />
+      </main>
+    );
+  }
+
+  // Mobile step 0: Introduction
+  if (currentStep === 0) {
+    return (
+      <main className="quote-builder-page">
+        <CreateQuoteIntro />
+
+        <FormNavi />
+
+        <DraftModal />
+      </main>
+    );
+  }
+
+  // Mobile step 1: Window details
+  if (currentStep === 1) {
+    return (
+      <main className="quote-builder-page">
+        <StepHeader />
+
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div className="container">
+            <div>
+              <h2>Window details</h2>
+              <p>Tell us about the window.</p>
+            </div>
+
+            <ImageRadioField
+              label="Window Type"
+              options={options.windowType}
+              name="windowType"
+              selectedValue={values.windowType}
+              onChange={handleValues}
+            />
+
+            <DropdownField
+              label="No of Sashes"
+              options={options.sashCount}
+              name="sashCount"
+              selectedValue={values.sashCount}
+              onChange={handleValues}
+            />
+          </div>
+        </form>
+
+        <FormNavi />
+
+        <DraftModal />
+      </main>
+    );
+  }
+
+  // Mobile step 2: Dimensions and opening
+  if (currentStep === 2) {
+    return (
+      <main className="quote-builder-page">
+        <StepHeader />
+
+        <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="container">
+            <div>
+              <h2>Dimensions & Opening</h2>
+              <p>Enter the measurements.</p>
+            </div>
+
+            <InputField
+              label="Overall Width"
+              inputType="number"
+              id="overall-width"
+              name="width"
+              value={values.width}
+              onChange={handleValues}
+              unit="mm"
+            />
+
+            <InputField
+              label="Overall Height"
+              inputType="number"
+              id="overall-height"
+              name="height"
+              value={values.height}
+              onChange={handleValues}
+              unit="mm"
+            />
+
+            <DropdownField
+              label="Window Orientation"
+              name="orientation"
+              classNames={["window-orientation"]}
+              options={options.orientation}
+              selectedValue={values.orientation}
+              onChange={handleValues}
+            />
+
+            {values.windowType === "frameless-window" && (
+              <RadioField
+                label="Matter Transom"
+                id="matterTransom"
+                name="matterTransom"
+                classNames={["matterTransom"]}
+                options={options.matterTransom}
+                selectedValue={values.matterTransom}
+                onChange={handleValues}
+              />
+            )}
+
+            {values.windowType !== "sliding-window" && (
+              <RadioField
+                label="Opening Style"
+                id="openingStyle"
+                classNames={["opening-style"]}
+                options={options.openingStyle}
+                name="openingStyle"
+                selectedValue={values.openingStyle}
+                onChange={handleValues}
+              />
+            )}
+          </div>
+        </form>
+
+        <FormNavi />
+
+        <DraftModal />
+      </main>
+    );
+  }
+
+  // Mobile step 3: Glass details
+  if (currentStep === 3) {
+    return (
+      <main className="quote-builder-page">
+        <StepHeader />
+
+        <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="container">
+            <div>
+              <h2>Glass Details</h2>
+              <p>Choose your glass specifications.</p>
+            </div>
+
+            <GlassFields />
+          </div>
+        </form>
+
+        <GlassSizeTip
+          windowType={values.windowType}
+          sashes={values.sashCount}
+          width={values.width}
+          height={values.height}
+        />
+
+        <FormNavi />
+
+        <DraftModal />
+      </main>
+    );
+  }
+
+  // Mobile step 4: Accessories
+  if (currentStep === 4) {
+    return (
+      <main className="quote-builder-page">
+        <StepHeader />
+
+        <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="container">
+            <div>
+              <h2>Accessories & Add-ons</h2>
+              <p>Select additional items.</p>
+            </div>
+
+            <AccessoryFields />
+          </div>
+        </form>
+
+        <FormNavi />
+
+        <DraftModal />
+      </main>
+    );
+  }
+
+  // Mobile step 5: Review and quotation
+  return (
+    <main className="quote-builder-page">
+      <StepHeader />
+
+      <form className="quote-form" onSubmit={(e) => e.preventDefault()}>
+        <div className="container">
+          <div>
+            <h2>Review & Quotation</h2>
+            <p>Review your items and total.</p>
+          </div>
+        </div>
+      </form>
+
+      <Quotation
+        values={values}
+        onAddToCart={handleAddToCart}
+        onSaveDraft={openSaveDraft}
+      />
+
+      <FormNavi
+        backTo={openSaveDraft}
+        nextTo={() => handleAddToCart()}
+        backwardText={
+          <>
+            <i className="fa fa-save" />
+            Save Draft
+          </>
+        }
+        forwardText={
+          <>
+            <i className="fa fa-cart-plus" />
+            Add to Cart
+          </>
+        }
+      />
+
+      <DraftModal />
+    </main>
+  );
+}
 
 export default QuoteBuilder;

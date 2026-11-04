@@ -131,7 +131,6 @@ export default function Home() {
                     {tool.image ? <img src={tool.image} alt="" /> : <i className={tool.icon} />}
 
                   </div>
-                  {console.log(tool)}
                   {tool.status && <span className={`status ${tool.status.selectors?.join(" ")}`}>{tool.status.text}</span>}
                 </div>
                 <div className="tool-card__content">

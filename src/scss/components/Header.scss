@@ -151,6 +151,11 @@ aside {
             color: var(--green);
             text-align: center;
           }
+          // status badge (Draft, Soon, etc.) sits on the right edge of the link
+          .status {
+            margin-left: auto;
+            flex-shrink: 0;
+          }
           &:hover,
           &:focus-visible {
             color: var(--green);
@@ -241,19 +246,23 @@ aside {
   }
 }
 
-&.light-mode {
-  .icon-sun {
-    display: none;
+// Theme icon toggling: both theme buttons carry the current theme class
+.theme-btn,
+aside .use button {
+  &.light-mode {
+    .icon-sun {
+      display: none;
+    }
+    .icon-moon {
+      display: block;
+    }
   }
-  .icon-moon {
-    display: block;
-  }
-}
-&.dark-mode {
-  .icon-sun {
-    display: block;
-  }
-  .icon-moon {
-    display: none;
+  &.dark-mode {
+    .icon-sun {
+      display: block;
+    }
+    .icon-moon {
+      display: none;
+    }
   }
 }

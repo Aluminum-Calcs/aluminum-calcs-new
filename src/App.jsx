@@ -35,26 +35,26 @@ function App() {
   return (
     <HelmetProvider>
       <PageContextProvider>
-        <BrowserRouter>
+        <BrowserRouter basename="/aluminum-calcs-new">
           <Header/>
           <CalculatorModal />
           <ScrollToTop/>
 
           <Routes>
             <Route
-              path="/aluminum-calcs-new/"
+              path="/"
               element={<Home />}
             />
             <Route
-              path="/aluminum-calcs-new/sign-in"
+              path="/sign-in"
               element={<SignIn/>}
             />
             <Route
-              path="/aluminum-calcs-new/settings"
+              path="/settings"
               element={<Settings/>}
             />
             <Route
-              path="/aluminum-calcs-new/quote-builder"
+              path="/quote-builder"
               element={
                 <QuoteContextProvider>
                   <QuoteBuilder/>
@@ -63,35 +63,35 @@ function App() {
             >
             </Route>
             <Route
-              path="/aluminum-calcs-new/quote-success"
+              path="/quote-success"
               element={<QuoteSuccess />}
             />
             <Route
-              path="/aluminum-calcs-new/quotes"
+              path="/quotes"
               element={<Quotes />}
             />
             <Route
-              path="/aluminum-calcs-new/clients"
+              path="/clients"
               element={<Clients />}
             />
             <Route
-              path="/aluminum-calcs-new/help-support"
+              path="/help-support"
               element={<HelpSupport />}
             />
             <Route
-              path="/aluminum-calcs-new/glass-price-calculator"
+              path="/glass-price-calculator"
               element={<GlassPrice />}
             />
             <Route
-              path="/aluminum-calcs-new/sheet-optimizer"
+              path="/sheet-optimizer"
               element={<SheetOptimizer />}
             />
             <Route
-              path="/aluminum-calcs-new/channels"
+              path="/channels"
               element={<Channels />}
             />
             <Route
-              path="/aluminum-calcs-new/stile-calculator"
+              path="/stile-calculator"
               element={
                 <StileContextProvider>
                   <StileCalc />
@@ -99,15 +99,15 @@ function App() {
               }
             />
             <Route
-              path="/aluminum-calcs-new/materials"
+              path="/materials"
               element={<Materials />}
             />
             <Route
-              path="/aluminum-calcs-new/sales"
+              path="/sales"
               element={<Sales />}
             />
             <Route
-              path="/aluminum-calcs-new/clients"
+              path="/clients"
               element={<Clients />}
             />
           </Routes>

@@ -14,7 +14,7 @@ const tools = [
     title: "Quote Builder",
     description: "Create complete window quotations in minutes with sliding, casement, and frameless options.",
     image: quoteSvg,
-    link: "/aluminum-calcs-new/quote-builder",
+    link: "/quote-builder",
     cta: "Start New Quote",
     accent: "quote",
   },
@@ -22,15 +22,27 @@ const tools = [
     title: "Glass Calculator",
     description: "Map dimensions, glass type, and finish choices to a precise price in seconds.",
     image: glassSvg,
-    link: "/aluminum-calcs-new/glass-price-calculator",
+    link: "/glass-price-calculator",
     cta: "Calculate Glass",
     accent: "glass",
+  },
+  {
+    title: "Sheet Optimizer",
+    description: "Plan cuts for glass, aluminum, plywood, and accuboard sheets and get a visual representation of your pontential cut.",
+    image: null,
+    icon: "fa fa-object-group",
+    link: "/sheet-optimizer",
+    cta: "Optimize your cuts",
+    accent: "sheet",
+    status: {
+      text: "new",
+    },
   },
   {
     title: "Channels",
     description: "Browse aluminum channel references, lengths, and application notes from one workspace.",
     image: transom,
-    link: "/aluminum-calcs-new/channels",
+    link: "/channels",
     cta: "Explore Channels",
     accent: "channels",
   },
@@ -38,7 +50,7 @@ const tools = [
     title: "Profile / Stile Calc",
     description: "Calculate stile and profile dimensions for custom fabrication and cutlists.",
     image: lockStile,
-    link: "/aluminum-calcs-new/stile-calculator",
+    link: "/stile-calculator",
     cta: "Calculate Profiles",
     accent: "stile",
   },
@@ -47,9 +59,13 @@ const tools = [
     description: "Record and total instant sales in seconds.",
     image: null,
     icon: "fa fa-money",
-    link: "/aluminum-calcs-new/sales",
+    link: "/sales",
     cta: "Make a sale",
     accent: "sales",
+    status: {
+      text: "Still in development",
+      selectors: ["status--pending"],
+    },
   },
 ];
 
@@ -74,10 +90,10 @@ export default function Home() {
               Build better estimates, compare material options, and keep every aluminum project moving with fewer delays.
             </p>
             <div className="hero-actions">
-              <NavLink to="/aluminum-calcs-new/quote-builder" className="primary-btn">
+              <NavLink to="/quote-builder" className="primary-btn">
                 <i className="fa fa-magic" aria-hidden="true" /> New quote
               </NavLink>
-              <NavLink to="/aluminum-calcs-new/cart" className="secondary-btn">
+              <NavLink to="/cart" className="secondary-btn">
                 <i className="fa fa-shopping-cart" aria-hidden="true" /> View cart
               </NavLink>
             </div>
@@ -110,8 +126,13 @@ export default function Home() {
           <div className="tool-grid">
             {tools.map((tool) => (
               <article key={tool.title} className={`tool-card ${tool.accent}`}>
-                <div className="tool-card__icon" aria-hidden="true">
-                  {tool.image ? <img src={tool.image} alt="" /> : <i className={tool.icon} />}
+                <div className="tool-card_header">
+                  <div className="tool-card__icon" aria-hidden="true">
+                    {tool.image ? <img src={tool.image} alt="" /> : <i className={tool.icon} />}
+
+                  </div>
+                  {console.log(tool)}
+                  {tool.status && <span className={`status ${tool.status.selectors?.join(" ")}`}>{tool.status.text}</span>}
                 </div>
                 <div className="tool-card__content">
                   <h3>{tool.title}</h3>

@@ -3,7 +3,7 @@ import EhiEjakhian from "../assets/images/ehiejakhian.jpg";
 import "../scss/components/Footer.scss";
 import { PageContext } from "../context/PageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpwork, faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { faUpwork, faDiscord} from "@fortawesome/free-brands-svg-icons";
 
 export const profileLinks = [
   {
@@ -39,6 +39,16 @@ export const profileLinks = [
     ref:"https://github.com/Ehiejakhian", 
     id:"github-link", 
     iconClass: "fa fa-github"
+  },
+  { 
+    ref:"https://x.com/Ehiejakhian", 
+    id:"x-link", 
+    iconClass: "fa fa-twitter"
+  },
+  { 
+    ref:"https://selar.com/m/ehiejakhian", 
+    id:"selar-link", 
+    iconClass: "fa fa-shopping-bag"
   },
 ];
 

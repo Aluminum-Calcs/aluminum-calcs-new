@@ -11,11 +11,129 @@
   }
 }
 
+// Out-of-stock badge. Move this next to your other .status--* styles if you like.
+.status--out-of-stock {
+  background: color-mix(in srgb, var(--error) 12%, transparent);
+  border-color: color-mix(in srgb, var(--error) 30%, transparent);
+  color: var(--error);
+}
+
+// ===== Inventory summary =====
+.inventory-summary {
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .summary-tile {
+    @include df(normal, normal, column, 6px);
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 1px solid var(--green-300);
+
+    .label {
+      color: var(--green);
+      font: 700 0.7rem 'jetbrains-mono';
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .value {
+      color: var(--text);
+      font: 700 1.4rem 'cascadia-code';
+    }
+  }
+}
+
+// ===== Add material =====
+.add-material {
+  .add-material-form {
+    @include card-shadow;
+    & {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .card-heading {
+      background: var(--green-100);
+      padding: 16px;
+      border-bottom: 1px solid var(--green-300);
+      .card-icon {
+        background: var(--bg);
+      }
+    }
+
+    .add-material-fields {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .usage-picker {
+      padding: 0 16px 16px;
+      @include df(normal, center, row wrap, 8px);
+
+      > span {
+        font-weight: 600;
+        margin-right: 4px;
+      }
+    }
+
+    .usage-chip {
+      border: 1px solid var(--green-500);
+      border-radius: 20px;
+      padding: 2px 10px;
+      font-size: .8rem;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: all .2s;
+
+      &:hover,
+      &:focus-visible,
+      &.selected {
+        background: var(--green-200);
+        border-color: var(--green);
+      }
+
+      &.selected {
+        font-weight: 700;
+      }
+    }
+
+    .add-material-actions {
+      padding: 16px;
+      border-top: 1px solid var(--green-300);
+      @include df(normal, normal, row wrap, 10px);
+
+      .save-button {
+        @include btn(var(--text), var(--green-500), var(--inv-text), var(--green));
+        &:disabled {
+          opacity: .5;
+          cursor: not-allowed;
+        }
+      }
+
+      .cancel-button {
+        @include btn;
+      }
+    }
+  }
+}
+
 .material-controls {
   // border: 1px solid;
   // @include card-shadow;
   .container {
     @include df(normal, normal, column, 8px);
+  }
+
+  .results-count {
+    margin: 0;
+    color: var(--medium);
+    font-size: .85rem;
   }
 
   .material-filters {
@@ -71,6 +189,39 @@
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 26px;
   }
+
+  .materials-empty {
+    grid-column: 1 / -1;
+    padding: 40px 24px;
+    text-align: center;
+    @include df(normal, center, column, 12px);
+
+    i {
+      font-size: 2rem;
+      color: var(--green);
+      border: 1px solid;
+      width: 4rem;
+      height: 4rem;
+      background: var(--green-100);
+      @include df(center, center);
+    }
+
+    .empty-title {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      font-family: 'jetbrains-mono';
+    }
+
+    .empty-text {
+      margin: 0;
+      font-size: .95rem;
+      color: var(--medium);
+      line-height: 1.5;
+    }
+  }
+
   .material-card {
     @include card-shadow;
     & {
@@ -82,6 +233,11 @@
       border-bottom: 1px solid var(--green-300);
       .card-icon {
         background: var(--bg);
+      }
+      // stock badge sits on the right edge of the heading
+      .status {
+        margin-left: auto;
+        flex-shrink: 0;
       }
     }
     .card-description {
@@ -107,6 +263,19 @@
           border-radius: 20px;
           padding: 2px 8px;
           font-size: .8rem;
+        }
+      }
+    }
+    .material-actions {
+      border-top: 1px solid var(--green-300);
+      padding: 12px 16px;
+      @include df(right, center, row, 8px);
+
+      .delete-button {
+        @include btn(var(--error));
+        & {
+          padding: 6px 10px;
+          font-size: .85rem;
         }
       }
     }

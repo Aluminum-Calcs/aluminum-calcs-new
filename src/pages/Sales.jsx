@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef, useId } from 'react';
 import { useLocation } from 'react-router';
 import { PageContext } from '../context/PageContext';
 import InputField from '../components/InputField';
@@ -25,9 +25,55 @@ const trialSales = [
   },
 ];
 
+export function Dialog({ isOpen, onClose, title, children, className = '' }) {
+  const dialogRef = useRef(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (isOpen && !dialog.open) {
+      dialog.showModal();
+    } else if (!isOpen && dialog.open) {
+      dialog.close();
+    }
+  }, [isOpen]);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      className={`dialog ${className}`}
+      aria-labelledby={titleId}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      onClose={onClose}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <header className="dialog__header">
+        <h2 id={titleId}>{title}</h2>
+        <button
+          className="dialog__close"
+          type="button"
+          aria-label={`Close ${title}`}
+          onClick={onClose}
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </header>
+      <section className="dialog__body">{children}</section>
+    </dialog>
+  );
+}
+
 function Sales() {
   const { pathname } = useLocation();
   const { setCurrentPage } = useContext(PageContext);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => { 
     setCurrentPage("Sales")
@@ -137,6 +183,15 @@ function Sales() {
       <section className="sales_grid">
         <div className="container">
           <h2>Your Sales</h2>
+          <button
+            className="primary-btn"
+            type="button"
+            aria-haspopup="dialog"
+            onClick={() => setIsFilterOpen(true)}
+          >
+            <i className="fa fa-filter" aria-hidden="true" />
+            Filter sales
+          </button>
           <ul className="sales_grid_list">
             {trialSales?.map((each,i) =>
               <SingleSale
@@ -147,6 +202,47 @@ function Sales() {
           </ul>
         </div>
       </section>
+      <Dialog
+        isOpen={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        title="Filter sales"
+      >
+        <form
+          className="sales-filter-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            setIsFilterOpen(false);
+          }}
+        >
+          <label>
+            Customer
+            <input name="customer" type="search" placeholder="Customer name" />
+          </label>
+          <label>
+            Sort by
+            <select name="sortBy" defaultValue="date">
+              <option value="date">Date</option>
+              <option value="customer">Customer</option>
+              <option value="price">Price</option>
+            </select>
+          </label>
+          <label>
+            Order
+            <select name="sortOrder" defaultValue="descending">
+              <option value="ascending">Ascending</option>
+              <option value="descending">Descending</option>
+            </select>
+          </label>
+          <div className="sales-filter-form__actions">
+            <button type="button" onClick={() => setIsFilterOpen(false)}>
+              Cancel
+            </button>
+            <button className="primary-btn" type="submit">
+              Apply filters
+            </button>
+          </div>
+        </form>
+      </Dialog>
     </main>
   )
 };
@@ -158,12 +254,30 @@ export function SingleSale({
 
   return <article className={`single_sale ${class_names?.join(' ')}`}>
     <div className="details">
-      <p>{sale_data?.item_name}</p>
-      <p>{sale_data?.item_qty}</p>
-      <p>@₦{sale_data?.item_price}</p>
-      <p>₦{sale_data?.item_total}</p>
-      <p>{sale_data?.date_bought}</p>
-      <p>{sale_data?.customer_name}</p>
+      <div className="detail">
+        <span className="detail-label">Item</span>
+        <p>{sale_data?.item_name}</p>
+      </div>
+      <div className="detail">
+        <span className="detail-label">Quantity</span>
+        <p>{sale_data?.item_qty}</p>
+      </div>
+      <div className="detail">
+        <span className="detail-label">Unit price</span>
+        <p>@₦{sale_data?.item_price}</p>
+      </div>
+      <div className="detail">
+        <span className="detail-label">Total</span>
+        <p>₦{sale_data?.item_total}</p>
+      </div>
+      <div className="detail">
+        <span className="detail-label">Date</span>
+        <p>{sale_data?.date_bought}</p>
+      </div>
+      <div className="detail">
+        <span className="detail-label">Customer</span>
+        <p>{sale_data?.customer_name}</p>
+      </div>
     </div>
     <div className="actions">
       <button><i className="fa fa-edit"></i></button>

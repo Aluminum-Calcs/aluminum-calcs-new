@@ -1,4 +1,3 @@
-
 @use '../util/' as *;
 
 // hero section in Clients.scss
@@ -11,6 +10,7 @@
   .container {
     @include df(normal, normal, column, 16px);
   }
+
   @media (min-width: $tab) {
     @include card-shadow;
   }
@@ -23,7 +23,7 @@
   gap: 22px;
 
   @media (min-width: $tab) {
-    > button {
+    >button {
       grid-column: span 2;
       align-self: flex-end;
     }
@@ -32,7 +32,8 @@
 
 .sales_grid {
   margin-top: 60px;
-  > .container {
+
+  >.container {
     @include df(normal, normal, column, 16px);
   }
 }
@@ -42,9 +43,202 @@
 
   .single_sale {
     @include card-shadow;
+
     & {
-      padding: 8px 16px;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 16px;
+      min-width: 0;
+
+      .detail {
+        min-width: 0;
+
+        .detail-label {
+          display: block;
+          margin-bottom: 3px;
+          color: var(--medium);
+          font: 700 0.65rem 'jetbrains-mono';
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+
+        p {
+          min-width: 0;
+          color: var(--medium);
+          font-size: 0.85rem;
+          line-height: 1.45;
+          overflow-wrap: anywhere;
+        }
+
+        &:nth-child(1) {
+          grid-column: 1 / -1;
+
+          p {
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 700;
+          }
+        }
+
+
+        &:nth-child(4) {
+          grid-column: 1 / -1;
+          padding-top: 12px;
+          border-top: 1px solid var(--green-200);
+
+          p {
+            color: var(--green);
+            font-size: 1.2rem;
+            font-weight: 700;
+          }
+        }
+
+        &:nth-child(5),
+        &:nth-child(6) {
+          grid-column: 1 / -1;
+        }
+      }
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 12px;
+      border-top: 1px solid var(--green-200);
+
+      button {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--green-300);
+        background: transparent;
+        color: var(--green);
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &:hover {
+          background: var(--green);
+          color: var(--inv-text);
+        }
+
+        &:last-child:hover {
+          border-color: var(--error);
+          background: var(--error);
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--green);
+          outline-offset: 2px;
+        }
+      }
     }
   }
 }
 
+.dialog {
+  width: min(32rem, calc(100% - 2rem));
+  max-width: none;
+  max-height: min(85vh, 42rem);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--green-200);
+  background: var(--cream);
+  color: var(--text);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
+
+  .dialog__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--green-200);
+
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+  }
+
+  .dialog__close {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border: 1px solid var(--green-300);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 1.4rem;
+
+    &:hover {
+      background: var(--green);
+      color: var(--inv-text);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+  }
+
+  .dialog__body {
+    padding: 24px;
+  }
+
+  .sales-filter-form {
+    display: grid;
+    gap: 18px;
+
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 12px;
+      border: 1px solid var(--green-300);
+      background: var(--cream);
+      color: var(--text);
+      font: inherit;
+    }
+  }
+
+  .sales-filter-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 6px;
+
+    button {
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid var(--green-300);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 2px;
+      }
+    }
+  }
+}

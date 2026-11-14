@@ -54,6 +54,7 @@ $cream-200: rgba($cream, .1);
   --green-900: rgba(47, 111, 78, 0.9);
 
   --max-w: 1200px;
+  --max-w-sm: 1060px;
   @media (min-width: $desktop) {
     --max-w: 100%;
   }

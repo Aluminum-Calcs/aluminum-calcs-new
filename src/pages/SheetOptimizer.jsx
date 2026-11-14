@@ -492,7 +492,7 @@ export default function SheetOptimizer() {
   );
 }
 
-function GlassDetails(values, handleValues) {
+function GlassDetails({values, handleValues}) {
   return (
     <form className="sheet-size-form">
       <div className="optimizer-field-grid">
@@ -502,6 +502,7 @@ function GlassDetails(values, handleValues) {
           name="sheetWidth"
           value={values.sheetWidth}
           onChange={handleValues}
+          placeholder={initialValues.sheetWidth}
           unit="mm"
         />
         <InputField
@@ -509,6 +510,7 @@ function GlassDetails(values, handleValues) {
           label="height"
           name="sheetHeight"
           value={values.sheetHeight}
+          placeholder={initialValues.sheetHeight}
           onChange={handleValues}
           unit="mm"
         />

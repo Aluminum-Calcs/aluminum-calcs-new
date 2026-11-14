@@ -75,3 +75,27 @@ main {
 .special {
   color: var(--green);
 }
+
+.primary-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font: 700 0.75rem 'jetbrains-mono';
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.secondary-btn {
+  flex: 0 0 auto;
+  padding: 11px 14px;
+  border: 1px solid var(--green);
+  background: transparent;
+  color: var(--text);
+
+  &:hover {
+    background: var(--green-100);
+  }
+}

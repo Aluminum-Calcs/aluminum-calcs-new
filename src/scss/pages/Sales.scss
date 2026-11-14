@@ -3,8 +3,48 @@
 
 // hero section in Clients.scss
 
-.sales-grid {
-  border: 1px solid;
-  
+.add_sales {
+  margin-top: 60px;
+  max-width: var(--max-w-sm);
+  align-self: center;
+
+  .container {
+    @include df(normal, normal, column, 16px);
+  }
+  @media (min-width: $tab) {
+    @include card-shadow;
+  }
+}
+
+.sales_form {
+  padding: 0 !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 22px;
+
+  @media (min-width: $tab) {
+    > button {
+      grid-column: span 2;
+      align-self: flex-end;
+    }
+  }
+}
+
+.sales_grid {
+  margin-top: 60px;
+  > .container {
+    @include df(normal, normal, column, 16px);
+  }
+}
+
+.sales_grid_list {
+  @include dg(auto-fit, 200px, 1fr, 22px);
+
+  .single_sale {
+    @include card-shadow;
+    & {
+      padding: 8px 16px;
+    }
+  }
 }
 
